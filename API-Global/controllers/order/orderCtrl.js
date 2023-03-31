@@ -7,7 +7,7 @@ const authMe = require('../../middleware/authMe');
 const productCtrl = require('../productCtrl');
 const jwt = require('jsonwebtoken');
 const User = require('../../models/userModel');
-const paypalCtrl = require('../order/paypalCtrl');
+const paypalCtrl = require('./paypalCtrl');
 const axios = require('axios');
 const dotenv = require('dotenv');
 
