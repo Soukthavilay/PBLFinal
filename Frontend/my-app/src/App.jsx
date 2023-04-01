@@ -1,22 +1,18 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import AdminPage from './components/admin/AdminPage';
-import UserPage from './components/user/UserPage';
+import Header from './components/header/Header';
+import Footer from './components/footer/Footer';
+import Page from './components/mainPages/Page';
+
 
 function App() {
   return (
+    <>
+    <Header/>
     <div className="container">
-      <Router>
-        <Switch>
-          <Route path='/admin'>
-            <AdminPage/>
-          </Route>
-          <Route path='/user'>
-            <UserPage/>
-          </Route>
-        </Switch>
-      </Router>
+      <Page/>
     </div>
+    <Footer/>
+    </>
   );
 }
 
