@@ -95,11 +95,11 @@ const productCtrl = {
             }
             const price = types[0].price;
             if (!images)
-                return res.status(400).json({ msg: "Không có hình ảnh tải lên" });
+                return res.status(400).json({ msg: "No pictures to upload" });
             const product = await Products.findOne({ title: title });
             console.log(title);
             if (product)
-                return res.status(400).json({ msg: "Sản phẩm này đã tồn tại." });
+                return res.status(400).json({ msg: "This product already exists." });
             const newProduct = new Products({
                 types: listType,
                 title: title,
