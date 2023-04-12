@@ -26,7 +26,7 @@ app.use(morgan('tiny'));
 app.disable('x-powered-by'); // less hackers know about our stack
 // app.use(cors());
 app.use(cors({
-    origin: "http://127.0.0.1:5173",
+    origin: "http://localhost:3000",
     credentials: true,
 }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
