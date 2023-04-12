@@ -7,18 +7,6 @@ import MainPages from './components/mainpages/Pages';
 import { TopHeader } from './components/top-header/TopHeader';
 
 function App() {
-  // var body = {
-  //   name:"Koh",
-  //   type:[
-  //     {
-  //       name:"Koh",
-  //       price:"10",
-  //     }
-  //   ]
-  // }
-
-  // console.log(body.type[0].name)
-
   return (
     <DataProvider>
       <Router>
