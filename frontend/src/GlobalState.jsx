@@ -16,7 +16,7 @@ export const DataProvider = ({ children }) => {
     const firstLogin = localStorage.getItem('firstLogin');
     if (firstLogin) {
       const refreshToken = async () => {
-        const res = await axios.get('https://pbl-final1.onrender.com/user/refresh_token');
+        const res = await axios.get('https://pbl-final11.onrender.com/user/refresh_token');
 
         setToken(res.data.accesstoken);
        // console.log(res);

@@ -13,7 +13,7 @@ function ProductsAPI() {
   useEffect(() => {
     const getProducts = async () => {
       const res = await axios.get(
-        `https://pbl-final1.onrender.com/api/products?limit=${
+        `https://pbl-final11.onrender.com/api/products?limit=${
           page * 9
         }&${category}&${sort}&title[regex]=${search}`
       );

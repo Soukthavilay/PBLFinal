@@ -28,7 +28,7 @@ function Cart() {
 
   const addToCart = async (cart) => {
     await axios.patch(
-      'https://pbl-final1.onrender.com/user/addcart',
+      'https://pbl-final11.onrender.com/user/addcart',
       { cart },
       {
         headers: { Authorization: token },
