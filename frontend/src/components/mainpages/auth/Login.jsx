@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { MdLogin } from 'react-icons/md';
 import { TiStarburst } from 'react-icons/ti';
 import { BsFacebook } from 'react-icons/bs';
 import Logo from '../../headers/icon/logo-white-1.svg';
+import Header from '../../headers/Header';
 
-function Login() {
+function Login(isShown) {
   const [user, setUser] = useState({
     email: '',
     password: '',
   });
-
   const onChangeInput = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
@@ -37,8 +37,11 @@ function Login() {
       color: 'rgba(255,255,255)'
     }
   }
-
+  // const pathname = isShown;
+  // console.log(pathname)
   return (
+    <>
+    <Header isShown={false}/>
     <div className="login-page">
       <form onSubmit={loginSubmit}>
       <h2>Login</h2>
@@ -81,6 +84,7 @@ function Login() {
         <img style={style} src="https://cdn-icons-png.flaticon.com/512/2504/2504839.png" alt="ig" width="30" height="30" />
       </form>
     </div>
+    </>
   );
 }
 //login

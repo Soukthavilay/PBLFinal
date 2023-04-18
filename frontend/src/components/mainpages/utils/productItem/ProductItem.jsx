@@ -18,18 +18,8 @@ function ProductItem({ product, isAdmin, deleteProduct, handleCheck }) {
     });
   }, []);
   // console.log(product)
-  const onEnter = ({ currentTarget }) => {
-    gsap.to(currentTarget, {
-      repeatDelay: 1,
-      yoyo: true,
-      scale: 1.1,
-    });
-  };
-  const onLeave = ({ currentTarget }) => {
-    gsap.to(currentTarget, { scale: 1 });
-  };
   return (
-    <div onMouseEnter={onEnter} onMouseLeave={onLeave} className="product_card">
+    <div className="product_card">
       {isAdmin && (
         <input
           type="checkbox"

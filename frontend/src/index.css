@@ -1,7 +1,6 @@
 /* Import statements */
-@import url('./components/footer/footer.css');
-@import url('./components/mainpages/home/banner/banner.css');
 @import url('./components/headers/header.css');
+@import url('./components/mainpages/home/banner/banner.css');
 @import url('./components/mainpages/products/products.css');
 @import url('./components/mainpages/auth/login.css');
 @import url('./components/mainpages/detailProduct/detailProduct.css');
@@ -14,6 +13,8 @@
 @import url('./components/mainpages/home/pup/pup.css');
 @import url('./components/mainpages/about/about.css');
 @import url('./components/mainpages/checkout/checkout.css');
+@import url('./components/footer/footer.css');
+
 
 * {
   padding: 0;
@@ -30,12 +31,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+ul{
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+}
 .App {
-  /* max-width: 1230px; */
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  margin: 0 auto;
-  /* padding: 0 20px; */
-  box-shadow: 0 0 35px #eee;
+  /* margin: 0 auto;
+  box-shadow: 0 0 35px #eee; */
 }
 a {
   text-decoration: none;
@@ -50,7 +56,9 @@ button {
   cursor: pointer;
 }
 
-
+input{
+  border: 2px solid gray;
+}
 
 /* ----------------- Responsive ------------------ */
 @media (max-width: 450px) {

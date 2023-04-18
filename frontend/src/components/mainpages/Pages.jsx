@@ -24,6 +24,7 @@ import Comment from './processed/Comment';
 import Profile from './auth/Profile';
 import MyFeedback from './myfeedback/MyFeedback';
 import Loading from './utils/loading/Loading';
+import Admin from './admin/Admin';
 
 function Pages() {
   const state = useContext(GlobalState);
@@ -90,7 +91,7 @@ function Pages() {
         exact
         component={isLogged ? Checkout : Loading}
       />
-
+      <Route path='/admin' exact component={isAdmin ? Admin : NotFound}></Route>
       <Route path="*" exact component={NotFound} />
     </Switch>
   );

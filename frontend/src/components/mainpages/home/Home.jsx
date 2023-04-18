@@ -2,6 +2,7 @@ import React from 'react';
 import { Banner } from './banner/Banner';
 import { Pup } from './pup/Pup';
 import { Service } from './ourservice/Service';
+import './home.css'
 
 
 import { About } from '../about/About';

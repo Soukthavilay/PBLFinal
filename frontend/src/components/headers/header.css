@@ -5,21 +5,18 @@
 }
 header {
   background-color: #101010;
-  opacity: 100%;
   min-height: 70px;
-  width: 100%;
   overflow: hidden;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #060606;
-  padding: 10px 180px;
+  padding: 0px 100px;
   z-index: 10;
   position: relative;
 }
 header .logo {
-  flex: 1;
+  /* flex: 1; */
 }
 header a {
   text-transform: uppercase;
@@ -42,7 +39,7 @@ li > a:hover{
 }
 .cart-icon {
   position: relative;
-  margin-right: 20px;
+  /* margin-right: 20px; */
 }
 .cart-icon span {
   background: crimson;
@@ -133,8 +130,8 @@ li > a:hover{
   cursor: pointer;
   text-decoration: none;
 }
-header > ul {
+/* header > ul {
   position: absolute;
   left: 37% !important;
   margin-bottom: 0px;
-}
+} */
