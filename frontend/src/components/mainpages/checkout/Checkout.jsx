@@ -38,7 +38,7 @@ const Checkout = () => {
   const addToCart = async (cart) => {
     
     await axios.patch(
-      'http://localhost:5000/user/addcart',
+      'https://pbl-final1.onrender.com/user/addcart',
       { cart },
       {
         headers: { Authorization: token },

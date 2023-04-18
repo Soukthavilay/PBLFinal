@@ -31,7 +31,7 @@ function Header(props) {
   // };
 
   const logoutUser = async () => {
-    await axios.get('http://localhost:5000/user/logout');
+    await axios.get('https://pbl-final1.onrender.com/user/logout');
     localStorage.removeItem('firstLogin');
     window.location.href = '/';
   };

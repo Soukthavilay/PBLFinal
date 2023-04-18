@@ -12,7 +12,7 @@ function UserAPI(token) {
     if (token) {
       const getUser = async () => {
         try {
-          const res = await axios.get('http://localhost:5000/user/infor', {
+          const res = await axios.get('https://pbl-final1.onrender.com/user/infor', {
             headers: { Authorization: token },
           });
           setDetail(res.data)
@@ -44,7 +44,7 @@ function UserAPI(token) {
       setCart([...cart, { ...newProduct,quantity: 1 }]);
 
       await axios.patch(
-        'http://localhost:5000/user/addcart',
+        'https://pbl-final1.onrender.com/user/addcart',
         { cart: [...cart, { ...newProduct, quantity: 1 }] },
         {
           headers: { Authorization: token },
