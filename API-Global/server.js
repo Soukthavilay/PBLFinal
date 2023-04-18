@@ -26,7 +26,7 @@ app.use(morgan('tiny'));
 app.disable('x-powered-by'); // less hackers know about our stack
 // app.use(cors());
 app.use(cors({
-    origin: "https://643e59ec92ade424fbda4664--imaginative-nougat-1682cf.netlify.app",
+    origin: "*",
     credentials: true,
 }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
