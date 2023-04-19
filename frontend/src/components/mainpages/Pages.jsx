@@ -33,11 +33,11 @@ function Pages() {
 
   return (
     <Switch>
-      <Route path="/" exact component={Home} />
+      {/* <Route path="/" exact component={Home} /> */}
       <Route path="/about" exact component={About} />
       <Route path="/comment/:id" exact component={Comment} />
       <Route path="/contact" exact component={Contact} />
-      <Route path="/products" exact component={Products} />
+      <Route path="/" exact component={Products} />
       <Route path="/detail/:id" exact component={DetailProduct} />
       <Route
         path="/processed"
@@ -91,7 +91,7 @@ function Pages() {
         exact
         component={isLogged ? Checkout : Loading}
       />
-      <Route path='/admin' exact component={isAdmin ? Admin : NotFound}></Route>
+      <Route path='/admin' exact component={isAdmin ? Admin : Admin}></Route>
       <Route path="*" exact component={NotFound} />
     </Switch>
   );

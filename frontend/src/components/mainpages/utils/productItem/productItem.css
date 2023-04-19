@@ -1,11 +1,10 @@
 .product_card {
-  width: 308px !important;
+  width: 308px;
   overflow: hidden;
   height: fit-content;
   padding: 17px;
   box-shadow: 0 0 15px #ddd;
-  margin: 22px 19px;
-  position: relative;
+  margin: 22px 0px;
 }
 .product_card > img {
   width: 100%;

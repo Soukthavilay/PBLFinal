@@ -1,11 +1,14 @@
 @import url('../utils/productItem/productItem.css');
 .products {
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  justify-items: center;
-  margin: 20px 0;
-  padding: 0px 168px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  /* display: grid; */
+  /* grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); */
+  /* justify-items: center; */
+  /* margin: 20px 0; */
+  /* padding: 0px 168px; */
 }
 
 /* ----------- Product Item ----------------- */
@@ -37,19 +40,18 @@
 
 /* ------------ Filters Menu ----------------- */
 .filter_menu {
-  background-color: #010101;
+  background-color: #151414;
   width: 100%;
   min-height: 82px;
   overflow: hidden;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  padding: 0 180px;
+  /* flex-wrap: wrap; */
+  /* padding: 0 100px; */
   /* margin: 15px 0; */
 }
-.filter_menu select,
-input {
+.filter_menu select{
   border: 1px solid #ccc;
   border-radius: 30px;
   outline: none;
@@ -59,8 +61,8 @@ input {
   /* margin: 10px 25px 10px 21px; */
 }
 .filter_menu input {
-  flex: 1;
-  margin: 0 170px;
+  /* flex: 1; */
+  /* margin: 0 170px; */
 }
 
 /* -------------------- Load More --------------- */

@@ -15,7 +15,7 @@ function Filters() {
   };
 
   return (
-    <div className="filter_menu">
+    <div className="filter_menu padding-hero">
       <div className="row">
         {/* <span>Lọc: </span> */}
         <select name="category" value={category} onChange={handleCategory}>

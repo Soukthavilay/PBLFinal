@@ -101,7 +101,7 @@ function Header(props) {
     };
   
     return (
-      <header>
+      <header className='padding-hero'>
         <div className="menu" onClick={() => setMenu(!menu)}>
           <img src={Menu} alt="" width="30" />
         </div>
@@ -113,7 +113,7 @@ function Header(props) {
                 //
                 'Admin'
               ) : (
-                <h2>Laos Technolygy</h2>
+                <h2>Koh</h2>
               )}
             </Link>
           </h1>
@@ -121,10 +121,16 @@ function Header(props) {
   
         <ul style={styleMenu}>
           <li>
-            <Link to="/">{'home'}</Link>
+            <Link to="/">{'Devices'}</Link>
           </li>
           <li>
-            <Link to="/products">{isAdmin ? 'Products' : 'Shop'}</Link>
+            <Link to="/products">{isAdmin ? 'Products' : 'Computers'}</Link>
+          </li>
+          <li>
+            <Link to="/#">{'Phones'}</Link>
+          </li>
+          <li>
+            <Link to="/#">{'Gaming'}</Link>
           </li>
           {/* <li onMouseEnter={onEnter} onMouseLeave={onLeave}>
             <Link to="/about">{'about'}</Link>
@@ -133,21 +139,20 @@ function Header(props) {
             <Link to="/contact">{'contact'}</Link>
           </li> */}
   
-          {isAdmin && adminRouter()}
-          {isLogged ? (
-            loggedRouter()
-          ) : (
-            <li>
-              <Link to="/login">
-                {/* <BiUser /> */}LOGIN
-              </Link>
-            </li>
-          )}
+         
           <li onClick={() => setMenu(!menu)}>
             <img src={Close} alt="" width="30" className="menu" />
           </li>
         </ul>
-  
+  <div className='header-right'>
+         {isAdmin && adminRouter()}
+          {isLogged ? (
+            loggedRouter()
+          ) : (
+              <Link to="/login">
+                <BiUser />
+              </Link>
+          )}
         {isAdmin ? (
           ''
         ) : (
@@ -159,6 +164,7 @@ function Header(props) {
             </Link>
           </div>
         )}
+        </div>
       </header>
     );
   }

@@ -70,13 +70,13 @@ function Products() {
   return (
     <>
       <Filters />
-      <div className="header-information">
+      {/* <div className="header-information">
           <p className="header-label">Shop</p>
           <div className="header-direction">
             <Link to="/">Home /</Link>
             <Link to="/products">Shop</Link>
           </div>
-        </div>
+        </div> */}
 
 
 
@@ -88,7 +88,7 @@ function Products() {
         </div>
       )}
       
-      <div className="products">
+      <div className="products padding-hero">
         {products.map((product) => {
           return (
             <ProductItem
