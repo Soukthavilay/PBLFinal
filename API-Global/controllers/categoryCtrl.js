@@ -14,14 +14,22 @@ const categoryCtrl = {
         try {
             // if user have role = 1 ---> admin
             // only admin can create , delete and update category
-            const {name} = req.body;
+            const {name,images} = req.body;
             const category = await Category.findOne({name})
-            if(category) return res.status(400).json({msg: "Danh mục này đã tồn tại."})
+            if(category) return res.status(400).json({msg: "This category has existed."})
+            if (!images)
+                return res.status(400).json({ msg: "No pictures to upload" });
 
-            const newCategory = new Category({name})
+            const newCategory = new Category(
+                {
+                    name:name,
+                    images:images
+                }
+
+            )
 
             await newCategory.save()
-            res.json({msg: "Đã tạo một danh mục"})
+            res.json({ msg: "Category created!", newCategory });
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
