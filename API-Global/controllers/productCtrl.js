@@ -83,17 +83,17 @@ const productCtrl = {
     },
     createProduct: async (req, res) => {
         try {
-            const { types, title, description, images, category } = req.body;
-            var listType = [];
-            for (var i = 0; i < types.length; i++) {
-                const typeItem = new Type({
-                    name: types[i].name,
-                    price: types[i].price,
-                    amount: types[i].amount,
-                });
-                listType.push(typeItem);
-            }
-            const price = types[0].price;
+            const { title,price,amount, description, images, category,feature,band } = req.body;
+            // var listType = [];
+            // for (var i = 0; i < types.length; i++) {
+            //     const typeItem = new Type({
+            //         name: types[i].name,
+            //         price: types[i].price,
+            //         amount: types[i].amount,
+            //     });
+            //     listType.push(typeItem);
+            // }
+            // const price = types[0].price;
             if (!images)
                 return res.status(400).json({ msg: "No pictures to upload" });
             const product = await Products.findOne({ title: title });
@@ -101,12 +101,15 @@ const productCtrl = {
             if (product)
                 return res.status(400).json({ msg: "This product already exists." });
             const newProduct = new Products({
-                types: listType,
+                // types: listType,
                 title: title,
                 description: description,
                 images: images,
                 category: category,
                 price: price,
+                amount:amount,
+                feature: feature,
+                band:band,
             });
             await newProduct.save();
             res.json({ msg: "Product create!", newProduct });
@@ -118,48 +121,49 @@ const productCtrl = {
     deleteProduct: async (req, res) => {
         try {
             await Products.findByIdAndDelete(req.params.id)
-            res.json({ msg: "Đã xóa một sản phẩm" })
+            res.json({ msg: "Delete product success" })
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }
     },
     updateProduct: async (req, res) => {
         try {
-            const { types, title, description, images, category } = req.body;
-            if (!images) return res.status(400).json({ "Error": "Dont have image" })
-            var listType = [];
-            for (var i = 0; i < types.length; i++) {
-                var type;
-                if (types[i]._id != null) {
-                    type = await Type.findOneAndUpdate({ _id: types[i]._id }, {
-                        name: types[i].name, price: types[i].price, amount: types[i].amount
-                    })
-                }
-                else {
-                    type = new Type({
-                        name: types[i].name,
-                        price: types[i].price,
-                        amount: types[i].amount,
-                    });
-                }
-                listType.push({
-                    _id: type._id,
-                    name: type.name,
-                    price: type.price,
-                    amount: type.amount
-                })
+            const productId = req.params.id;
+            const { title, price, amount, description, images, category, feature, band } = req.body;
+            console.log(productId)
+            // Check if the product exists
+            const existingProduct = await Products.findById(productId);
+            if (!existingProduct) {
+                return res.status(404).json({ message: 'Product not found' });
             }
-            const id = req.params;
-            console.log(id);
-            await Products.findOneAndUpdate({ _id: req.params._id }, {
-                types: listType, title: title, description: description, images: images, category: category
-            })
-            res.json({ message: "Update successful" })
-        } catch (err) {
+        
+            // Check if images are provided
+            // if (!images || !images.length) {
+            //     return res.status(400).json({ message: 'Images are required' });
+            // }
+        
+            // Update the product
+            const updatedProduct = await Products.findByIdAndUpdate(
+                productId,
+                {
+                title,
+                price,
+                amount,
+                description,
+                images,
+                category,
+                feature,
+                band,
+                },
+                { new: true }
+            );
+        
+            res.json({ message: 'Product updated successfully', data: updatedProduct });
+            } catch (err) {
             console.log(err);
-            return res.status(500).json({ msg: err.message })
+            res.status(500).json({ message: 'Internal server error' });
         }
-    },
+    },      
     searchProduct: async (req, res) => {
         try {
             const { searchToken } = req.query;

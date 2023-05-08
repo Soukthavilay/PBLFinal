@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema({
     },
     avatar: {
         type: String,
+        default: 'https://cdn-icons-png.flaticon.com/512/149/149071.png'
     },
     cart: {
         type: Array,
@@ -35,14 +36,8 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
-    fullName: {
-        type: String,
-    },
     birthday: {
         type: Date,
-    },
-    pet: {
-        type: Array,
     },
 
 }, {

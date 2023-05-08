@@ -7,7 +7,7 @@ const authMe = require('../middleware/authMe');
 const userCtrl = {
   register: async (req, res) => {
     try {
-      const { name, email, password } = req.body;
+      const { name, email, password, phone } = req.body;
 
       const user = await Users.findOne({ email });
 
@@ -24,6 +24,7 @@ const userCtrl = {
         name,
         email,
         password: passwordHash,
+        phone,
       });
       // Save mongodb
       await newUser.save();

@@ -10,6 +10,15 @@ const productSchema = new mongoose.Schema(
     },
     price: {
       type: Number,
+      required: true,
+    },
+    amount:{
+      type: Number,
+      required: true,
+    },
+    band:{
+      type: String,
+      required: true,
     },
     types: {
       type: Array,
@@ -19,6 +28,50 @@ const productSchema = new mongoose.Schema(
     description: {
       type: String,
       required: true,
+    },
+    feature:{
+      color:{
+        type: String,
+      },
+      typeOf:{
+        type: String,
+      },
+      SSDStorage:{
+        type: String,
+      },
+      processor:{
+        type: String,
+      },
+      graphicSeries:{
+        type: String,
+      },
+      operatingSystem:{
+        type: String,
+      },
+      keyboardLanguage:{
+        type: String,
+      },
+      hardDiscType:{
+        type: String,
+      },
+      ram:{
+        type: String,
+      },
+      inches:{
+        type:String,
+      },
+      storage:{
+        type:String,
+      },
+      batteries:{
+        type:String,
+      },
+      connectivities:{
+        type:String,
+      },
+      sim:{
+        type:String,
+      }
     },
     images: {
       type: Object,

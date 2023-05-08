@@ -16,17 +16,17 @@ cloudinary.config({
 router.post('/upload', (req, res) =>{
     try {
         if(!req.files || Object.keys(req.files).length === 0)
-            return res.status(400).json({msg: 'Không co tập tin nao được tải lên.'})
+            return res.status(400).json({msg: 'No files are uploaded.'})
         
         const file = req.files.file;
         if(file.size > 1024*1024) {
             removeTmp(file.tempFilePath)
-            return res.status(400).json({msg: "Kích thước quá lớn"})
+            return res.status(400).json({msg: "Size is too big"})
         }
 
         if(file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png'){
             removeTmp(file.tempFilePath)
-            return res.status(400).json({msg: "Định dạng tệp không chính xác."})
+            return res.status(400).json({msg: "Incorrect file format."})
         }
 
         cloudinary.v2.uploader.upload(file.tempFilePath, {folder: "test"}, async(err, result)=>{
