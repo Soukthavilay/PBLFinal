@@ -1,0 +1,102 @@
+.categories-item{
+    width: 100%;
+    .banners-double{
+        width: 100%;
+        float: left;
+        margin-bottom: 15px;
+        .banner_fam{
+            margin-bottom: 0 !important;
+            width: calc(50% - 10px);
+            float: left;
+            cursor: pointer;
+            .view{
+                position: relative;
+                float: left;
+                overflow: hidden;
+                text-align: center;
+                cursor: pointer;
+                img{
+                    display: block;
+                    position: relative;
+                    width: 100%;
+                }
+                .block_gris{
+                    display: none;
+                    color: #FFFFFF;
+                    float: left;
+                    height: 55px;
+                    margin-top: -55px;
+                    opacity: 0.6;
+                    width: 100%;
+                }
+                .topbannerh{
+                    width: 50%;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(0%, -50%);
+                    margin-top: 0;
+                    height: auto;
+                    h2.nom_banner_h{
+                        color: #000;
+                        padding-right: 10px;
+                        font-weight: 600;
+                        text-transform: none;
+                        text-align: left;
+                    }
+                }
+            }
+        }
+    }
+    .banners-triple{
+        width: 100%;
+        float: left;
+        display: flex;
+        justify-content: space-between;
+        .banner_fam{
+            width: calc(33% - 9px);
+            float: left;
+            width: auto;
+            cursor: pointer;
+            .view{
+                float: left;
+                width: 100%;
+                overflow: hidden;
+                position: relative;
+                text-align: center;
+                cursor: pointer;
+                img{
+                    display: block;
+                    position: relative;
+                    width: 100%;
+                }
+                .block_gris{
+                    display: none;
+                    color: #FFFFFF;
+                    float: left;
+                    height: 55px;
+                    margin-top: -55px;
+                    opacity: 0.6;
+                    width: 100%;
+                }
+                .topbannerh{
+                    width: 50%;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(0%, -50%);
+                    margin-top: 0;
+                    height: auto;
+                    float: left;
+                    h2.nom_banner_h{
+                        color: #000;
+                        padding-right: 10px;
+                        font-weight: 600;
+                        text-transform: none;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+}

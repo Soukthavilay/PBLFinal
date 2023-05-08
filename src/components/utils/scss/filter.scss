@@ -1,0 +1,54 @@
+.menu-content{
+    background-color: #0f3460;
+    width: 100%;
+    margin: auto;
+    height: 45px;
+    .menuMargen{
+        display: flex;
+        height: 100%;
+        justify-content: space-around;
+        align-items: center;
+        .Btncateg{
+            height: 100%;
+            .btnCategories{
+                text-decoration: none;
+                color: white;
+                display: flex;
+                flex-direction: column;
+                text-transform:uppercase;
+            }
+        }
+        .Btnband{
+            height: 100%;
+            .btn-band{
+                text-decoration: none;
+                color: white;
+                display: flex;
+                flex-direction: column;
+                text-transform:uppercase;
+            }
+        }
+        .menu-choice{
+            height: 100%;
+            display: flex;
+            ul{
+                list-style-type: none;
+            }
+            .option-menu{
+                display: flex;
+                justify-content: space-between;
+                margin: 0;
+                padding: 0;
+                gap: 100px;
+                align-items: center;
+                .option{
+                    a{
+                        color: white;
+                        text-decoration: none;
+                        margin: 0 10px;
+                    }
+                }
+            }
+        }
+    }
+}
