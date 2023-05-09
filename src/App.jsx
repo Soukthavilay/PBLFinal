@@ -6,6 +6,7 @@ import { DataProvider } from './GlobalState';
 import TopHeader from './components/utils/top-header/TopHeader';
 import Header from './components/utils/header/Header';
 import Filter from './components/utils/filter/Filter';
+import { Footer } from './components/utils/footer/Footer';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Header/>
         <Filter/>
         <User/>
+        <Footer/>
       </Router>
     </DataProvider>
   );
