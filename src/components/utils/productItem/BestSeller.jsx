@@ -63,7 +63,10 @@ const BestSeller = () => {
                         </h3>
                         <div className="product-detail">
                           <p className="product-price">
-                            {price.toLocaleString("vi-VN")}
+                            {new Intl.NumberFormat("vi-VN", {
+                              style: "currency",
+                              currency: "VND",
+                            }).format(price)}{" "}
                           </p>
                           <a className="btn btn--animated btn--primary--white btn--border--blue">
                             Mua ngay
