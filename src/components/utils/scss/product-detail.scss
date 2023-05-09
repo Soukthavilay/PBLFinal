@@ -8,9 +8,9 @@
 
   &-left {
     width: 50%;
-
+    text-align: center;
     img {
-      width: 100%;
+      width: 80%;
       object-fit: contain;
     }
   }
@@ -72,6 +72,7 @@
         }
 
         &[type=number] {
+          appearance: textfield;
           -moz-appearance:textfield; /* Firefox */
         }
       }
@@ -122,5 +123,18 @@
 
     }
 
+  }
+}
+
+.detail-body {
+  display: flex;
+  max-width: 1440px;
+  margin: auto;
+  column-gap: 24px;
+  &-left {
+    width: 65%;
+  }
+  &-right {
+    width: 35%;
   }
 }
