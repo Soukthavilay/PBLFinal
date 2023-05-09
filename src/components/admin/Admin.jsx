@@ -1,8 +1,23 @@
+import Dashboard from "./dashboard/Dashboard"
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Sidebar from "./dashboard/sidebar/Sidebar";
+import Products from "./createProducts/Products";
+import './scss/dashboard.scss'
+
 
 
 const Admin = () => {
   return (
-    <div>Admin</div>
+    <>
+      <Router>
+      <div className="dashboard-admin">
+          <div className="app-container">
+            <Sidebar/>
+            <Dashboard/>
+          </div>
+        </div>
+      </Router>
+    </>
   )
 }
 

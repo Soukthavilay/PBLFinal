@@ -8,6 +8,7 @@ import Filter from '../utils/filter/Filter';
 import Register from '../login-register/Register';
 import { GlobalState } from '../../GlobalState';
 import { useContext } from 'react';
+import Admin from '../admin/Admin';
 
 const Page = () => {
   const state = useContext(GlobalState);
@@ -16,6 +17,7 @@ const Page = () => {
   return (
     <Router>
       <Switch>
+      <Route path="/admin" component={Admin} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/product" component={ProductDetail} />
