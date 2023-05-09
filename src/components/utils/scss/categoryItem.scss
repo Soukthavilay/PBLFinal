@@ -1,9 +1,11 @@
 .categories-item{
-    width: 100%;
+    max-width: 1440px;
+    margin: auto;
     .banners-double{
         width: 100%;
-        float: left;
         margin-bottom: 15px;
+        display: flex;
+        column-gap: 24px;
         .banner_fam{
             margin-bottom: 0 !important;
             width: calc(50% - 10px);
@@ -11,10 +13,11 @@
             cursor: pointer;
             .view{
                 position: relative;
-                float: left;
+                // float: left;
                 overflow: hidden;
                 text-align: center;
                 cursor: pointer;
+                width: 100%;
                 img{
                     display: block;
                     position: relative;
@@ -24,10 +27,22 @@
                     display: none;
                     color: #FFFFFF;
                     float: left;
-                    height: 55px;
-                    margin-top: -55px;
-                    opacity: 0.6;
+                    // height: 55px;
+                    // margin-top: -55px;
+                    opacity: 0;
                     width: 100%;
+                    transition: .4s;
+
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    z-index: 10;
+                    background-color: #000;
+                    &:hover {
+                        opacity: 0.5;
+                    }
                 }
                 .topbannerh{
                     width: 50%;
@@ -50,16 +65,15 @@
     }
     .banners-triple{
         width: 100%;
-        float: left;
         display: flex;
         justify-content: space-between;
+        column-gap: 24px;
         .banner_fam{
-            width: calc(33% - 9px);
+            width: 100%;
             float: left;
-            width: auto;
             cursor: pointer;
             .view{
-                float: left;
+                // float: left;
                 width: 100%;
                 overflow: hidden;
                 position: relative;
@@ -74,10 +88,22 @@
                     display: none;
                     color: #FFFFFF;
                     float: left;
-                    height: 55px;
-                    margin-top: -55px;
-                    opacity: 0.6;
+                    // height: 55px;
+                    // margin-top: -55px;
+                    opacity: 0;
                     width: 100%;
+                    transition: .4s;
+
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    z-index: 10;
+                    background-color: #000;
+                    &:hover {
+                        opacity: 0.5;
+                    }
                 }
                 .topbannerh{
                     width: 50%;
