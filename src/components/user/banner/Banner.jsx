@@ -1,5 +1,6 @@
 import Band from '../../utils/band/Band'
 import CategoryItem from '../../utils/categoryItem/CategoryItem'
+import BestSeller from '../../utils/productItem/BestSeller'
 import Recommand from '../../utils/productItem/Recommand'
 import '../../utils/scss/banner.scss'
 
@@ -17,6 +18,7 @@ const Banner = () => {
         <Band/>
         <CategoryItem/>
         <Recommand/>
+        <BestSeller/>
     </>
     
   )
