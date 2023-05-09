@@ -1,10 +1,44 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import {BsSearch, BsCart4} from 'react-icons/bs';
 import {FiUser} from 'react-icons/fi';
+import {MdLogout} from 'react-icons/md'
+
+import { GlobalState } from "../../../GlobalState";
+
 import '../scss/header.scss';
+import axios from "axios";
 
 const Header = () => {
+    const state = useContext(GlobalState);
+    const isLogged = state.userAPI.isLogged;
+    const userDetail = state.userAPI.detail;
 
+    const logoutUser = async () => {
+        await axios.get('http://localhost:5000/user/logout');
+        localStorage.removeItem('firstLogin');
+        window.location.href = '/';
+    };
+
+    const LogoutRouter = () => {
+        return (
+            <div className="header__right">
+                <Link target="_parent" to="/login" className="user-sign">
+                    <label>{userDetail[0].name}</label>
+                    <div className="my-account">
+                        My account 
+                    </div>
+                </Link>
+                <Link to="/" onClick={logoutUser}>
+                    <MdLogout/>
+                </Link>
+                <div className="header-cart">
+                    <BsCart4/>
+                    <span className="header-cart-count">0</span>
+                </div>
+            </div> 
+        )
+    }
 
     return (
     <header className="header">
@@ -22,18 +56,23 @@ const Header = () => {
                 placeholder="SEARCH HERE"
                 type="text"/>
         </div>
-        <div className="header__right">
-            <Link target="_parent" to="/client/login" className="user-sign">
-                <label>Sign in</label>
-                <div className="my-account">
-                    My account <FiUser/>
+        {isLogged ? (
+            LogoutRouter()
+        )
+        : (
+            <div className="header__right">
+                <Link target="_parent" to="/login" className="user-sign">
+                    <label>Sign in</label>
+                    <div className="my-account">
+                        My account <FiUser/>
+                    </div>
+                </Link>
+                <div className="header-cart">
+                    <BsCart4/>
+                    <span className="header-cart-count">0</span>
                 </div>
-            </Link>
-            <div className="header-cart">
-                <BsCart4/>
-                <span className="header-cart-count">0</span>
             </div>
-        </div>
+        )}
     </header>
     );
 }

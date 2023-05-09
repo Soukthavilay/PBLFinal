@@ -9,8 +9,8 @@ export const GlobalState = createContext();
 export const DataProvider = ({ children }) => {
     const [token, setToken] = useState(false);
     const refreshToken = async () => {
-        const token = await axios.get('http://localhost:5000/user/refresh_token',{ withCredentials: true })
-        console.log(token)
+        const res = await axios.get('http://localhost:5000/user/refresh_token',{ withCredentials: true })
+        setToken(res.data.accesstoken);
     }
     useEffect (()=>{
         const firstLogin = localStorage.getItem('firstLogin');
@@ -20,9 +20,9 @@ export const DataProvider = ({ children }) => {
 
     const state = {
         token: [token, setToken],
-        // userAPI: UserAPI(token),
-        // categoriesAPI: CategoriesAPI(),
-        // productsAPI: ProductsAPI(),
+        userAPI: UserAPI(token),
+        categoriesAPI: CategoriesAPI(),
+        productsAPI: ProductsAPI(),
     };
 
     return <GlobalState.Provider value={state}>{children}</GlobalState.Provider>;

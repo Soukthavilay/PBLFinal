@@ -5,24 +5,22 @@ import Header from '../utils/header/Header';
 import Banner from './banner/Banner';
 import Filter from '../utils/filter/Filter';
 import Register from '../login-register/Register';
-import { Footer } from '../utils/footer/Footer';
+import { GlobalState } from '../../GlobalState';
+import { useContext } from 'react';
 
 const Page = () => {
+  const state = useContext(GlobalState);
+  // console.log(state)
+  
   return (
-    <>
-      <Router>
-        <TopHeader />
-        <Header />
-        <Filter />
-        <Switch>
-          <Route path="/client/login" component={Login} />
-          <Route path="/client/register" component={Register} />
-          <Route path="/client" component={Banner} />
-        </Switch>
-      </Router>
-      <Footer />
-    </>
-  );
+    <Router>
+      <Switch>
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <Route path="/" component={Banner} />
+      </Switch>
+    </Router>
+  )
 }
 
 export default Page

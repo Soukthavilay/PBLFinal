@@ -17,7 +17,7 @@ const Register = () => {
         try{
             await axios.post('http://localhost:5000/user/register', formData);
             localStorage.setItem('firstLogin', true);
-            window.location.href = '/client';
+            window.location.href = '/';
         }catch(err){
             console.error(err);
         }
@@ -44,7 +44,7 @@ const Register = () => {
             <input type="text" name="phone" onChange={handleChange} value={formData.phone} />
         </div>
         <button type="submit">Register</button>
-        <button><Link target="_parent" to="/client/login">Login</Link></button>
+        <button><Link target="_parent" to="/login">Login</Link></button>
     </form>
     )
 }

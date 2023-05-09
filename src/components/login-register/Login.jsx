@@ -17,7 +17,7 @@ const Login = () => {
     try {
         await axios.post('http://localhost:5000/user/login', formData);
         localStorage.setItem('firstLogin', true);
-        window.location.href = '/client';
+        window.location.href = '/';
         } catch (error) {
             console.error(error);
         }
@@ -37,7 +37,7 @@ const Login = () => {
                 <input type="password" name="password" onChange={handleChange} value={formData.password} />
             </div>
             <button type="submit">Login</button>
-            <button><Link target="_parent" to="/client/register">Login</Link></button>
+            <button><Link target="_parent" to="/register">Login</Link></button>
         </form>
     )
 }
