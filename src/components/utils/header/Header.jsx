@@ -11,13 +11,14 @@ import axios from "axios";
 
 const Header = () => {
     const state = useContext(GlobalState);
-    const isLogged = state.userAPI.isLogged;
+    const [isLogged] = state.userAPI.isLogged;
     const userDetail = state.userAPI.detail;
 
     const logoutUser = async () => {
         await axios.get('http://localhost:5000/user/logout');
-        localStorage.removeItem('firstLogin');
-        window.location.href = '/';
+        localStorage.removeItem("accessToken")
+        // window.location.href = '/';
+        window.location.reload();
     };
 
     const LogoutRouter = () => {

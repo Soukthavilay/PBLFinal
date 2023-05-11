@@ -9,15 +9,17 @@ import Register from '../login-register/Register';
 import { GlobalState } from '../../GlobalState';
 import { useContext } from 'react';
 import Admin from '../admin/Admin';
+import Notfound from '../utils/NotFound/Notfound';
 
 const Page = () => {
   const state = useContext(GlobalState);
-  // console.log(state)
+  const [isLogged] = state.userAPI.isLogged;
+  const [isAdmin] = state.userAPI.isAdmin;
   
   return (
     <Router>
       <Switch>
-      <Route path="/admin" component={Admin} />
+      <Route path="/admin" component={isAdmin ? Admin : Notfound} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/product" component={ProductDetail} />
