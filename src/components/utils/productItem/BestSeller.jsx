@@ -5,6 +5,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import axios from "axios";
+import StarRatings from "react-star-ratings";
 
 // import required modules
 import { Navigation } from "swiper";
@@ -28,6 +29,8 @@ const BestSeller = () => {
   },[])
 
   const product = data;
+  var userStar = 5;
+  var numberComments = 12;
   return (
     <>
       <div className="featured-product">
@@ -62,12 +65,24 @@ const BestSeller = () => {
                           </a>
                         </h3>
                         <div className="product-detail">
-                          <p className="product-price">
-                            {new Intl.NumberFormat("vi-VN", {
-                              style: "currency",
-                              currency: "VND",
-                            }).format(price)}{" "}
-                          </p>
+                          <div className="product-detail-meta">
+                            <p className="product-price">
+                              {new Intl.NumberFormat("vi-VN", {
+                                style: "currency",
+                                currency: "VND",
+                              }).format(price)}
+                            </p>
+                            <div className="product-ratings">
+                              <StarRatings
+                                name="rating"
+                                rating={userStar}
+                                starRatedColor="#fadb14"
+                                starDimension="16px"
+                                starSpacing="2px"
+                              />
+                              <span>({numberComments})</span>
+                            </div>
+                          </div>
                           <a className="btn btn--animated btn--primary--white btn--border--blue">
                             Mua ngay
                           </a>

@@ -8,9 +8,9 @@
 
   &-left {
     width: 50%;
-
+    text-align: center;
     img {
-      width: 100%;
+      width: 80%;
       object-fit: contain;
     }
   }
@@ -72,6 +72,7 @@
         }
 
         &[type=number] {
+          appearance: textfield;
           -moz-appearance:textfield; /* Firefox */
         }
       }
@@ -119,8 +120,175 @@
           object-fit: contain;
         }
       }
-
     }
 
+    .btn {
+      width: 400px;
+    }
+  }
+}
+
+.detail-body {
+  display: flex;
+  max-width: 1440px;
+  margin: auto;
+  column-gap: 48px;
+  &-left {
+    width: 65%;
+  }
+  &-right {
+    width: 35%;
+
+    .product-specs {
+      &-item {
+        display: flex;
+        padding: 0.875rem;
+
+        &:nth-child(odd) {
+          background-color: rgb(239, 239, 239);
+        }
+      }
+
+      span {
+        display: block;
+
+        &.specs-item-title {
+          width: 50%;
+        }
+
+        &.specs-item-subtitle {
+          width: 50%;
+        }
+      }
+    }
+  }
+}
+
+.product-reviews {
+  max-width: 1440px;
+  margin: 36px auto 64px;
+
+  &-summary {
+    display: flex;
+    column-gap: 24px;
+    justify-content: space-between;
+    border: 1px solid rgb(239, 239, 239);
+    border-radius: 5px;
+    padding: 24px 0;
+
+    .reviews-summary-item {
+      width: 50%;
+
+      &:nth-child(1) {
+        text-align: center;
+
+        h4 {
+          margin: 0;
+          font-weight: 400;
+          font-size: 16px;
+          color: #444b52;
+        }
+
+        span {
+          display: block;
+
+          &.average-star {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1464f4;
+          }
+
+          &.total-comment {
+            color: #939ca3;
+          }
+        }
+      }
+
+      &:nth-child(2) {
+        text-align: center;
+      }
+
+      button {
+        width: 30%;
+      }
+    }
+  }
+
+  &-detail {
+    margin-top: 36px;
+
+    .reviews-detail-item {
+      display: flex;
+      margin-bottom: 24px;
+
+      .reviews-detail-avatar {
+        margin-right: 24px;
+        height: fit-content;
+        height: 50px;
+        width: 50px;
+        flex-shrink: 0;
+        text-align: center;
+        background-color: #cbd1d6;
+        color: #FFFFFF;
+        border-radius: 50%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .reviews-detail-content {
+        h5 {
+          margin: 0;
+        }
+
+        p {
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  .comment-container {
+    transition: .5s;
+    overflow: hidden;
+    &.show {
+      height: 375px;
+    }
+
+    &.hide {
+      height: 0;
+    }
+    .comment-form {
+      display: flex;
+      flex-direction: column;
+      row-gap: 12px;
+      width: 40%;
+      input {
+        padding: 15px;
+        border: 1px solid #939ca3;
+        border-radius: 5px;
+        letter-spacing: 0.04em;
+        outline: none;
+        transition: .3s;
+        &:focus {
+          border-color: #1464f4;
+        }
+      }
+      textarea {
+        resize: none;
+        border-radius: 5px;
+        padding: 15px;
+        font-family: 'Mulish', sans-serif;
+        letter-spacing: 0.02em;
+        border: 1px solid #939ca3;
+        outline: none;
+        transition: .3s;
+        margin-bottom: 16px;
+        &:focus {
+          border-color: #1464f4;
+        }
+      }
+    }
   }
 }

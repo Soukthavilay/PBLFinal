@@ -2,9 +2,9 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
-import "swiper/css/pagination";
 import "swiper/css/navigation";
 import axios from "axios";
+import StarRatings from "react-star-ratings";
 
 // import required modules
 import { Navigation } from "swiper";
@@ -28,7 +28,8 @@ const Recommand = () => {
     }
   },[])
 
-  const product = data;
+  var userStar = 5;
+  var numberComments = 12;
   return (
     <>
       <div className="featured-product">
@@ -38,9 +39,6 @@ const Recommand = () => {
             spaceBetween={50}
             loop={true}
             slidesPerView={4}
-            pagination={{
-              clickable: true,
-            }}
             navigation={true}
             className="featured-product-slide"
             modules={[Navigation]}
@@ -52,7 +50,7 @@ const Recommand = () => {
                   <SwiperSlide key={id}>
                     <div className="product-item">
                       <div className="product-item-image">
-                        <a href="">
+                        <a href="" target="_blank">
                           <img src={image} alt={image} />
                         </a>
                       </div>
@@ -63,12 +61,24 @@ const Recommand = () => {
                           </a>
                         </h3>
                         <div className="product-detail">
-                          <p className="product-price">
-                            {new Intl.NumberFormat("vi-VN", {
-                              style: "currency",
-                              currency: "VND",
-                            }).format(price)}
-                          </p>
+                          <div className="product-detail-meta">
+                            <p className="product-price">
+                              {new Intl.NumberFormat("vi-VN", {
+                                style: "currency",
+                                currency: "VND",
+                              }).format(price)}
+                            </p>
+                            <div className="product-ratings">
+                              <StarRatings
+                                name="rating"
+                                rating={userStar}
+                                starRatedColor="#fadb14"
+                                starDimension="16px"
+                                starSpacing="2px"
+                              />
+                              <span>({ numberComments })</span>
+                            </div>
+                          </div>
                           <a className="btn btn--animated btn--primary--white btn--border--blue">
                             Mua ngay
                           </a>

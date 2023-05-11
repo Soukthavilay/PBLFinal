@@ -10,6 +10,9 @@ import { GlobalState } from '../../GlobalState';
 import { useContext } from 'react';
 import Admin from '../admin/Admin';
 import Notfound from '../utils/NotFound/Notfound';
+import OrderSummary from './checkout/OrderSummary';
+import ShippingDetail from './checkout/ShippingDetail';
+import Payment from './checkout/Payment';
 
 const Page = () => {
   const state = useContext(GlobalState);
@@ -23,6 +26,9 @@ const Page = () => {
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/product" component={ProductDetail} />
+        <Route path="/order-summary" component={OrderSummary} />
+        <Route path="/shipping-detail" component={ShippingDetail} />
+        <Route path="/payment" component={Payment} />
         <Route path="/" component={Banner} />
       </Switch>
     </Router>
