@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import StarRatings from 'react-star-ratings';
 
 function ProductDetailHeader() {
@@ -7,6 +7,9 @@ function ProductDetailHeader() {
   var isInStock = false;
   var ratingCommentNumber = 2
   var ratingStars = 2;
+
+  let [count, setCount] = useState(0);
+
   return (
     <>
       <div className="detail-header">
@@ -37,9 +40,19 @@ function ProductDetailHeader() {
             </div>
           </div>
           <div className="product-quantity">
-            <button className="quantity-btn">-</button>
-            <input type="number" value={0} />
-            <button className="quantity-btn">+</button>
+            <button
+              className="quantity-btn"
+              onClick={() => setCount((c) => Math.max(c - 1, 0))}
+            >
+              -
+            </button>
+            <input type="number" value={count} />
+            <button
+              className="quantity-btn"
+              onClick={() => setCount((c) => c + 1)}
+            >
+              +
+            </button>
           </div>
           <p className="product-color-main">Color: {color}</p>
           {isInStock ? (
