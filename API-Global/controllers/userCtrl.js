@@ -31,7 +31,6 @@ const userCtrl = {
       // Then create jsonwebtoken to authentication
       const accesstoken = createAccessToken({ id: newUser._id });
       const refreshtoken = createRefreshToken({ id: newUser._id });
-
       res.cookie('refreshtoken', refreshtoken, {
         httpOnly: true,
         path: '/user/refresh_token',
@@ -57,7 +56,6 @@ const userCtrl = {
       // If login success , create access token and refresh token
       const accesstoken = createAccessToken({ id: user._id });
       const refreshtoken = createRefreshToken({ id: user._id });
-
       res.cookie('refreshtoken', refreshtoken, {
         httpOnly: true,
         path: '/user/refresh_token',
@@ -82,6 +80,7 @@ const userCtrl = {
   refreshToken: (req, res) => {
     try {
       const rf_token = req.cookies.refreshtoken;
+      console.log(rf_token);
       if (!rf_token)
         return res.status(400).json({ msg: 'Please Login or Register' });
 
@@ -100,9 +99,8 @@ const userCtrl = {
 
   getUser: async (req, res) => {
     try {
-      const userID = await authMe(req);
-      const user = await Users.findById(userID).select('-password');
-      if (!user) return res.status(400).json({ msg: 'User does not exist.' });
+      const user = await Users.findById(req.user.id).select('-password')
+      if(!user) return res.status(400).json({msg: "User does not exist."})
       res.json(user);
     } catch (err) {
       return res.status(500).json({ msg: err.message });
