@@ -248,4 +248,47 @@
       }
     }
   }
+
+  .comment-container {
+    transition: .5s;
+    overflow: hidden;
+    &.show {
+      height: 375px;
+    }
+
+    &.hide {
+      height: 0;
+    }
+    .comment-form {
+      display: flex;
+      flex-direction: column;
+      row-gap: 12px;
+      width: 40%;
+      input {
+        padding: 15px;
+        border: 1px solid #939ca3;
+        border-radius: 5px;
+        letter-spacing: 0.04em;
+        outline: none;
+        transition: .3s;
+        &:focus {
+          border-color: #1464f4;
+        }
+      }
+      textarea {
+        resize: none;
+        border-radius: 5px;
+        padding: 15px;
+        font-family: 'Mulish', sans-serif;
+        letter-spacing: 0.02em;
+        border: 1px solid #939ca3;
+        outline: none;
+        transition: .3s;
+        margin-bottom: 16px;
+        &:focus {
+          border-color: #1464f4;
+        }
+      }
+    }
+  }
 }
