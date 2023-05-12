@@ -1,45 +1,57 @@
 import { useContext, useState } from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { GlobalState } from '../../GlobalState';
 
-import axios from 'axios';
-
 const Login = () => {
-    const state = useContext(GlobalState);
-    // console.log(state)
-    const [formData,setFormData] = useState({
-        email:'',
-        password:''
-    });
+  const state = useContext(GlobalState);
+  const [isAdmin] = state.userAPI.isAdmin;
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
 
-    const handleSubmit = async (event) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-        await axios.post('http://localhost:5000/user/login', formData);
-        localStorage.setItem('firstLogin', true);
+      // await axios.post('http://localhost:5000/user/login', { ...formData });
+      // localStorage.setItem("accessToken", true);
+      const response = await axios.post('http://localhost:5000/user/login', { ...formData }, { withCredentials: true });
+      const token = response.data.accesstoken;
+      localStorage.removeItem("accessToken");
+      localStorage.setItem("accessToken", token);
+      // window.location.href = '/';
+      if(isAdmin){
+        window.location.href = '/Admin';
+      }else{
         window.location.href = '/';
-        } catch (error) {
-            console.error(error);
-        }
-    };
+      }
+    } catch (error) {
+      alert(error.response.data.msg);
+    }
+  };
 
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-    return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label htmlFor="email">Email:</label>
-                <input type="email" name="email" onChange={handleChange} value={formData.email} />
-            </div>
-            <div>
-                <label htmlFor="password">Password:</label>
-                <input type="password" name="password" onChange={handleChange} value={formData.password} />
-            </div>
-            <button type="submit">Login</button>
-            <button><Link target="_parent" to="/register">Login</Link></button>
-        </form>
-    )
-}
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label htmlFor="email">Email:</label>
+        <input type="email" name="email" required onChange={handleChange} value={formData.email} />
+      </div>
+      <div>
+        <label htmlFor="password">Password:</label>
+        <input type="password" name="password" onChange={handleChange} value={formData.password} />
+      </div>
+      <button type="submit">Login</button>
+      <button>
+        <Link to="/register">Register</Link>
+      </button>
+    </form>
+  );
+};
 
-export default Login
+export default Login;

@@ -11,20 +11,21 @@ const Register = () => {
         password: '',
         phone: 0,
     });
-
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
     const  handleSubmit = async (event) => {
         event.preventDefault();
         try{
-            await axios.post('http://localhost:5000/user/register', formData);
-            localStorage.setItem('firstLogin', true);
+            await axios.post('http://localhost:5000/user/register', {...formData});
+            localStorage.setItem("accessToken", true);
             window.location.href = '/';
         }catch(err){
             console.error(err);
         }
     };
-    const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+    
     return (
     <form onSubmit={handleSubmit}>
         <div>
@@ -44,7 +45,7 @@ const Register = () => {
             <input type="text" name="phone" onChange={handleChange} value={formData.phone} />
         </div>
         <button type="submit">Register</button>
-        <button><Link target="_parent" to="/login">Login</Link></button>
+        <button><Link to="/login">Login</Link></button>
     </form>
     )
 }

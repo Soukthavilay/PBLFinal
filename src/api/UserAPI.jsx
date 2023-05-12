@@ -14,7 +14,7 @@ function UserAPI(token){
                 const res = await axios.get('http://localhost:5000/user/infor', {
                     headers: { Authorization: token },
                 });
-                setDetail(res.data)
+                setDetail(res.data);
                 setIsLogged(true);
                 res.data.role === 1 ? setIsAdmin(true) : setIsAdmin(false);
                 setCart(res.data.cart)
