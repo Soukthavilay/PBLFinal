@@ -1,9 +1,7 @@
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-import axios from "axios";
 import StarRatings from "react-star-ratings";
 
 // import required modules
@@ -11,22 +9,14 @@ import { Navigation } from "swiper";
 
 import "../scss/recommend.scss";
 import "../scss/common.scss";
-import { useEffect } from "react";
+import { useContext } from "react";
 import { useState } from "react";
+import { GlobalState } from "../../../GlobalState";
+import {Link} from 'react-router-dom';
 
 const Recommand = () => {
-  const [data,setData] = useState();
-  useEffect(()=>{
-    try {
-      const getProducts = async()=>{
-        const res = await axios.get("https://fakestoreapi.com/products");
-        setData(res.data);
-      }
-      getProducts();
-    } catch (error) {
-      console.log("error.message")
-    }
-  },[])
+  const state = useContext(GlobalState);
+  const [products, setProducts] = state.productsAPI.products;
 
   var userStar = 5;
   var numberComments = 12;
@@ -43,29 +33,28 @@ const Recommand = () => {
             className="featured-product-slide"
             modules={[Navigation]}
           >
-            {data &&
-              data.map((item) => {
-                const { id, title, image, price } = item;
+            {products &&
+              products.map((item) => {
+                const { _id, title, images, price } = item;
+                // console.log(item);
                 return (
-                  <SwiperSlide key={id}>
+                  <SwiperSlide key={_id}>
                     <div className="product-item">
                       <div className="product-item-image">
-                        <a href="" target="_blank">
-                          <img src={image} alt={image} />
-                        </a>
+                        <Link to={`/detail/${_id}`}>
+                          <img src={images.url} alt={images.url} />
+                        </Link>
                       </div>
                       <div className="product-item-detail">
                         <h3 className="product-name">
-                          <a href="">
-                            <span>{title}</span>
-                          </a>
+                            <Link to={`/detail/${_id}`}>{title}</Link>
                         </h3>
                         <div className="product-detail">
                           <div className="product-detail-meta">
                             <p className="product-price">
-                              {new Intl.NumberFormat("vi-VN", {
+                              {new Intl.NumberFormat("vi-LA", {
                                 style: "currency",
-                                currency: "VND",
+                                currency: "KIP",
                               }).format(price)}
                             </p>
                             <div className="product-ratings">
