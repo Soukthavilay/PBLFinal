@@ -89,6 +89,9 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    feedback:{
+      type: String,
+    }
   },
   {
     timestamps: true, //important
