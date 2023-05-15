@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import StarRatings from 'react-star-ratings';
+import { GlobalState } from '../../../GlobalState';
 
 function ProductDetailHeader( detailProduct ) {
   var isInStock = true;
   var ratingCommentNumber = 2
   var ratingStars = 2;
 
-  let [count, setCount] = useState(0);
+  let [count, setCount] = useState(1);
+  const state = useContext(GlobalState);
   const product = detailProduct.detailProduct;
+  const addCart = state.userAPI.addCart
+
+  const handleChange = () => {
+
+  }
   // console.log(product)
   return (
     <>
@@ -45,7 +53,7 @@ function ProductDetailHeader( detailProduct ) {
             >
               -
             </button>
-            <input type="number" value={count} />
+            <input type="number" value={count} onChange={handleChange}/>
             <button
               className="quantity-btn"
               onClick={() => setCount((c) => c + 1)}
@@ -80,7 +88,7 @@ function ProductDetailHeader( detailProduct ) {
             </div>
           </div>
           <button className="btn btn--animated btn--primary--blue btn--border--blue">
-            Add to Cart
+            <Link to="/cart" onClick={()=> addCart(product)}>Add to Cart</Link>
           </button>
         </div>
       </div>
