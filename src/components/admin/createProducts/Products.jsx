@@ -1,9 +1,111 @@
 import ProductHeader from '../headerAdmin/ProductHeader';
 import Popup from 'reactjs-popup';
 import ProductRow from './ProductRow';
+import { GlobalState } from '../../../GlobalState';
+import '../scss/createProduct.scss'
+import { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
+const initialState = {
+    _id:'',
+    title:'', 
+    description:"",
+    band:'',
+    category:'',
+    price:0,
+    amount:0,
+}
+const initialFeature = {
+    color: '',
+    typeOf: '',
+    SSDStorage: '',
+    processor: '',
+    graphicSeries: '',
+    operatingSystem: '',
+    keyboardLanguage: '',
+    hardDiscType: '',
+    ram: '',
+    inches: '',
+    storage: '',
+    batteries: '',
+    connectivities: '',
+    sim: ''
+}
 
 
 const Products = () => {
+    const state = useContext(GlobalState);
+    const [isAdmin] = state.userAPI.isAdmin;
+    const [product, setProduct] = useState(initialState);
+    const [feature, setFeature] = useState(initialFeature);
+    const [images, setImages] = useState(false);
+    const [callback, setCallback] = state.productsAPI.callback;
+    const [category] = state.categoriesAPI.categories;
+    const [edit, setEdit] = useState(false);
+    const [productShow] = state.productsAPI.products;
+
+    const handleUpload = async (e) =>{
+        e.preventDefault();
+        try {
+            if (!isAdmin) return alert('You are not admin');
+            const file = e.target.files[0];
+            if (!file) return alert('The file is not correct.');
+            if (file.size > 1024 * 1024) return alert('Image is large. Please try again');
+            if (file.type !== 'image/jpeg' && file.type !== 'image/png') return alert('The file is not correct.Please check again ');
+            let formData = new FormData();
+            formData.append('file', file);
+            const res = await axios.post('http://localhost:5000/api/upload', formData, {
+                headers: {
+                    'content-type': 'multipart/form-data',
+                //   Authorization: token,
+                },
+            });
+
+            setImages(res.data);
+        } catch (error) {
+            console.log(error.response.data.msg);
+        }
+    }
+    const handleChangeInput = (e) =>{
+        const {name, value } = e.target;
+        console.log(e.target);
+        setProduct({...product, [name]: value});
+        setFeature({...feature, [name]: value});
+    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const result = {
+                title : product.title,
+                description : product.description,
+                band : product.band,
+                category : product.category,
+                price : product.price,
+                amount : product.amount,
+                feature: {
+                    color: feature.color,
+                    typeOf : feature.typeOf,
+                    SSDStorage: feature.SSDStorage,
+                    processor: feature.processor,
+                    graphicSeries: feature.graphicSeries,
+                    operatingSystem: feature.operatingSystem,
+                    keyboardLanguage:feature.keyboardLanguage,
+                    hardDiscType: feature.hardDiscType,
+                    ram: feature.ram,
+                    inches: feature.inches,
+                    storage: feature.storage,
+                    batteries: feature.batteries,
+                    connectivities: feature.connectivities,
+                    sim: feature.sim
+                },
+            }
+            await axios.post("http://localhost:5000/api/products",{...result, images});
+            setCallback(!callback);
+            alert("created " + result);
+            window.location.href = '/admin/createProduct';
+        } catch (error) {
+            console.log(error.response.data.msg);
+        }
+    }
   return (
     <>
         <div className="app-content">
@@ -17,11 +119,262 @@ const Products = () => {
                         <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
                         </svg>
                     </button>
-                    <Popup trigger=
-                      {<button className='app-content-headerButton'>Add Product</button>}
-                        position="left center">
-                        <div>GeeksforGeeks</div>
-                      <button>Click here</button>
+                    <Popup trigger={<button className='app-content-headerButton button'>Add Product</button>}
+                        modal
+                        nested
+                    >
+                        {close => (
+                            <div className="modal">
+                                <button className="close" onClick={close}>
+                                    &times;
+                                </button>
+                                <div className="header"> Create Product </div>
+                                <div className="content">
+                                    {' '}
+                                    <div className='uploadImg'>
+                                        <input type="file" name="file" id="file_up" onChange={handleUpload}/>
+                                        <div id="file_img" className="no-line"></div>
+                                        <div id="file_img">
+                                            <img src={images ? images.url : ''} alt="" />
+                                            <span>X</span>
+                                        </div>
+                                    </div>
+                                    <form className="createProduct" onSubmit={handleSubmit}>
+                                        <div className="row">
+                                            <label htmlFor="title">Title</label>
+                                            <input
+                                                type="text"
+                                                name="title"
+                                                id="title"
+                                                required
+                                                value={product.title}
+                                                onChange={handleChangeInput}
+                                            />
+                                        </div>
+                                        <div className="row">
+                                            <label htmlFor="description">Description</label>
+                                            <textarea
+                                                type="text"
+                                                name="description"
+                                                id="description"
+                                                required
+                                                value={product.description}
+                                                rows="10"
+                                                onChange={handleChangeInput}
+                                            />
+                                        </div>
+                                        <div className="row">
+                                            <label htmlFor="band">Band</label>
+                                            <input
+                                                type="text"
+                                                name="band"
+                                                id="band"
+                                                required
+                                                value={product.band}
+                                                onChange={handleChangeInput}
+                                            />
+                                        </div>
+                                        <div className="row">
+                                            <label htmlFor="category">Categories</label>
+                                            <select name="category" value={product.category} onChange={handleChangeInput}>
+                                                <option>Select category</option>
+                                                {category.map((item)=>{
+                                                    return (
+                                                            <option value={item._id} key={item._id}>
+                                                                {item.name}
+                                                            </option>
+                                                        );
+                                                })}
+                                            </select>
+                                        </div>
+                                        <div className="row">
+                                            <label htmlFor="price">Price</label>
+                                            <input
+                                                type="text"
+                                                name="price"
+                                                id="price"
+                                                required
+                                                value={product.price}
+                                                onChange={handleChangeInput}
+                                            />
+                                        </div>
+                                        <div className="row">
+                                            <label htmlFor="amount">Amount</label>
+                                            <input
+                                                type="text"
+                                                name="amount"
+                                                id="amount"
+                                                required
+                                                value={product.amount}
+                                                onChange={handleChangeInput}
+                                            />
+                                        </div>
+                                        <div className="feature-product">
+                                            <label htmlFor="feature">Feature</label>
+                                            <div className="row">
+                                                <label htmlFor="color">Color</label>
+                                                <input
+                                                    type="text"
+                                                    name="color"
+                                                    id="color"
+                                                    value={feature.color}
+                                                    onChange={handleChangeInput}
+                                                />
+                                            </div>
+                                            <div className="row">
+                                                <label htmlFor="typeOf">typeOf</label>
+                                                <input
+                                                    type="text"
+                                                    name="typeOf"
+                                                    id="typeOf"
+                                                    value={feature.typeOf}
+                                                    onChange={handleChangeInput}
+                                                />
+                                            </div>
+                                            <div className="row">
+                                                <label htmlFor="SSDStorage">SSD Storage</label>
+                                                <input
+                                                    type="text"
+                                                    name="SSDStorage"
+                                                    id="SSDStorage"
+                                                    value={feature.typeSSDStorageOf}
+                                                    onChange={handleChangeInput}
+                                                />
+                                            </div>
+                                            <div className="row">
+                                                <label htmlFor="processor">Processor</label>
+                                                <input
+                                                    type="text"
+                                                    name="processor"
+                                                    id="processor"
+                                                    value={feature.processor}
+                                                    onChange={handleChangeInput}
+                                                />
+                                            </div>
+                                            <div className="row">
+                                                <label htmlFor="graphicSeries">Graphic Series</label>
+                                                <input
+                                                    type="text"
+                                                    name="graphicSeries"
+                                                    id="graphicSeries"
+                                                    value={feature.graphicSeries}
+                                                    onChange={handleChangeInput}
+                                                />
+                                            </div>
+                                            <div className="row">
+                                                <label htmlFor="operatingSystem">operatingSystem</label>
+                                                <input
+                                                    type="text"
+                                                    name="operatingSystem"
+                                                    id="operatingSystem"
+                                                    value={feature.operatingSystem}
+                                                    onChange={handleChangeInput}
+                                                />
+                                            </div>
+                                            <div className="row">
+                                                <label htmlFor="keyboardLanguage">keyboardLanguage</label>
+                                                <input
+                                                    type="text"
+                                                    name="keyboardLanguage"
+                                                    id="keyboardLanguage"
+                                                    value={feature.keyboardLanguage}
+                                                    onChange={handleChangeInput}
+                                                />
+                                            </div>
+                                            <div className="row">
+                                                <label htmlFor="hardDiscType">hardDiscType</label>
+                                                <input
+                                                    type="text"
+                                                    name="hardDiscType"
+                                                    id="hardDiscType"
+                                                    value={feature.hardDiscType}
+                                                    onChange={handleChangeInput}
+                                                />
+                                            </div>
+                                            <div className="row">
+                                                <label htmlFor="ram">ram</label>
+                                                <input
+                                                    type="text"
+                                                    name="ram"
+                                                    id="ram"
+                                                    value={feature.ram}
+                                                    onChange={handleChangeInput}
+                                                />
+                                            </div>
+                                            <div className="row">
+                                                <label htmlFor="ram">inches</label>
+                                                <input
+                                                    type="text"
+                                                    name="inches"
+                                                    id="inches"
+                                                    value={feature.inches}
+                                                    onChange={handleChangeInput}
+                                                />
+                                            </div>
+                                            <div className="row">
+                                                <label htmlFor="storage">storage</label>
+                                                <input
+                                                    type="text"
+                                                    name="storage"
+                                                    id="storage"
+                                                    value={feature.storage}
+                                                    onChange={handleChangeInput}
+                                                />
+                                            </div>
+                                            <div className="row">
+                                                <label htmlFor="batteries">batteries</label>
+                                                <input
+                                                    type="text"
+                                                    name="batteries"
+                                                    id="batteries"
+                                                    value={feature.batteries}
+                                                    onChange={handleChangeInput}
+                                                />
+                                            </div>
+                                            <div className="row">
+                                                <label htmlFor="connectivities">connectivities</label>
+                                                <input
+                                                    type="text"
+                                                    name="connectivities"
+                                                    id="connectivities"
+                                                    value={feature.connectivities}
+                                                    onChange={handleChangeInput}
+                                                />
+                                            </div>
+                                            <div className="row">
+                                                <label htmlFor="sim">sim</label>
+                                                <input
+                                                    type="text"
+                                                    name="sim"
+                                                    id="sim"
+                                                    value={feature.sim}
+                                                    onChange={handleChangeInput}
+                                                />
+                                            </div>
+                                        </div>
+                                        <button type="submit">Create</button>
+                                    </form>
+                                </div>
+                                <div className="actions">
+                                <Popup
+                                    trigger={<button className="button"> Create </button>}
+                                    nested
+                                >
+                                    <span>
+                                        Success
+                                    </span>
+                                </Popup>
+                                <button
+                                    className="button"
+                                    onClick={() => {
+                                    close();
+                                    }}
+                                >
+                                    Cancel
+                                </button>
+                                </div>
+                            </div>
+                        )}
                     </Popup>
                 </div>
                 <div className="app-content-actions">
@@ -67,7 +420,14 @@ const Products = () => {
                 </div>
                 <div className="product-area-wrapper tableView">
                     <ProductHeader/>
-                    <ProductRow/>
+                    {productShow.map((product) => {
+                        return (
+                            <ProductRow
+                                key={product._id}
+                                productShow={product}
+                            />
+                        );
+                        })}
                 </div>
         </div>
     </>
