@@ -25,7 +25,7 @@ const Page = () => {
       <Route path="/admin" component={isAdmin ? Admin : Notfound} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
-        <Route path="/product" component={ProductDetail} />
+        <Route path="/detail/:id" component={ProductDetail} />
         <Route path="/order-summary" component={OrderSummary} />
         <Route path="/shipping-detail" component={ShippingDetail} />
         <Route path="/payment" component={Payment} />
