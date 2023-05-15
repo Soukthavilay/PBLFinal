@@ -9,6 +9,7 @@ function ProductDetailHeader( detailProduct ) {
   let [count, setCount] = useState(0);
   const product = detailProduct.detailProduct;
   // console.log(product)
+
   return (
     <>
       <div className="detail-header">

@@ -22,7 +22,7 @@ const Page = () => {
   return (
     <Router>
       <Switch>
-      <Route path="/admin" component={isAdmin ? Admin : Notfound} />
+        <Route path="/admin" component={isAdmin ? Admin : Admin} />
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/detail/:id" component={ProductDetail} />

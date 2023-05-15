@@ -15,14 +15,14 @@ const Dashboard = () => {
   const [isAdmin] = state.userAPI.isAdmin;
   return (
     <>
-        <Router>
-            <Switch>
-                <Route path="/admin/createProduct" component={isAdmin ? Products : Notfound}/>
-                <Route path="/admin/createCategories" component={Categories}/>
-                <Route path="/admin/orderList" component={Orders}/>
-                <Route path="/admin/Report" component={Report}/>
-            </Switch>
-        </Router>
+      <Router>
+        <Switch>
+          <Route path="/admin/createProduct" component={isAdmin ? Products : Products} />
+          <Route path="/admin/createCategories" component={Categories} />
+          <Route path="/admin/orderList" component={Orders} />
+          <Route path="/admin/Report" component={Report} />
+        </Switch>
+      </Router>
     </>
   )
 }
