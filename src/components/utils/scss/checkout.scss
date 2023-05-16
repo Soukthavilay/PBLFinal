@@ -187,3 +187,73 @@
     }
   }
 }
+
+.shipping-detail {
+  margin-bottom: 36px;
+
+  &-title {
+    text-align: center;
+  }
+
+  &-form {
+    max-width: 600px;
+    margin: auto;
+    
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px;
+      row-gap: 6px;
+
+      label {
+        font-weight: 600;
+      }
+
+      input,
+      select {
+        padding: 15px;
+        outline: none;
+        border: 1px solid #b6b6b6;
+        border-radius: 5px;
+
+        &::placeholder {
+          font-weight: 600;
+          color: rgba(129, 129, 129, 0.6);
+        }
+      }
+
+      select {
+        cursor: pointer;
+      }
+
+      .checkout-collapse-sub {
+        height: 0;
+        background-color: rgba(129, 129, 129, 0.6);
+      }
+
+      .checkout-collapse-sub.active {
+        height: 136px;
+      }
+
+    }
+    .checkout-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 36px;
+
+      .btn {
+        width: 40%;
+      }
+    }
+  }
+}
+
+.checkout-confirm {
+  text-align: center;
+  height: 58vh;
+
+  .btn {
+    width: 20%;
+    margin-top: 48px;
+  }
+}

@@ -5,9 +5,9 @@ import ProductReviewDetail from './ProductReviewDetail';
 
 function ProductReviews() {
   var totalStar = 0;
-  let averageStar = 0;
-  let commentList = [1, 2, 3, 4, 5, 6];
-  let totalComment = commentList.length;
+  var averageStar = 0;
+  var commentList = [1, 2, 3, 4, 5, 6];
+  var totalComment = commentList.length;
   if (commentList.length > 0) {
     for (var i = 0; i < commentList.length; i++) {
       totalStar += commentList[i];

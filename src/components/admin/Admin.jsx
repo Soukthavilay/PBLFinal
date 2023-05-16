@@ -3,9 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Sidebar from "./dashboard/sidebar/Sidebar";
 
 import './scss/dashboard.scss'
-import Dashboard from './dashboard/Dashboard';
-// import Products from "./createProducts/Products";
-// import './scss/dashboard.scss'
 
 
 

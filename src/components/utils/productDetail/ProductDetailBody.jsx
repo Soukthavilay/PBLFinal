@@ -15,21 +15,6 @@ function ProductDetailBody(detailProduct) {
             <p>
               {product.description}
             </p>
-            <p>
-              {product.description}
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
-              recusandae soluta temporibus expedita neque tempora, facere qui
-              voluptatibus praesentium, laboriosam atque commodi, tenetur
-              consequatur enim beatae repellendus corrupti molestiae dolorum.
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
-              recusandae soluta temporibus expedita neque tempora, facere qui
-              voluptatibus praesentium, laboriosam atque commodi, tenetur
-              consequatur enim beatae repellendus corrupti molestiae dolorum.
-            </p>
           </div>
         </div>
         <div className="detail-body-right">
