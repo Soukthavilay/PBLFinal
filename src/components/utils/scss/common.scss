@@ -85,3 +85,16 @@
   transform: scaleX(1);
   transition-timing-function: cubic-bezier(0.45, 1.64, 0.47, 0.66);
 }
+
+input {
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type="number"] {
+    appearance: textfield;
+    -moz-appearance: textfield; /* Firefox */
+  }
+}

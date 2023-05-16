@@ -17,6 +17,7 @@ function ProductDetailHeader( detailProduct ) {
 
   }
   // console.log(product)
+
   return (
     <>
       <div className="detail-header">
