@@ -29,7 +29,7 @@ const ProductRow = (productShow) => {
                 <span className="cell-label">Status:</span>
                 <span className="status active">Active</span>
             </div>
-            <div className="product-cell sales"><span className="cell-label">Sales:</span>{product.sold ? product.sold : 0}</div>
+            <div className="product-cell sales"><span className="cell-label">Sales:</span>{product.sold}</div>
             <div className="product-cell stock"><span className="cell-label">Stock:</span>{product.amount}</div>
             <div className="product-cell price"><span className="cell-label">Price:</span>{product.price}</div>
         </div>
