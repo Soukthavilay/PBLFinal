@@ -26,12 +26,32 @@ function UserAPI(token){
         }
     }, [token]);
 
+    const addCart = async (product) => {
+        // console.log(product);
+        if (!isLogged) return alert('Please login to continue buying');
+        if(product.amount === 0) return alert('This type not have in stock');
+        const check = cart.every(item =>{
+            return item._id !== product._id
+        });
+        if(check){
+            setCart([...cart, {...product, quantity:1}]);
+            await axios.patch('http://localhost:5000/user/addcart',{cart:[...cart, {...product, quantity: 1}]},{
+                headers:{
+                    Authorization: token
+                }
+            })
+        } else {
+            alert("This product has been added to cart.");
+        }
+    }
+
     
 
     return {
         isLogged: [isLogged, setIsLogged],
         isAdmin: [isAdmin, setIsAdmin],
         cart: [cart, setCart],
+        addCart: addCart,
         history: [history, setHistory],
         detail:[detail,setDetail], 
     };
