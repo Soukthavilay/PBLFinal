@@ -89,7 +89,7 @@ function ProductDetailHeader( detailProduct ) {
             </div>
           </div>
           <button className="btn btn--animated btn--primary--blue btn--border--blue">
-            <Link to="/order-summary" onClick={()=> addCart(product)}>Add to Cart</Link>
+            <Link to="/order-summary" onClick={()=> addCart(product)}>Add to Carttt</Link>
           </button>
         </div>
       </div>
