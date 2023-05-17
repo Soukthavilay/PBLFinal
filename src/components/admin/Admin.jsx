@@ -1,8 +1,8 @@
-// import Dashboard from "./dashboard/Dashboard"
+import Dashboard from "./dashboard/Dashboard"
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-// import Sidebar from "./dashboard/sidebar/Sidebar";
-// import Products from "./createProducts/Products";
-// import './scss/dashboard.scss'
+import Sidebar from "./dashboard/sidebar/Sidebar";
+
+import './scss/dashboard.scss'
 
 
 
@@ -12,8 +12,8 @@ const Admin = () => {
       <Router>
       <div className="dashboard-admin">
           <div className="app-container">
-            {/* <Sidebar/> */}
-            {/* <Dashboard/> */}
+            <Sidebar/>
+            <Dashboard/>
           </div>
         </div>
       </Router>

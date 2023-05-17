@@ -21,7 +21,7 @@ function ProductReviewDetail() {
               starDimension="16px"
               starSpacing="2px"
             />
-            <p className="reviews-comment-detail" reviews-comment-detail>
+            <p className="reviews-comment-detail">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
               voluptatem nulla quibusdam possimus, similique porro inventore
               vitae distinctio minus, nihil voluptatibus adipisci? Ratione
@@ -42,7 +42,7 @@ function ProductReviewDetail() {
               starDimension="16px"
               starSpacing="2px"
             />
-            <p className="reviews-comment-detail" reviews-comment-detail>
+            <p className="reviews-comment-detail">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
               voluptatem nulla quibusdam possimus, similique porro inventore
               vitae distinctio minus, nihil voluptatibus adipisci? Ratione
@@ -63,7 +63,7 @@ function ProductReviewDetail() {
               starDimension="16px"
               starSpacing="2px"
             />
-            <p className="reviews-comment-detail" reviews-comment-detail>
+            <p className="reviews-comment-detail">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo
               voluptatem nulla quibusdam possimus, similique porro inventore
               vitae distinctio minus, nihil voluptatibus adipisci? Ratione

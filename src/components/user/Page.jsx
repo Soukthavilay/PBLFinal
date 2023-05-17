@@ -12,7 +12,9 @@ import Admin from '../admin/Admin';
 import Notfound from '../utils/NotFound/Notfound';
 import OrderSummary from './checkout/OrderSummary';
 import ShippingDetail from './checkout/ShippingDetail';
-import Payment from './checkout/Payment';
+import Cart from './cart/Cart';
+import CheckoutComfirm from "./checkout/CheckoutComfirm";
+import LoginForm from '../login-register/LoginForm';
 
 const Page = () => {
   const state = useContext(GlobalState);
@@ -22,13 +24,15 @@ const Page = () => {
   return (
     <Router>
       <Switch>
-      <Route path="/admin" component={isAdmin ? Admin : Notfound} />
+        <Route path="/admin" component={isAdmin ? Admin : Admin} />
         <Route path="/login" component={Login} />
+        <Route path="/sign-in" component={LoginForm} />
         <Route path="/register" component={Register} />
-        <Route path="/product" component={ProductDetail} />
+        <Route path="/detail/:id" component={ProductDetail} />
         <Route path="/order-summary" component={OrderSummary} />
         <Route path="/shipping-detail" component={ShippingDetail} />
-        <Route path="/payment" component={Payment} />
+        <Route path="/cart" component={Cart} />
+        <Route path="/checkout-confirm" component={CheckoutComfirm} />
         <Route path="/" component={Banner} />
       </Switch>
     </Router>
