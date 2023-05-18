@@ -163,7 +163,18 @@ const productCtrl = {
             console.log(err);
             res.status(500).json({ message: 'Internal server error' });
         }
-    },      
+    },    
+    getTopSoldProduct : async (req,res)=>{
+        try {
+            const products = await Products.aggregate([
+                {$sort: {sold:-1}},
+                {$limit:10}
+            ]);
+            res.json(products);
+        } catch (error) {
+            res.status(500).json({ message: 'Internal server error' });
+        }
+    }, 
     searchProduct: async (req, res) => {
         try {
             const { searchToken } = req.query;
