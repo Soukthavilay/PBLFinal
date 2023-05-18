@@ -10,7 +10,9 @@ router.route('/orders')
     .post(orderCtrl.createOrder)
     .put(auth, orderCtrl.updateOrderDetail)
     .delete(auth, orderCtrl.removeOrderItem)
+    
 
+router.route('/createOrder').post(orderCtrl.CreateOrderKoh)
 
 router.route('/orders/admin')
     .get(auth, authAdmin, orderCtrl.getAllOrders)

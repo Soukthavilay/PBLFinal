@@ -2,9 +2,17 @@ const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
     user_id: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
+    },
+    name: {
+        type: String,
+        required: true,
+    },
+    email: {
+        type: String,
+        required: true,
     },
     total: {
         type: Number,
@@ -12,28 +20,26 @@ const orderSchema = new mongoose.Schema({
         default: 0.0
     },
     listOrderItems: {
-        type: Array,
-        required: true,
-        default: []
+        type:Array,
+        required:true
     },
     status: {
         type: String,
-        ref: 'Status',
-        required: true
+        enum: ['Pending', 'Confirmed', 'Shipping','Paid', 'Cancelled'],
+        default: 'Pending',
     },
     address: {
         type: String,
-        default: "64 Nguyen Luong Bang",
         required: true
     },
     phone: {
         type: String,
         required: true,
-        default: "0123456789"
     },
-    delivery: {
-        type: String,
-    }
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 }, {
     timestamps: true
 });

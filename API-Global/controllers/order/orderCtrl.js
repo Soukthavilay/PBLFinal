@@ -74,6 +74,70 @@ const orderCtrl = {
                 return res.status(500).json({ message: err.message });
         }
     },
+    CreateOrderKoh: async (req, res) => {
+        try {
+            const { phone, address ,user_id} = req.body;
+            const user = await User.findById(user_id);
+            if (!user) {
+                return res.status(400).json({ msg: 'User does not exist.' });
+            }
+        
+        const cart = user.cart;
+        let total = 0;
+        for (let i = 0; i < cart.length; i++){
+            const product = await Products.findById(cart[i]._id);
+            if (!product) {
+                return res.status(400).json({ msg: 'Product not found.' });
+            }
+            const purchasedPrice = cart[i].price;
+            total += purchasedPrice * cart[i].quantity;
+            cart[i].price = purchasedPrice;
+            if(product.amount === 0){
+                return res.status(400).json({ msg: 'The product is out of stock.' });
+            }
+            if(product.amount < cart[i].quantity){
+                return res.status(400).json({ msg: 'Not enough products. please reduce.' });
+            }
+            product.amount -= cart[i].quantity;
+            product.sold += cart[i].quantity;
+            await product.save();
+        }
+        const order = new Orders({
+            user_id: user_id,
+            email: user.email,
+            name: user.name,
+            address: address,
+            phone: phone,
+            listOrderItems: cart,
+            total: total,
+            status: 'Pending'
+        });
+        await order.save();
+        user.cart = [];
+        await user.save();
+        return res.json({ msg: 'Order placed successfully.', order: order });
+        } catch (error) {
+            return res.status(500).json({ msg: error.message });
+        }
+    },      
+    updateOrderStatus: async (req,res) => {
+        const { status } = req.body;
+        try {
+            const order = await Orders.findByIdAndUpdate(
+                req.params.id,
+                { status },
+                { new: true }
+            );
+            
+                if (!order) {
+                return res.status(404).json({ msg: 'Order not found.' });
+                }
+            
+                res.json({ msg: 'Order status updated successfully.', order });
+            } catch (error) {
+                res.status(500).json({ msg: error.message });
+            }
+    },
     addTypeToOrder: async (req, res) => {
         try {
             const { product_id, type_id, amount } = req.body;
