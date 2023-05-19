@@ -6,14 +6,14 @@ function CheckoutConfirm() {
     <div className="checkout-confirm">
       <StepTracker current={3} />
 
-      <h3>Đơn hàng đã được ghi nhận</h3>
+      <h3>Order has been received</h3>
 
-      <p>Thời gian giao hàng khoảng 4 - 5 ngày</p>
+      <p>Delivery time is about 4-5 days</p>
 
-      <h3>Cảm ơn quý khách đã tin tưởng mua hàng của chúng tôi!</h3>
+      <h3>Thank you for trusting our purchase!</h3>
 
       <button className="btn btn--animated btn--primary--blue btn--border--blue">
-        Tiếp tục mua
+        Continue to shopping
       </button>
     </div>
   );

@@ -5,8 +5,6 @@ import axios from "axios"
 import { Link } from 'react-router-dom';
 
 function OrderSummary() {
-  var productPrice = 20000000;
-  var [quantity, setQuantity] = useState(0);
   const state = useContext(GlobalState);
     const [cart, setCart] = state.userAPI.cart;
     const [token] = state.token;
@@ -119,7 +117,7 @@ function OrderSummary() {
           Continue to product
         </button>
         <button className="btn btn--animated btn--primary--white btn--border--blue">
-          Next
+          <Link to="/shipping-detail">NEXT</Link>
         </button>
       </div>
     </div>
