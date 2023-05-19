@@ -175,7 +175,6 @@
       }
     }
   }
-
   .checkout-buttons {
     width: calc(60% + 64px);
     margin: auto;
@@ -184,6 +183,9 @@
     margin: 48px auto;
     button {
       width: 20%;
+      a{
+        color:unset;
+      }
     }
   }
 }

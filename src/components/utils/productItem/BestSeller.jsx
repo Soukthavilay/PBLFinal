@@ -19,7 +19,7 @@ const BestSeller = () => {
   useEffect(()=>{
     try {
       const getProducts = async()=>{
-        const res = await axios.get("https://fakestoreapi.com/products");
+        const res = await axios.get("http://localhost:5000/api/products/top-sold");
         setData(res.data);
       }
       getProducts();
@@ -49,13 +49,13 @@ const BestSeller = () => {
           >
             {data &&
               data.map((item) => {
-                const { id, title, image, price } = item;
+                const { _id, title, images, price ,sold } = item;
                 return (
-                  <SwiperSlide key={id}>
+                  <SwiperSlide key={_id}>
                     <div className="product-item">
                       <div className="product-item-image">
                         <a href="">
-                          <img src={image} alt={image} />
+                          <img src={images.url} alt={images.url} />
                         </a>
                       </div>
                       <div className="product-item-detail">
@@ -80,7 +80,7 @@ const BestSeller = () => {
                                 starDimension="16px"
                                 starSpacing="2px"
                               />
-                              <span>({numberComments})</span>
+                              <span>({sold})</span>
                             </div>
                           </div>
                           <a className="btn btn--animated btn--primary--white btn--border--blue">

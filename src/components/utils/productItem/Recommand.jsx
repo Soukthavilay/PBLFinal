@@ -35,7 +35,7 @@ const Recommand = () => {
           >
             {products &&
               products.map((item) => {
-                const { _id, title, images, price } = item;
+                const { _id, title, images, price ,sold} = item;
                 // console.log(item);
                 return (
                   <SwiperSlide key={_id}>
@@ -65,12 +65,12 @@ const Recommand = () => {
                                 starDimension="16px"
                                 starSpacing="2px"
                               />
-                              <span>({ numberComments })</span>
+                              <span>({ sold })</span>
                             </div>
                           </div>
-                          <a className="btn btn--animated btn--primary--white btn--border--blue">
+                          <Link to={`/detail/${_id}`} className="btn btn--animated btn--primary--white btn--border--blue">
                             Mua ngay
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
