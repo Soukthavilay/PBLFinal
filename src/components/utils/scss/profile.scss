@@ -1,0 +1,46 @@
+.profile {
+  max-width: 1188px;
+  margin: auto;
+  display: flex;
+  column-gap: 36px;
+  
+  &-option {
+    width: 25%;
+    padding: 16px;
+  }
+
+  &-content {
+    width: 75%;
+    padding: 32px;
+
+    &-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+  }
+
+  .orders {
+
+    .order-item {
+
+      &-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 16px;
+      }
+
+      .order-product {
+        display: flex;
+        justify-content: space-between;
+
+        &-img {
+          img {
+            width: 80px;
+          }
+        }
+      }
+    }
+  }
+}
