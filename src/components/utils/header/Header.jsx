@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import {BsSearch, BsCart4} from 'react-icons/bs';
 import {FiUser} from 'react-icons/fi';
@@ -13,6 +13,13 @@ const Header = () => {
     const state = useContext(GlobalState);
     const [isLogged] = state.userAPI.isLogged;
     const userDetail = state.userAPI.detail;
+    const [cart] = state.userAPI.cart;
+    const [cartCount, setCartCount] = useState(0);
+
+    useEffect(() => {
+        const count = cart.reduce((total, item) => total + item.quantity, 0);
+        setCartCount(count);
+    }, [cart]);
 
     const logoutUser = async () => {
         await axios.get('http://localhost:5000/user/logout');
@@ -34,8 +41,10 @@ const Header = () => {
                     <MdLogout/>
                 </Link>
                 <div className="header-cart">
-                    <BsCart4/>
-                    <span className="header-cart-count">0</span>
+                    <Link to="/order-summary">
+                        <BsCart4/>
+                        <span className="header-cart-count">{cartCount}</span>
+                    </Link>
                 </div>
             </div> 
         )
