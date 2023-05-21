@@ -68,7 +68,7 @@ const productCtrl = {
     },
     getProductsByCategory: async (req, res) => {
         try {
-            const { category } = req.query;
+            const category = req.params.id;
             const products = await Products.find({ category: category });
 
             res.json({

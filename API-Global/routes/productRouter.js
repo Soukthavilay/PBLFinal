@@ -17,7 +17,7 @@ router.route('/products/:id')
     .put(auth, authAdmin, productCtrl.updateProduct)
     .get(productCtrl.getDetailProduct)
 
-router.route('/product')
+router.route('/products/category/:id')
     .get(productCtrl.getProductsByCategory)
 
 

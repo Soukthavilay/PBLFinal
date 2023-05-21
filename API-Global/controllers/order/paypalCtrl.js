@@ -3,53 +3,57 @@ const Orders = require('../../models/order/orderModel')
 
 const paypalCtrl = {
 
-    payment: async (res, amount, address, order_id) => {
+    payment: async (req, res) => {
         try {
-            const payment = {
-                "intent": "sale",
-                "payer": {
-                    "payment_method": "paypal"
+          const { amount, order_id ,price, total} = req.body;
+          const payment = {
+            intent: "sale",
+            payer: {
+              payment_method: "paypal",
+            },
+            redirect_urls: {
+              return_url: "http://localhost:5000/api/paypal/success",
+              cancel_url: "http://localhost:5000/api/paypal/cancel",
+            },
+            transactions: [
+              {
+                item_list: {
+                  items: [
+                    {
+                      name: order_id,
+                      sku: "001",
+                      price: price,
+                      currency: "USD",
+                      quantity: 1,
+                    },
+                  ],
                 },
-                "redirect_urls": {
-                    "return_url": "http://pet.kreazy.me/api/paypal/success",
-                    "cancel_url": "http://pet.kreazy.me/api/paypal/cancel"
+                amount: {
+                  currency: "USD",
+                  total: total,
                 },
-                "transactions": [{
-                    "item_list": {
-                        "items": [{
-                            "name": order_id,
-                            "sku": "001",
-                            "price": amount,
-                            "currency": "USD",
-                            "quantity": 1
-                        }]
-                    },
-                    "address": {
-                        "recipient_name": address
-                    },
-                    "amount": {
-                        "currency": "USD",
-                        "total": amount
-                    },
-                    "description": "This is the payment description."
-                }]
-            };
-            await paypal.payment.create(payment, function (error, payment) {
-                if (error) {
-                    throw error;
-                } else {
-                    for (let i = 0; i < payment.links.length; i++) {
-                        if (payment.links[i].rel === 'approval_url') {
-                            res.json({ url: payment.links[i].href })
-                        }
-                    }
+                description: "This is the payment description.",
+              },
+            ],
+          };
+      
+          paypal.payment.create(payment, function (error, payment) {
+            if (error) {
+              throw error;
+            } else {
+              for (let i = 0; i < payment.links.length; i++) {
+                if (payment.links[i].rel === "approval_url") {
+                  res.json({ url: payment.links[i].href });
+                  return; // Return after sending the response
                 }
-            })
+              }
+            }
+          });
         } catch (err) {
-            console.log(err)
-            return res.status(500).json({ message: err.message })
+          console.log(err);
+          return res.status(500).json({ message: err.message });
         }
-    },
+      },      
     success: async (req, res) => {
         const payerId = req.query.PayerID;
         const paymentId = req.query.paymentId;
