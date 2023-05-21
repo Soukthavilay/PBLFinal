@@ -17,6 +17,7 @@ import CheckoutComfirm from "./checkout/CheckoutComfirm";
 import LoginForm from '../login-register/LoginForm';
 import ProductList from '../utils/productList/ProductList';
 import UserProfile from './profile/UserProfile';
+import PaymentMethod from './checkout/PaymentMethod';
 
 const Page = () => {
   const state = useContext(GlobalState);
@@ -35,6 +36,7 @@ const Page = () => {
         <Route path="/shipping-detail" component={ShippingDetail} />
         <Route path="/cart" component={Cart} />
         <Route path="/checkout-confirm" component={CheckoutComfirm} />
+        <Route path="/payment-method" component={PaymentMethod}/>
         <Route path="/product-list" component={ProductList} />
         <Route path="/profile" component={UserProfile} />
         <Route path="/" component={Banner} />

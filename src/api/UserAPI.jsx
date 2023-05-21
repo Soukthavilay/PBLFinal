@@ -6,6 +6,7 @@ function UserAPI(token){
     const [cart, setCart] = useState([]);
     const [history, setHistory] = useState([]);
     const [detail,setDetail] = useState([]);
+    const [order,setOrder] = useState([]);
 
     useEffect(() => {
         if (token) {
@@ -25,6 +26,22 @@ function UserAPI(token){
             getUser();
         }
     }, [token]);
+
+    useEffect(()=>{
+        try {
+        const getMyorder = async ()=>{
+            const res = await axios.get("http://localhost:5000/api/orders",{
+            headers: {
+                Authorization: token,
+            },
+            });
+            setOrder(res.data);
+        }
+        getMyorder();
+        } catch (error) {
+        console.log("error.message");
+        }
+    },[token]);
 
     const addCart = async (product) => {
         // console.log(product);
@@ -54,6 +71,7 @@ function UserAPI(token){
         addCart: addCart,
         history: [history, setHistory],
         detail:[detail,setDetail], 
+        order:[order,setOrder],
     };
 }
 

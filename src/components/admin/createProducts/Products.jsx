@@ -11,24 +11,24 @@ const initialState = {
     description: "",
     band: '',
     category: '',
-    price: 0,
-    amount: 0,
+    price: 20,
+    amount: 30,
 }
 const initialFeature = {
-    color: '',
+    color: 'Red',
     typeOf: '',
     SSDStorage: '',
     processor: '',
     graphicSeries: '',
-    operatingSystem: '',
+    operatingSystem: 'iOS',
     keyboardLanguage: '',
     hardDiscType: '',
-    ram: '',
-    inches: '',
-    storage: '',
-    batteries: '',
-    connectivities: '',
-    sim: ''
+    ram: '6 GB',
+    inches: '6.5-6.9',
+    storage: '256 GB',
+    batteries: '4001-5000 mAh',
+    connectivities: 'Bluetooth',
+    sim: 'Dual'
 }
 
 

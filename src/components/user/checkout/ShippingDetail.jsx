@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import StepTracker from './StepTracker'
 import { GlobalState } from '../../../GlobalState';
 import axios from 'axios';
@@ -11,19 +11,63 @@ function ShippingDetail() {
   const email = userDetail.email; 
   const [phone,setPhone] = useState('');
   const [address,setAddress] = useState('');
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.post('http://localhost:5000/api/createOrder',
-      { phone:phone,
-        address:address,
-        user_id:id});
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('cod');
+  const [itemOrder,setItemOrder] = useState();
 
-        window.location.href = "/checkout-confirm";
+  const handlePaymentMethodChange = (event) => {
+    setSelectedPaymentMethod(event.target.value);
+};
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (selectedPaymentMethod === 'cod') {
+    try {
+      await axios.post('http://localhost:5000/api/createOrder', {
+        phone: phone,
+        address: address,
+        user_id: id
+      });
+
+      window.location.href = "/checkout-confirm";
     } catch (error) {
-      console.log(error.response.data.msg);
+      console.log(error);
     }
-  };
+  } else if (selectedPaymentMethod === 'paypal') {
+    try {
+      const res = await axios.post('http://localhost:5000/api/createOrder', {
+        phone: phone,
+        address: address,
+        user_id: id
+      });
+      setItemOrder(res.data);
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};
+
+useEffect(() => {
+  if (itemOrder && itemOrder.order?.listOrderItems?.length > 0) {
+    const orderNow = {
+      amount: itemOrder.order.listOrderItems[0].quantity,
+      order_id: itemOrder.order._id,
+      total: itemOrder.order.total,
+      price: itemOrder.order.listOrderItems[0].price
+    };
+    axios.post('http://localhost:5000/api/paypal', { ...orderNow })
+      .then(response => {
+        // Xử lý kết quả của API
+        console.log(response.data);
+        window.open(response.data.url, '_blank');
+        window.location.href = "/checkout-confirm";
+      })
+      .catch(error => {
+        // Xử lý lỗi nếu có
+        console.log(error);
+      });
+  }
+}, [itemOrder]);
+
   function selectPayment(e) {
     handleToggle();
     console.log(e.target.value)
@@ -59,14 +103,15 @@ function ShippingDetail() {
           <div className="form-group">
             <label htmlFor="payment-method">Payment methods</label>
             <select
-              name="payment-method"
-              id="paymentMethod"
-              // onChange={selectPayment}
+                name="payment-method"
+                id="paymentMethod"
+                value={selectedPaymentMethod}
+                onChange={handlePaymentMethodChange}
             >
-              <option value="cod">Ship cod</option>
-              <option value="paypal">Paypal</option>
+                <option value="cod">Ship cod</option>
+                <option value="paypal">Paypal</option>
             </select>
-          </div>
+        </div>
           <div className="checkout-buttons">
             <button className="btn btn--animated btn--primary--blue btn--border--blue">
               Tiếp tục mua

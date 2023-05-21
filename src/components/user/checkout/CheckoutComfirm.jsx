@@ -5,7 +5,7 @@ function CheckoutConfirm() {
   return (
     <div className="checkout-confirm">
       <StepTracker current={3} />
-
+      
       <h3>Order has been received</h3>
 
       <p>Delivery time is about 4-5 days</p>
