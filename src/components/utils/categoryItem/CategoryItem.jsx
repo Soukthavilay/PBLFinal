@@ -1,11 +1,22 @@
 import { Link } from 'react-router-dom'
 import '../scss/categoryItem.scss'
+import { GlobalState } from '../../../GlobalState'
+import { useContext, useEffect, useState } from 'react'
 const CategoryItem = () => {
+  const state = useContext(GlobalState);
+  const [categories] = state.categoriesAPI.categories;
+  const [categoryIDs, setCategoryIDs] = useState([]);
+  // console.log(categories)
+  useEffect(()=>{
+    const categoryNames = ['Laptop', 'Phones', 'Devices', 'Headphones','Speakers'];
+    const filteredIDs = categories.filter((item)=> categoryNames.includes(item.name)).map((item)=> item._id);
+    setCategoryIDs(filteredIDs);
+  },[categories]);
   return (
     <>
       <div className="categories-item">
         <div className="banners-double">
-          <Link to="#" className="banner_fam" title="Computers">
+          <Link to={`/product-list/${categoryIDs[4]}`} className="banner_fam" title="Computers">
             <div className="view">
               <picture>
                 <source media="(min-width: 721px)" srcSet="https://cache.tradeinn.com/images/banners-categorias/11486-grande.jpg" />
@@ -18,7 +29,7 @@ const CategoryItem = () => {
               </div>
             </div>
           </Link>
-          <Link to="#" className="banner_fam" title="Phones">
+          <Link to={`/product-list/${categoryIDs[0]}`} className="banner_fam" title="Phones">
             <div className="view">
               <picture>
                 <source media="(min-width: 721px)" srcSet="https://cache.tradeinn.com/images/banners-categorias/11488-grande.jpg" />
@@ -33,7 +44,7 @@ const CategoryItem = () => {
           </Link>
         </div>
         <div className="banners-triple">
-          <Link to="#" className="banner_fam" title="Devices">
+          <Link to={`/product-list/${categoryIDs[2]}`} className="banner_fam" title="Devices">
             <div className="view">
               <picture>
                 <source media="(min-width: 721px)" srcSet="https://cache.tradeinn.com/images/banners-categorias/11490-peke.jpg" />
@@ -46,7 +57,7 @@ const CategoryItem = () => {
               </div>
             </div>
           </Link>
-          <Link to="#" className="banner_fam" title="">
+          <Link to={`/product-list/${categoryIDs[3]}`} className="banner_fam" title="Headphones">
             <div className="view">
               <picture>
                 <source media="(min-width: 721px)" srcSet="https://cache.tradeinn.com/images/banners-categorias/11494-peke.jpg" />
@@ -55,11 +66,11 @@ const CategoryItem = () => {
               </picture>
               <div className="block_gris"></div>
               <div className="topbannerh">
-                <h2 className='nom_banner_h'>Phones</h2>
+                <h2 className='nom_banner_h'>Headphones</h2>
               </div>
             </div>
           </Link>
-          <Link to="#" className="banner_fam">
+          <Link to={`/product-list/${categoryIDs[1]}`} className="banner_fam" title='Speakers'>
             <div className="view">
               <picture>
                 <source media="(min-width: 721px)" srcSet="https://cache.tradeinn.com/images/banners-categorias/11499-peke.jpg" />
@@ -68,7 +79,7 @@ const CategoryItem = () => {
               </picture>
               <div className="block_gris"></div>
               <div className="topbannerh">
-                <h2 className='nom_banner_h'>Phones</h2>
+                <h2 className='nom_banner_h'>Speakers</h2>
               </div>
             </div>
           </Link>
