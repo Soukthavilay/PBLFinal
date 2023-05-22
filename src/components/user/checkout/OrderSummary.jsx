@@ -51,6 +51,12 @@ function OrderSummary() {
         setCart([...cart]);
         addToCart(cart);
     };
+
+    const removeItem = (id) => {
+      const newCart = cart.filter((item) => item._id !== id);
+      setCart(newCart);
+      addToCart(newCart);
+    };
   return (
     <div className="order-summary">
       <StepTracker current={1} />
@@ -90,7 +96,7 @@ function OrderSummary() {
                   </button>
                 </div>
                 <div className="product-remove">
-                  <button className="remove-btn">Delete</button>
+                  <button className="remove-btn" onClick={() => removeItem(item._id)}>Delete</button>
                 </div>
               </div>
               <div className="product-detail-price">
