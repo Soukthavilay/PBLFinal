@@ -28,18 +28,24 @@ function UserAPI(token){
     }, [token]);
 
     useEffect(()=>{
-        try {
-        const getMyorder = async ()=>{
-            const res = await axios.get("http://localhost:5000/api/orders",{
-            headers: {
-                Authorization: token,
-            },
-            });
-            setOrder(res.data);
-        }
-        getMyorder();
-        } catch (error) {
-        console.log("error.message");
+        if(token){
+            try {
+                const getMyorder = async ()=>{
+                    const res = await axios.get("http://localhost:5000/api/orders",{
+                    headers: {
+                        Authorization: token,
+                    },
+                    });
+                    if(Array.isArray(res.data)){
+                        setOrder(res.data);
+                    } else {
+                        throw new Error('Invalid order data');
+                    }
+                };
+                getMyorder();
+                } catch (error) {
+                console.log("error.message");
+                }
         }
     },[token]);
 

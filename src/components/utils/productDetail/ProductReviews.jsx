@@ -29,10 +29,10 @@ function ProductReviews() {
   return (
     <>
       <div className="product-reviews">
-        <h3 className="product-reviews-title">Đánh giá sản phẩm</h3>
+        <h3 className="product-reviews-title">Product Reviews</h3>
         <div className="product-reviews-summary">
           <div className="reviews-summary-item">
-            <h4>Đánh giá trung bình</h4>
+            <h4>Average rating</h4>
             <span className="average-star">{averageStar} / 5</span>
             <StarRatings
               name="rating"
@@ -41,15 +41,15 @@ function ProductReviews() {
               starDimension="16px"
               starSpacing="2px"
             />
-            <span className="total-comment">{totalComment} đánh giá</span>
+            <span className="total-comment">{totalComment} Review</span>
           </div>
           <div className="reviews-summary-item">
-            <p>Bạn đã dùng sản phẩm này?</p>
+            <p>Have you used this product?</p>
             <button
               className="btn btn--animated btn--primary--blue btn--border--blue"
               onClick={handleToggle}
             >
-              Gửi đánh giá
+              Submit a review
             </button>
           </div>
         </div>
@@ -59,7 +59,7 @@ function ProductReviews() {
             showHideComment ? "comment-container show" : "comment-container hide"
           }
         >
-          <h3>Viết đánh giá sản phẩm</h3>
+          <h3>Write a product review</h3>
           <div className="comment-form">
             <input type="text" placeholder="Name" />
             <StarRatings
@@ -78,8 +78,20 @@ function ProductReviews() {
               rows="5"
               placeholder="Write comment about product..."
             ></textarea>
+            <div className="uploadImg">
+              <input
+                type="file"
+                name="file"
+                id="file_up"
+              />
+              <div id="" className="no-line"></div>
+              <div id="file_img">
+                <img src={""} alt="" />
+                <span>X</span>
+              </div>
+            </div>
             <button className="btn btn--animated btn--primary--blue btn--border--blue">
-              Gửi đánh giá
+              Submit a review
             </button>
           </div>
         </div>

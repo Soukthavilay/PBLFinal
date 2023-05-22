@@ -2,10 +2,10 @@ import "../../utils/scss/profile.scss";
 import MyOrders from './MyOrders';
 import { GlobalState } from "../../../GlobalState";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 function UserProfile() {
   const state = useContext(GlobalState);
   const [myOrder] = state.userAPI.order;
-  console.log(myOrder)
 
   return (
     <div className='profile'>
@@ -14,10 +14,10 @@ function UserProfile() {
           <img src="" alt="" />
         </div>
         <div className="profile-option-item">
-          <a href="">My Info</a>
+          <Link to="">My Info</Link>
         </div>
         <div className="profile-option-item">
-          <a href="">My Orders</a>
+          <Link to="">My Orders</Link>
         </div>
       </div>
       <div className="profile-content">
