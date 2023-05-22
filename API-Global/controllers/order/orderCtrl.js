@@ -265,22 +265,25 @@ const orderCtrl = {
     getOrdersbyID: async (req, res) => {
         try {
             const id = await authMe(req);
+            if (!id) {
+                return res.status(401).json({ msg: 'Unauthorized' });
+            }
             const orders = await Orders.find({ user_id: id });
-            res.send(JSON.stringify(orders));
+            res.json(orders);
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }
     },
-    getOrders: async (req, res) => {
-        try {
-            const user_id = await authMe(req);
-            const orders = await Orders.find({ user_id: user_id });
-            res.send(orders)
-        } catch (err) {
-            console.log(err);
-            return res.status(500).json({ msg: err.message })
-        }
-    },
+    // getOrders: async (req, res) => {
+    //     try {
+    //         const user_id = await authMe(req);
+    //         const orders = await Orders.find({ user_id: user_id });
+    //         res.send(orders)
+    //     } catch (err) {
+    //         console.log(err);
+    //         return res.status(500).json({ msg: err.message })
+    //     }
+    // },
     getAllOrders: async (req, res) => {
         try {
             const orders = await Orders.find(
