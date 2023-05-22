@@ -10,7 +10,6 @@ import { Navigation } from "swiper";
 import "../scss/recommend.scss";
 import "../scss/common.scss";
 import { useContext } from "react";
-import { useState } from "react";
 import { GlobalState } from "../../../GlobalState";
 import {Link} from 'react-router-dom';
 

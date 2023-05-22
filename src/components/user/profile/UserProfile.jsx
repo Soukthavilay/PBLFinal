@@ -2,25 +2,15 @@ import "../../utils/scss/profile.scss";
 import MyOrders from './MyOrders';
 import { GlobalState } from "../../../GlobalState";
 import { useContext } from "react";
-import { Link } from "react-router-dom";
 import OrderDetail from "./OrderDetail";
+import ProfileOption from "./ProfileOption";
 function UserProfile() {
   const state = useContext(GlobalState);
   const [myOrder] = state.userAPI.order;
 
   return (
     <div className='profile'>
-      <div className="profile-option">
-        {/* <div className="profile-avatar">
-          <img src="" alt="" />
-        </div> */}
-        <div className="profile-option-item">
-          <Link to="/myInfo">My Info</Link>
-        </div>
-        <div className="profile-option-item">
-          <Link to="/profile">My Orders</Link>
-        </div>
-      </div>
+      <ProfileOption />
       <div className="profile-content">
         {/* <h4 className='profile-content-title'>Please select an option</h4> */}
         <div className="orders">
