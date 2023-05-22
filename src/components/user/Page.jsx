@@ -37,10 +37,11 @@ const Page = () => {
         <Route path="/shipping-detail" component={ShippingDetail} />
         <Route path="/cart" component={Cart} />
         <Route path="/checkout-confirm" component={CheckoutComfirm} />
-        <Route path="/payment-method" component={PaymentMethod}/>
+        <Route path="/payment-method" component={PaymentMethod} />
         <Route path="/product-list/:id" component={ProductList} />
         <Route path="/order-detail/:id" component={OrderDetail} />
         <Route path="/profile" component={UserProfile} />
+        <Route path="/order-detail" component={OrderDetail} />
         <Route path="/" component={Banner} />
       </Switch>
     </Router>

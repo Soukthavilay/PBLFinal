@@ -3,6 +3,7 @@ import MyOrders from './MyOrders';
 import { GlobalState } from "../../../GlobalState";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
+import OrderDetail from "./OrderDetail";
 function UserProfile() {
   const state = useContext(GlobalState);
   const [myOrder] = state.userAPI.order;
@@ -10,9 +11,9 @@ function UserProfile() {
   return (
     <div className='profile'>
       <div className="profile-option">
-        <div className="profile-avatar">
+        {/* <div className="profile-avatar">
           <img src="" alt="" />
-        </div>
+        </div> */}
         <div className="profile-option-item">
           <Link to="">My Info</Link>
         </div>
@@ -23,7 +24,7 @@ function UserProfile() {
       <div className="profile-content">
         {/* <h4 className='profile-content-title'>Please select an option</h4> */}
         <div className="orders">
-          <h2>My Orders</h2>
+          <h2 className="orders-title">My Orders</h2>
           <div className="orders-list">
             {myOrder?.map((item)=>{
               return (
@@ -33,6 +34,7 @@ function UserProfile() {
           </div>
         {/* <MyOrders order={myOrder}/> */}
         </div>
+        {/* <OrderDetail/> */}
       </div>
     </div>
   )
