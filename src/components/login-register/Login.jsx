@@ -1,14 +1,14 @@
-import { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { GlobalState } from '../../GlobalState';
+import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { GlobalState } from "../../GlobalState";
 
 const Login = () => {
   const state = useContext(GlobalState);
   const [isAdmin] = state.userAPI.isAdmin;
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const handleChange = (e) => {
@@ -19,17 +19,19 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      // await axios.post('http://localhost:5000/user/login', { ...formData });
-      // localStorage.setItem("accessToken", true);
-      const response = await axios.post('http://localhost:5000/user/login', { ...formData }, { withCredentials: true });
+      const response = await axios.post(
+        "http://localhost:5000/user/login",
+        { ...formData },
+        { withCredentials: true }
+      );
       const token = response.data.accesstoken;
       localStorage.removeItem("accessToken");
       localStorage.setItem("accessToken", token);
-      // window.location.href = '/';
-      if(isAdmin){
-        window.location.href = '/Admin';
-      }else{
-        window.location.href = '/';
+
+      if (isAdmin) {
+        window.location.href = "/Admin";
+      } else {
+        window.location.href = "/";
       }
     } catch (error) {
       alert(error.response.data.msg);
@@ -40,11 +42,22 @@ const Login = () => {
     <form onSubmit={handleSubmit}>
       <div>
         <label htmlFor="email">Email:</label>
-        <input type="email" name="email" required onChange={handleChange} value={formData.email} />
+        <input
+          type="email"
+          name="email"
+          required
+          onChange={handleChange}
+          value={formData.email}
+        />
       </div>
       <div>
         <label htmlFor="password">Password:</label>
-        <input type="password" name="password" onChange={handleChange} value={formData.password} />
+        <input
+          type="password"
+          name="password"
+          onChange={handleChange}
+          value={formData.password}
+        />
       </div>
       <button type="submit">Login</button>
       <button>

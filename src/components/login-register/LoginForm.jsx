@@ -65,13 +65,22 @@ function LoginForm() {
   const handleRegisterSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post("http://localhost:5000/user/register", {
-        ...registerFormData,
-      });
-      localStorage.setItem("accessToken", true);
-      window.location.href = "/";
-    } catch (err) {
-      console.error(err);
+      const response = await axios.post(
+        "http://localhost:5000/user/register",
+        { ...registerFormData },
+        { withCredentials: true }
+      );
+      const token = response.data.accesstoken;
+      localStorage.removeItem("accessToken");
+      localStorage.setItem("accessToken", token);
+
+      if (isAdmin) {
+        window.location.href = "/Admin";
+      } else {
+        window.location.href = "/";
+      }
+    } catch (error) {
+      alert(error.response.data.msg);
     }
   };
 

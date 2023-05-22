@@ -31,7 +31,6 @@ const Header = () => {
     const LogoutRouter = () => {
         return (
           <>
-            {isLogged ? 
             <div className="header__right">
                 <Link target="_parent" to='/myInfo' className="user-sign">
                     <label>{userDetail[0].name}</label>
@@ -48,24 +47,7 @@ const Header = () => {
                         <span className="header-cart-count">{cartCount}</span>
                     </Link>
                 </div>
-            </div> : 
-            <div className="header__right">
-                <Link target="_parent" to='/login' className="user-sign">
-                    <label>{userDetail[0].name}</label>
-                    <div className="my-account">
-                        My account 
-                    </div>
-                </Link>
-                <Link to="/" onClick={logoutUser}>
-                    <MdLogout/>
-                </Link>
-                <div className="header-cart">
-                    <Link to="/order-summary">
-                        <BsCart4/>
-                        <span className="header-cart-count">{cartCount}</span>
-                    </Link>
-                </div>
-            </div> }
+            </div>
           </>
             
         )
@@ -128,7 +110,7 @@ const Header = () => {
           LogoutRouter()
         ) : (
           <div className="header__right">
-            <Link target="_parent" to="/login" className="user-sign">
+            <Link target="_parent" to="/sign-in" className="user-sign">
               <label>Sign in</label>
               <div className="my-account">
                 My account <FiUser />
