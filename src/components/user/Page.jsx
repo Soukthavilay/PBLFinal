@@ -19,6 +19,7 @@ import ProductList from '../utils/productList/ProductList';
 import UserProfile from './profile/UserProfile';
 import PaymentMethod from './checkout/PaymentMethod';
 import OrderDetail from './profile/OrderDetail';
+import MyInfo from './profile/MyInfo';
 
 const Page = () => {
   const state = useContext(GlobalState);
@@ -42,6 +43,7 @@ const Page = () => {
         <Route path="/order-detail/:id" component={OrderDetail} />
         <Route path="/profile" component={UserProfile} />
         <Route path="/order-detail" component={OrderDetail} />
+        <Route path="/myInfo" component={MyInfo} />
         <Route path="/" component={Banner} />
       </Switch>
     </Router>

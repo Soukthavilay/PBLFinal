@@ -33,7 +33,7 @@ const Header = () => {
           <>
             {isLogged ? 
             <div className="header__right">
-                <Link target="_parent" to='/profile' className="user-sign">
+                <Link target="_parent" to='/myInfo' className="user-sign">
                     <label>{userDetail[0].name}</label>
                     <div className="my-account">
                         My account 

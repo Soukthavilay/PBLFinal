@@ -15,10 +15,10 @@ function UserProfile() {
           <img src="" alt="" />
         </div> */}
         <div className="profile-option-item">
-          <Link to="">My Info</Link>
+          <Link to="/myInfo">My Info</Link>
         </div>
         <div className="profile-option-item">
-          <Link to="">My Orders</Link>
+          <Link to="/profile">My Orders</Link>
         </div>
       </div>
       <div className="profile-content">
