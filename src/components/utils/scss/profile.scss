@@ -3,7 +3,7 @@
   margin: auto;
   display: flex;
   column-gap: 36px;
-  
+
   &-option {
     width: 25%;
     padding: 16px;
@@ -13,6 +13,7 @@
 
     &-item {
       margin-bottom: 8px;
+
       a {
         color: #3c3c3c;
         transition: .4s;
@@ -28,7 +29,10 @@
 
   &-content {
     width: 75%;
-    padding: 32px;
+    padding: 16px 32px 32px;
+    margin-top: 32px;
+    background-color: #fafafa;
+    border-radius: 3px;
 
     &-title {
       display: flex;
@@ -43,8 +47,62 @@
     }
   }
 
-  .orders {
+  .profile-content-item {
+    display: flex;
+    margin-top: 24px;
 
+    .title {
+      width: 25%;
+      display: block;
+    }
+
+    input.subtitle {
+      border: none;
+      outline: none;
+      background-color: transparent;
+      font-size: 16px;
+    }
+
+    .pwd-contain {
+      span {
+        margin-right: 32px;
+      }
+    }
+
+    button {
+      outline: none;
+      border: 1px solid #1464f4;
+      padding: 8px 16px;
+      color: #FFFFFF;
+      cursor: pointer;
+    }
+
+    .update-pwd-btn {
+      background-color: #1464f4;
+    }
+
+    .cancel-change-pwd {
+      background-color: #FFFFFF;
+      color: #1464f4;
+      width: 100px;
+      margin-left: 24px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      row-gap: 14px;
+
+      input {
+        padding: 8px 12px;
+        outline-color: #1464f4;
+      }
+
+
+    }
+  }
+
+  .orders {
     .order-item {
       // padding: 16px;
       border: 1px solid #bbbbbb;
@@ -83,6 +141,7 @@
 
         &-img {
           margin-right: 16px;
+
           img {
             width: 80px;
           }
@@ -90,6 +149,7 @@
 
         &-info {
           width: 50%;
+
           .product-name {
             overflow: hidden;
             text-overflow: ellipsis;
