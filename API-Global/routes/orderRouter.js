@@ -20,6 +20,8 @@ router.route('/orders/admin')
 router.route('/orders/:id')
     .put(orderCtrl.updateOrder)
 
+router.route('/update-status/:id').put(orderCtrl.updateOrderStatusAdmin);
+
 router.route('/cart')
     .get(auth, orderCtrl.getCart)
     .put(auth, orderCtrl.addTypeToOrder)

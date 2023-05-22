@@ -10,6 +10,8 @@ const User = require('../../models/userModel');
 const paypalCtrl = require('./paypalCtrl');
 const axios = require('axios');
 const dotenv = require('dotenv');
+const nodemailer = require("nodemailer");
+const Mailgen = require('mailgen');
 
 const orderCtrl = {
     createOrder: async (req, res) => {
@@ -120,23 +122,54 @@ const orderCtrl = {
             return res.status(500).json({ msg: error.message });
         }
     },      
-    updateOrderStatus: async (req,res) => {
-        const { status } = req.body;
+    updateOrderStatusAdmin: async (req,res) => {
+        const orderId  = req.params.id;
+        const {status} = req.body;
+        console.log(orderId);
         try {
-            const order = await Orders.findByIdAndUpdate(
-                req.params.id,
-                { status },
-                { new: true }
-            );
-            
-                if (!order) {
+            const order = await Orders.findByIdAndUpdate(orderId, { status }, { new: true });
+            if (!order) {
                 return res.status(404).json({ msg: 'Order not found.' });
+            }
+            // order.status = status;
+            // await order.save();
+            if(order.status === 'Delivered'){
+                await order.save();
+                const user = await User.findById(order.user_id);
+                if (!user) {
+                    return res.status(404).json({ msg: 'User not found.' });
                 }
-            
-                res.json({ msg: 'Order status updated successfully.', order });
+                const email = user.email;
+                const transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: 'koke1150199@gmail.com',
+                        pass: 'nanozlpbkistsqrp'
+                    }
+                });
+                const mailOptions = {
+                    from: 'koke1150199@gmail.com',
+                    to: email,
+                    subject: 'Notice of successful delivery',
+                    text: 'Your order has been delivered successfully. Thank you for your purchase!'
+                };
+                
+                transporter.sendMail(mailOptions, (error, info) => {
+                    console
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+                });
+            }
+            res.json({ msg: 'Order status updated successfully.', order });
             } catch (error) {
                 res.status(500).json({ msg: error.message });
             }
+    },
+    userCancelOrder : async (req, res) => {
+
     },
     addTypeToOrder: async (req, res) => {
         try {
