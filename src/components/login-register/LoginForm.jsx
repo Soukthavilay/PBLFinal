@@ -2,9 +2,11 @@ import React, { useState, useContext } from "react";
 import "../utils/scss/login.scss";
 import axios from "axios";
 import { GlobalState } from "../../GlobalState";
+import Loading from "../utils/Loading/Loading";
 
 function LoginForm() {
   const [active, setActive] = useState(false);
+  const [loading, setLoading] = useState(false);
   const addClass = () => {
     if (!active) setActive(true);
   };
@@ -30,6 +32,7 @@ function LoginForm() {
     try {
       // await axios.post('http://localhost:5000/user/login', { ...loginFormData });
       // localStorage.setItem("accessToken", true);
+      setLoading(true);
       const response = await axios.post(
         "http://localhost:5000/user/login",
         { ...loginFormData },
@@ -46,6 +49,8 @@ function LoginForm() {
       }
     } catch (error) {
       alert(error.response.data.msg);
+    } finally {
+      setLoading(false); // Tắt trạng thái loading
     }
   };
 
@@ -65,6 +70,7 @@ function LoginForm() {
   const handleRegisterSubmit = async (event) => {
     event.preventDefault();
     try {
+      setLoading(true);
       const response = await axios.post(
         "http://localhost:5000/user/register",
         { ...registerFormData },
@@ -81,11 +87,14 @@ function LoginForm() {
       }
     } catch (error) {
       alert(error.response.data.msg);
+    } finally {
+      setLoading(false); // Tắt trạng thái loading
     }
   };
 
   return (
     <>
+    {loading && <Loading />} {/* Hiển thị component Loading khi loading là true */}
       <div
         className={
           active

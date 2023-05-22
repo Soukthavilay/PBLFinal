@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react'
 import StepTracker from './StepTracker'
 import { GlobalState } from '../../../GlobalState';
 import axios from 'axios';
+import Loading from '../../utils/Loading/Loading';
 
 function ShippingDetail() {
   const state = useContext(GlobalState)
@@ -13,6 +14,7 @@ function ShippingDetail() {
   const [address,setAddress] = useState('');
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('cod');
   const [itemOrder,setItemOrder] = useState();
+  const [loading, setLoading] = useState(false);
 
   const handlePaymentMethodChange = (event) => {
     setSelectedPaymentMethod(event.target.value);
@@ -21,6 +23,7 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   if (selectedPaymentMethod === 'cod') {
     try {
+      setLoading(true);
       await axios.post('http://localhost:5000/api/createOrder', {
         phone: phone,
         address: address,
@@ -30,9 +33,12 @@ const handleSubmit = async (e) => {
       window.location.href = "/checkout-confirm";
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   } else if (selectedPaymentMethod === 'paypal') {
     try {
+      setLoading(true);
       const res = await axios.post('http://localhost:5000/api/createOrder', {
         phone: phone,
         address: address,
@@ -64,6 +70,8 @@ useEffect(() => {
       .catch(error => {
         // Xử lý lỗi nếu có
         console.log(error);
+      }).finally(() =>{
+        setLoading(false);
       });
   }
 }, [itemOrder]);
@@ -79,7 +87,9 @@ useEffect(() => {
   };
 
   return (
-    <div className="shipping-detail">
+    <>
+      {loading ? <>{loading && <Loading/>}</> : <>
+      <div className="shipping-detail">
       <StepTracker current={2} />
       <h3 className="shipping-detail-title">Thông tin giao hàng</h3>
       <form onSubmit={handleSubmit}>
@@ -122,8 +132,9 @@ useEffect(() => {
           </div>
         </div>
       </form>
-      
     </div>
+      </>}
+    </>
   );
 }
 

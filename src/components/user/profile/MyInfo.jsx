@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import ProfileOption from "./ProfileOption";
+import { GlobalState } from "../../../GlobalState";
+import { useContext } from "react";
 
 
 function MyInfo() {
+  const state = useContext(GlobalState);
+  const userDetail = state.userAPI.detail;
   const [isEdit, setIsEdit] = useState(false);
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePassword = () => {
@@ -17,11 +21,11 @@ function MyInfo() {
         <h2>User info</h2>
         <div className="profile-content-item">
           <span className="title">Name</span>
-          <span className="subtitle">Koh Koh</span>
+          <span className="subtitle">{userDetail[0].name}</span>
         </div>
         <div className="profile-content-item">
           <span className="title">Email</span>
-          <span className="subtitle">kohcuto@gmail.com</span>
+          <span className="subtitle">{userDetail[0].email}</span>
         </div>
         <div className="profile-content-item">
           <span className="title">Password</span>
@@ -76,7 +80,7 @@ function MyInfo() {
         </div>
         <div className="profile-content-item">
           <span className="title">Phone number</span>
-          <span className="subtitle">123456789</span>
+          <span className="subtitle">{userDetail[0].phone}</span>
         </div>
       </div>
     </div>

@@ -4,11 +4,25 @@ import { GlobalState } from "../../../GlobalState";
 import { useContext } from "react";
 import OrderDetail from "./OrderDetail";
 import ProfileOption from "./ProfileOption";
+import Loading from "../../utils/Loading/Loading";
+import { useState } from "react";
+import { useEffect } from "react";
 function UserProfile() {
   const state = useContext(GlobalState);
   const [myOrder] = state.userAPI.order;
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (myOrder.length === 0 || myOrder === undefined) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [myOrder]);
 
   return (
+    <>
+    {loading ? <>{loading && <Loading />}</> : <>
     <div className='profile'>
       <ProfileOption />
       <div className="profile-content">
@@ -27,6 +41,8 @@ function UserProfile() {
         {/* <OrderDetail/> */}
       </div>
     </div>
+    </>}
+    </>
   )
 }
 
