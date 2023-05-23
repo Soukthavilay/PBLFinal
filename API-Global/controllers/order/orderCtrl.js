@@ -133,13 +133,15 @@ const orderCtrl = {
             }
             // order.status = status;
             // await order.save();
-            if(order.status === 'Delivered'){
+            if(order.status === 'Delivered' || order.status === 'Confirmed' || order.status === 'Shipping' || order.status === 'Cancelled' || order.status === 'Paid'){
                 await order.save();
                 const user = await User.findById(order.user_id);
                 if (!user) {
                     return res.status(404).json({ msg: 'User not found.' });
                 }
                 const email = user.email;
+                const name = user.name;
+                const phone = user.phone;
                 const transporter = nodemailer.createTransport({
                     service: 'gmail',
                     auth: {
@@ -147,11 +149,77 @@ const orderCtrl = {
                         pass: 'nanozlpbkistsqrp'
                     }
                 });
+                const currentTime = new Date().toLocaleString();
+                const total = order.total;
+                const listOrderItems = order.listOrderItems;
                 const mailOptions = {
                     from: 'koke1150199@gmail.com',
                     to: email,
-                    subject: 'Notice of successful delivery',
-                    text: 'Your order has been delivered successfully. Thank you for your purchase!'
+                    subject: 'Notification order tracking ',
+                    html: `
+                    <html>
+
+                    <body style="background-color:#e2e1e0;font-family: Open Sans, sans-serif;font-size:100%;font-weight:400;line-height:1.4;color:#000;">
+                      <table style="max-width:670px;margin:50px auto 10px;background-color:#fff;padding:50px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);-moz-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24); border-top: solid 10px green;">
+                        <thead>
+                          <tr>
+                            <th style="text-align:left;"><img style="max-width: 150px;" src="https://res.cloudinary.com/dkiofoako/image/upload/v1684836528/PBL/techinn_1_vtxuk0.svg" alt="Lao Technology" /></th>
+                            <th style="text-align:right;font-weight:400;">${currentTime}</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td style="height:35px;">${order.status === "Cancelled" ? `<h2>Sorry for canceling your order because the store has a problem, so it can't deliver the goods to the customer. Try to buy new product again</h2>` : `<h2>Thank you for buying and trusting the shop. ${order.status === "Delivered" ? `<h2>Your item has been delivered</h2>` : ``}</h2>`}</td>
+                          </tr>
+                          <tr>
+                            <td colspan="2" style="border: solid 1px #ddd; padding:10px 20px;">
+                                ${order.status === "Cancelled" ? `<p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:150px">Order status</span><b style="color:red;font-weight:normal;margin:0">${order.status}</b></p>
+                                ` : `<p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:150px">Order status</span><b style="color:green;font-weight:normal;margin:0">${order.status}</b></p>
+                                `}
+                              <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Transaction ID</span> ${orderId}</p>
+                              <p style="font-size:14px;margin:0 0 0 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Order amount</span> USD. ${total}</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="height:35px;"></td>
+                          </tr>
+                          <tr>
+                            <td style="width:50%;padding:20px;vertical-align:top">
+                              <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px">Name</span> ${name}</p>
+                              <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Email</span> ${email}</p>
+                              <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Phone</span> +${phone}</p>
+                              <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">ID No.</span> ${order.user_id}</p>
+                            </td>
+                            <td style="width:50%;padding:20px;vertical-align:top">
+                              <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Address</span> ${order.address}</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="2" style="font-size:20px;padding:30px 15px 0 15px;">Items</td>
+                          </tr>
+                          <tr>
+                            <td colspan="2" style="padding:15px;">
+                                ${listOrderItems.map(item => `
+                                    <p style="font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;"><span style="display:block;font-size:13px;font-weight:normal;">${item.title}</span> USD. ${item.price} <b style="font-size:12px;font-weight:300;"> /${item.amount}</b></p>
+                                    <img src=${item.images.url} alt="order image" width=200px/>
+                                `)}
+                            </td>
+                          </tr>
+                        </tbody>
+                        <tfooter>
+                          <tr>
+                            <td colspan="2" style="font-size:14px;padding:50px 15px 0 15px;">
+                              <strong style="display:block;margin:0 0 10px 0;">Regards</strong> Lao Technology<br> Lao, Champasack, Pakse , 002132<br><br>
+                              <b>Phone:</b> 0888946837<br>
+                              <b>Email:</b> Soukthavilay2000@gmail.com
+                            </td>
+                          </tr>
+                        </tfooter>
+                      </table>
+                    </body>
+                    
+                    </html>
+                    `
                 };
                 
                 transporter.sendMail(mailOptions, (error, info) => {
@@ -319,20 +387,21 @@ const orderCtrl = {
     // },
     getAllOrders: async (req, res) => {
         try {
-            const orders = await Orders.find(
-                { "listOrderItems.0": { $exists: true } },
-                {
-                    listOrderItems: 1,
-                    _id: 1,
-                    user_id: 1,
-                    status: 1,
-                    total: 1,
-                    createdAt: 1,
-                    address: 1,
-                    phone: 1,
-                }
-            );
-            res.send(orders)
+            // const orders = await Orders.find(
+            //     { "listOrderItems.0": { $exists: true } },
+            //     {
+            //         listOrderItems: 1,
+            //         _id: 1,
+            //         user_id: 1,
+            //         status: 1,
+            //         total: 1,
+            //         createdAt: 1,
+            //         address: 1,
+            //         phone: 1,
+            //     }
+            // );
+            const orders = await Orders.find();
+            res.json({ orders });
         } catch (err) {
             console.log(err);
             return res.status(500).json({ message: err.message })
