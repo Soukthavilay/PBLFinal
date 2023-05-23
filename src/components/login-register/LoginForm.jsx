@@ -43,7 +43,7 @@ function LoginForm() {
       localStorage.setItem("accessToken", token);
       // window.location.href = '/';
       if (isAdmin) {
-        window.location.href = "/Admin";
+        window.location.href = "admin/createProduct";
       } else {
         window.location.href = "/";
       }
