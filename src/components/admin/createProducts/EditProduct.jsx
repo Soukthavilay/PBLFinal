@@ -3,6 +3,8 @@ import { GlobalState } from "../../../GlobalState"
 import axios from "axios"
 import { useContext, useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
+import "../scss/edit-product.scss"
+
 const initialState = {
     _id: '',
     title: '',
