@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "axios": "^1.4.0",
+    "html-react-parser": "^3.0.16",
     "http-proxy-middleware": "^2.0.6",
     "ra-data-json-server": "^4.10.2",
     "react": "^18.2.0",

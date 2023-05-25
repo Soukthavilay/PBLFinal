@@ -1,5 +1,6 @@
 import React from "react";
 import ProductSpecsTable from './ProductSpecsTable';
+import parse from 'html-react-parser';
 
 function ProductDetailBody(detailProduct) {
   const product = detailProduct.detailProduct;
@@ -12,16 +13,14 @@ function ProductDetailBody(detailProduct) {
             Product description {product.title}
           </h3>
           <div className="product-detail-content">
-            <p>
-              {product.description}
-            </p>
+            {parse(`${product.description}`)}
           </div>
         </div>
         <div className="detail-body-right">
           <h3 className="product-specs-title">
             <b>Thông số kỹ thuật</b>
           </h3>
-          <ProductSpecsTable feature={product.feature}/>
+          <ProductSpecsTable feature={product.feature} />
         </div>
       </div>
     </>
