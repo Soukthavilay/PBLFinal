@@ -86,7 +86,7 @@ const OrderDetail = () => {
                     <h2>Total Summary</h2>
                     <div className="order-summary-price_item">
                       <span className="order-summary-price_item-left">
-                        Subtotal (1 Items)
+                        Subtotal ({data.listOrderItems.length})
                       </span>
                       <span className="order-summary-price_item-right">
                         {data.total} USD
@@ -97,7 +97,7 @@ const OrderDetail = () => {
                         Shipping Fee
                       </span>
                       <span className="order-summary-price_item-right">
-                        20,000 USD
+                        {data.shippingFee ? data.shippingFee : 0} USD
                       </span>
                     </div>
                     <div className="order-summary-price_item total">
@@ -105,10 +105,10 @@ const OrderDetail = () => {
                         Total
                       </span>
                       <span className="order-summary-price_item-right">
-                        143,000 USD
+                        {data.total} USD
                       </span>
                     </div>
-                    <span className="order-summary-price_method">Ship COD</span>
+                    <span className="order-summary-price_method">Ship {data.paymentMethod ? data.paymentMethod : "COD"}</span>
                   </div>
                 </div>
               </>
