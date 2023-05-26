@@ -185,21 +185,12 @@ const productCtrl = {
             res.send(JSON.stringify(error))
         }
     },
-    getDetailProduct: async (req, res) => {
+    getDetailFeedback: async (req, res) => {
         try {
             const productId = req.params.id
             const product = await Products.findOne({ _id: productId })
-            const feedback = await feedbackCtrl.getFeedbackByProductID(productId);
-            const newDetailProduct = new DetailProduct({
-                types: product.types,
-                title: product.title.toLowerCase(),
-                description: product.description,
-                images: product.images,
-                category: product.category,
-                feedbacks: feedback,
-                price: product.price,
-            });
-            res.send(JSON.stringify(newDetailProduct))
+            const feedback = await feedbackCtrl.getFeedbackByProductID(product);
+            res.json({feedback})
         }
         catch (error) {
             res.send(JSON.stringify(error))
