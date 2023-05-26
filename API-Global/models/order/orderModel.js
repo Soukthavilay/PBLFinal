@@ -42,6 +42,9 @@ const orderSchema = new mongoose.Schema({
     },
     cancellationReason:{
         type: String,
+    },
+    paymentMethod:{
+        type: String,
     }
 }, {
     timestamps: true
