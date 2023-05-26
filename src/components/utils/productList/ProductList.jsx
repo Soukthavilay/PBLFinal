@@ -5,6 +5,7 @@ import { GlobalState } from "../../../GlobalState";
 import { Link } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import axios from "axios";
+import Loading from "../Loading/Loading";
 
 function ProductList() {
   const state = useContext(GlobalState);
@@ -12,6 +13,7 @@ function ProductList() {
   const params = useParams();
   const [categoryList,setCategoryList] = useState();
   const [pdcate,setPdcate] = useState();
+  const [loading,setLoading] = useState(false);
 
   useEffect(()=>{
     if(params.id && categories.length > 0){
@@ -26,28 +28,36 @@ function ProductList() {
 
 
   useEffect(()=>{
+    setLoading(true);
     if(categoryList){
       const getProductByCategory = async ()=>{
         const res = await axios.get(`http://localhost:5000/api/products/category/${categoryList}`)
         setPdcate(res.data.products);
+        setLoading(false);
       }
       getProductByCategory();
     }
   },[categoryList]);
-
+  useEffect(()=>{
+    if(pdcate?.length === 0 || pdcate === undefined){
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  },[pdcate])
   var userStar = 5;
   return (
     <div className="product-list">
       <h2>Product list</h2>
-
-      {pdcate ? 
-      
+      {loading ? 
+      <>
+        {loading && <Loading />}
+      </> : 
       <>
         <div className="product-list-items">
         {pdcate &&
           pdcate.map((item) => {
             const { _id, title, images, price, sold } = item;
-            // console.log(item);
             return (
               <div className="product-item" key={_id}>
                 <div className="product-item-image">
@@ -90,8 +100,7 @@ function ProductList() {
             );
           })}
       </div>
-      </> : 
-      <><div className="product-item"><h3>not have product</h3></div></>
+      </>
     }
     </div>
   );
