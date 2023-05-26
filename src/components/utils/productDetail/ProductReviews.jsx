@@ -1,19 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import StarRatings from "react-star-ratings";
 import ProductReviewDetail from './ProductReviewDetail';
+import axios from 'axios';
 
-function ProductReviews() {
-  var totalStar = 0;
-  var averageStar = 0;
-  var commentList = [1, 2, 3, 4, 5, 6];
-  var totalComment = commentList.length;
-  if (commentList.length > 0) {
-    for (var i = 0; i < commentList.length; i++) {
-      totalStar += commentList[i];
+function ProductReviews(detailProduct) {
+  const dtProduct = detailProduct.detailProduct;
+  const idProduct = dtProduct._id;
+  const [result,setResult] = useState(0);
+  const [feedback,setFeedback] = useState([]);
+
+  useEffect(()=>{
+    if(idProduct){
+      const getFeedback = async ()=>{
+        try {
+          const res = await axios.get(`http://localhost:5000/api/products/${idProduct}`);
+          setFeedback(res.data.feedback)
+        } catch (error) {
+          alert(error.response.data.msg);
+        }
+      }
+      getFeedback();
     }
-    averageStar = totalStar / commentList.length;
-  }
+  },[idProduct]);
   const [showHideComment, setShowHideComment] = useState(false);
   const handleToggle = () => {
     setShowHideComment(!showHideComment);
@@ -25,7 +34,17 @@ function ProductReviews() {
       rating: newRating,
     });
   };
-
+  useEffect(()=>{
+    
+    if (feedback && feedback.length){
+      var total = 0;
+      feedback?.map((FeedbackItem)=>{
+        total += FeedbackItem.rating;
+      })
+      setResult(total / feedback.length);
+    }
+  },[feedback]);
+  const feedbackTotal = feedback?.length || 0;
   return (
     <>
       <div className="product-reviews">
@@ -33,15 +52,15 @@ function ProductReviews() {
         <div className="product-reviews-summary">
           <div className="reviews-summary-item">
             <h4>Average rating</h4>
-            <span className="average-star">{averageStar} / 5</span>
+            <span className="average-star">{result} / {feedbackTotal}</span>
             <StarRatings
               name="rating"
-              rating={averageStar}
+              rating={result}
               starRatedColor="#fadb14"
               starDimension="16px"
               starSpacing="2px"
             />
-            <span className="total-comment">{totalComment} Review</span>
+            <span className="total-comment">Review</span>
           </div>
           <div className="reviews-summary-item">
             <p>Have you used this product?</p>
@@ -95,8 +114,11 @@ function ProductReviews() {
             </button>
           </div>
         </div>
-
-        <ProductReviewDetail />
+        {feedback?.length ? (
+          feedback.map((item) => <ProductReviewDetail key={item._id} fd={item} />)
+        ) : (
+          <p>No reviews available.</p>
+        )}
       </div>
     </>
   );
