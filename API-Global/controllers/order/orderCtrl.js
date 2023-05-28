@@ -125,14 +125,11 @@ const orderCtrl = {
     updateOrderStatusAdmin: async (req,res) => {
         const orderId  = req.params.id;
         const {status} = req.body;
-        console.log(orderId);
         try {
             const order = await Orders.findByIdAndUpdate(orderId, { status }, { new: true });
             if (!order) {
                 return res.status(404).json({ msg: 'Order not found.' });
             }
-            // order.status = status;
-            // await order.save();
             if(order.status === 'Delivered' || order.status === 'Confirmed' || order.status === 'Shipping' || order.status === 'Cancelled' || order.status === 'Paid'){
                 await order.save();
                 const user = await User.findById(order.user_id);

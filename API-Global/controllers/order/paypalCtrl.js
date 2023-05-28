@@ -6,6 +6,7 @@ const paypalCtrl = {
     payment: async (req, res) => {
         try {
           const { amount, order_id ,price, total} = req.body;
+          const Order = await Orders.findById(order_id);
           const payment = {
             intent: "sale",
             payer: {
@@ -17,16 +18,15 @@ const paypalCtrl = {
             },
             transactions: [
               {
+                order_id:order_id,
                 item_list: {
-                  items: [
-                    {
-                      name: order_id,
-                      sku: "001",
-                      price: price,
-                      currency: "USD",
-                      quantity: 1,
-                    },
-                  ],
+                  items: Order.listOrderItems.map((item) => ({
+                    name: order_id,
+                    sku: "001",
+                    price: item.price,
+                    currency: "USD",
+                    quantity: item.quantity,
+                  })),
                 },
                 amount: {
                   currency: "USD",
@@ -67,8 +67,8 @@ const paypalCtrl = {
                 throw error;
             } else {
                 try {
-                    const order_id = payment.transactions[0].item_list.items[0].name;
-                    await Orders.findByIdAndUpdate({ _id: order_id }, { status: "Paid" });
+                  const order_id = payment.transactions[0].item_list.items[0].name;
+                    await Orders.findByIdAndUpdate(order_id, { status: "Paid" },{ new: true });
                     res.send('Success');
                 }
                 catch (err) {
