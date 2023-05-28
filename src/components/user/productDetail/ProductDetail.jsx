@@ -4,7 +4,7 @@ import ProductDetailHeader from '../../utils/productDetail/ProductDetailHeader';
 import ProductReviews from '../../utils/productDetail/ProductReviews';
 import Recommand from "../../utils/productItem/Recommand";
 import { GlobalState } from '../../../GlobalState';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import "../../utils/scss/product-detail.scss";
 

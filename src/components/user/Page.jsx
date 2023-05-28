@@ -20,6 +20,7 @@ import UserProfile from './profile/UserProfile';
 import PaymentMethod from './checkout/PaymentMethod';
 import OrderDetail from './profile/OrderDetail';
 import MyInfo from './profile/MyInfo';
+import Review from './review/Review';
 
 const Page = () => {
   const state = useContext(GlobalState);
@@ -44,6 +45,7 @@ const Page = () => {
         <Route path="/profile" component={UserProfile} />
         <Route path="/order-detail" component={OrderDetail} />
         <Route path="/myInfo" component={MyInfo} />
+        <Route path="/review-product/:id" component={Review} />
         <Route path="/" component={Banner} />
       </Switch>
     </Router>

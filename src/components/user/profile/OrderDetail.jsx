@@ -4,6 +4,7 @@ import { GlobalState } from "../../../GlobalState";
 import ProfileOption from "./ProfileOption";
 import ip14 from "../../../assets/ip14.jpg";
 import "../../utils/scss/profile.scss";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const OrderDetail = () => {
   const state = useContext(GlobalState);
@@ -62,6 +63,11 @@ const OrderDetail = () => {
                     <div className="order-product-quantity">
                       Qty: {orderItem.quantity}
                     </div>
+                    <div className="order-product-review">
+                      <Link to={`/review-product/${orderItem._id}`}>
+                        Review
+                      </Link>
+                    </div>
                   </div>
                 ))}
             </div>
@@ -69,7 +75,7 @@ const OrderDetail = () => {
               <>
                 <div className="order-details-info">
                   <span className="order-details-info_code">
-                    Order: {data._id.slice(-6)}
+                    Order: #{data._id}
                   </span>
                   <span className="order-details-info_date">
                     Placed on {new Date(data.createdAt).toLocaleDateString()}

@@ -10,11 +10,8 @@ const OrderShow = (orders) => {
 
   useEffect(() => {
     if (categories.length === 0) {
-      // Categories chưa được tải, có thể hiển thị một thông báo loading hoặc placeholder
       return;
     }
-  
-    // Tiếp tục xử lý khi categories đã được tải
     categories.map((item) => {
       if (item._id === order.listOrderItems[0].category) {
         setNewNameCate(item.name);
