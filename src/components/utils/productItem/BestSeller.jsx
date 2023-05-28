@@ -13,6 +13,7 @@ import { Navigation } from "swiper";
 import "../scss/recommend.scss";
 import { useEffect } from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const BestSeller = () => {
   const [data,setData] = useState();
@@ -60,9 +61,9 @@ const BestSeller = () => {
                       </div>
                       <div className="product-item-detail">
                         <h3 className="product-name">
-                          <a href="">
+                          <Link to={`/detail/${_id}`}>
                             <span>{title}</span>
-                          </a>
+                          </Link>
                         </h3>
                         <div className="product-detail">
                           <div className="product-detail-meta">

@@ -100,9 +100,9 @@ function OrderSummary() {
                 </div>
               </div>
               <div className="product-detail-price">
-                {new Intl.NumberFormat("vi-LA", {
+                {new Intl.NumberFormat("vi-US", {
                   style: "currency",
-                  currency: "KIP",
+                  currency: "USD",
                 }).format(item.price)}
               </div>
             </div>
@@ -112,9 +112,9 @@ function OrderSummary() {
       </div>
       
       <div className='total'> Total :
-        {new Intl.NumberFormat("vi-LA", {
+        {new Intl.NumberFormat("vi-US", {
           style: "currency",
-          currency: "KIP",
+          currency: "USD",
         }).format(total)}
       </div>
 

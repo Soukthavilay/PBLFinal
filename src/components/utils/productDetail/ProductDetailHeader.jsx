@@ -31,9 +31,9 @@ function ProductDetailHeader( detailProduct ) {
           <h3 className="product-name">{product.title}</h3>
           <div className="product-price">
             <h4 className="product-price">
-              {new Intl.NumberFormat("vi-LA", {
+              {new Intl.NumberFormat("vi-US", {
                 style: "currency",
-                currency: "KIP",
+                currency: "USD",
               }).format(product.price)}
             </h4>
             <div className="product-ratings">

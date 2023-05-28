@@ -72,9 +72,9 @@ function ProductList() {
                   <div className="product-detail">
                     <div className="product-detail-meta">
                       <p className="product-price">
-                        {new Intl.NumberFormat("vi-LA", {
+                        {new Intl.NumberFormat("vi-US", {
                           style: "currency",
-                          currency: "KIP",
+                          currency: "USD",
                         }).format(price)}
                       </p>
                       <div className="product-ratings">

@@ -17,7 +17,11 @@ function UserAPI(token){
                 });
                 setDetail(res.data);
                 setIsLogged(true);
-                res.data.role === 1 ? setIsAdmin(true) : setIsAdmin(false);
+                if(res.data.role === 1){
+                    setIsAdmin(true)
+                } else if(res.data.role === 0) {
+                    setIsAdmin(false)
+                }
                 setCart(res.data.cart)
                 } catch (err) {
                 alert(err.response.data.msg);
@@ -50,7 +54,6 @@ function UserAPI(token){
     },[token]);
 
     const addCart = async (product) => {
-        // console.log(product);
         if (!isLogged) return alert('Please login to continue buying');
         if(product.amount === 0) return alert('This type not have in stock');
         const check = cart.every(item =>{
