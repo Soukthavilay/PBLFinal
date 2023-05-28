@@ -114,6 +114,7 @@
       .product-image {
         display: flex;
         align-items: center;
+        width: 60%;
         .product-name {
           width: 70%;
           h3 {
@@ -175,6 +176,15 @@
       }
     }
   }
+
+  .total {
+    max-width: 60%;
+    display: flex;
+    justify-content: flex-end;
+    margin: auto;
+    margin-top: 40px;
+  }
+
   .checkout-buttons {
     width: calc(60% + 64px);
     margin: auto;

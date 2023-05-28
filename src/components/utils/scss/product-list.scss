@@ -1,6 +1,51 @@
 $theme-color: #1464f4;
 
 .product-list {
+  &-content {
+    display: flex;
+    max-width: 1440px;
+    margin: auto;
+    column-gap: 48px;
+
+    .sidebar {
+      padding: 0 20px 20px;
+      width: 60%;
+      h3 {
+        background-color: #1464f4;
+        color: #ffffff;
+        padding: 8px 16px;
+        font-size: 16px;
+        position: relative;
+        &::before {
+          border-top: 8px solid #1464f4;
+          bottom: -8px;
+          content: "";
+          height: 0;
+          position: absolute;
+          width: 0;
+          left: 0;
+          border-left: 8px solid transparent;
+        }
+      }
+      &-item {
+        ul {
+          list-style: none;
+          margin-left: 8px;
+          padding: 32px 16px 16px;
+          border: 1px solid #ebebeb;
+          li {
+            margin-bottom: 8px;
+            font-size: 16px;
+            transition: .4s;
+            cursor: pointer;
+            &:hover {
+              color: #1464f4;
+            }
+          }
+        }
+      }
+    }
+  }
   h2 {
     text-align: center;
     font-weight: 600;
@@ -11,9 +56,9 @@ $theme-color: #1464f4;
   &-items {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    column-gap: 32px;
-    row-gap: 24px;
-    max-width: 1440px;
+    // column-gap: 32px;
+    // row-gap: 24px;
+    // max-width: 1440px;
     margin: 0 auto 36px;
 
     .product-item {
@@ -21,6 +66,8 @@ $theme-color: #1464f4;
       display: flex;
       flex-direction: column;
       height: 100%;
+      padding: 12px;
+      border: 0.5px solid #ebebeb;
 
       &-image {
         text-align: center;
@@ -61,15 +108,16 @@ $theme-color: #1464f4;
         }
 
         .product-detail-meta {
-          margin-top: 14px;
           border-top: 1px solid rgba(128, 128, 128, 0.3);
 
           display: flex;
           justify-content: space-between;
           align-items: center;
+          margin: 0 -12px;
+          padding: 12px;
 
           .product-price {
-            font-size: 18px;
+            font-size: 14px;
             line-height: 150%;
             margin: 14px 0;
             font-weight: 500;
@@ -79,7 +127,7 @@ $theme-color: #1464f4;
           span {
             margin-left: 8px;
             color: #939ca3;
-            font-size: 14px;
+            font-size: 12px;
           }
         }
       }
@@ -87,6 +135,38 @@ $theme-color: #1464f4;
       .product-detail {
         margin-top: auto;
       }
+    }
+  }
+}
+
+.service-list {
+  display: flex;
+  justify-content: center;
+  padding: 30px 50px;
+  border: 1px solid #1464f4;
+  width: fit-content;
+  margin: auto;
+  margin-top: 80px;
+  margin-bottom: 80px;
+
+  &-item {
+    display: flex;
+    padding: 0 20px;
+    border-right: 1px solid #ebebeb;
+    color: #939ca3;
+
+    &:last-child {
+      border: none;
+    }
+
+    h3 {
+      color: #151515;
+      font-weight: 500;
+      font-size: 16px;
+    }
+
+    span {
+      font-size: 12px;
     }
   }
 }

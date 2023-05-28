@@ -13,7 +13,7 @@ function StepTracker({ current }) {
             <div className="checkout-header-icon">
               <h4 className="checkout-header-step">1</h4>
             </div>
-            <h6 className="checkout-header-subtitle">Check Basket</h6>
+            <h6 className="checkout-header-subtitle">Check Order</h6>
           </div>
         </li>
         <li className={`checkout-header-list ${className(2)}`}>

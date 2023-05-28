@@ -8,6 +8,7 @@
         height: 100%;
         justify-content: space-around;
         align-items: center;
+        padding: 8px 0;
         .Btncateg{
             height: 100%;
             .btnCategories{
@@ -16,6 +17,11 @@
                 display: flex;
                 flex-direction: column;
                 text-transform:uppercase;
+                strong {
+                    display: flex;
+                    align-items: center;
+                    column-gap: 8px;
+                }
             }
         }
         .Btnband{

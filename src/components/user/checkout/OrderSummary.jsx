@@ -61,20 +61,14 @@ function OrderSummary() {
     <div className="order-summary">
       <StepTracker current={1} />
       <h2 className="order-summary-title">Cart Information</h2>
-      <p className="order-summary-subtitle">
-        Check the products in your cart
-      </p>
+      <p className="order-summary-subtitle">Check the products in your cart</p>
 
-      
       <div className="order-summary-product">
-        {cart.map((item)=>{
+        {cart.map((item) => {
           return (
             <div className="order-product-item" key={item._id}>
               <div className="product-image">
-                <img
-                  src={item.images.url}
-                  alt={item.images.url}
-                />
+                <img src={item.images.url} alt={item.images.url} />
                 <div className="product-name">
                   <h3>{item.title}</h3>
                 </div>
@@ -96,25 +90,32 @@ function OrderSummary() {
                   </button>
                 </div>
                 <div className="product-remove">
-                  <button className="remove-btn" onClick={() => removeItem(item._id)}>Delete</button>
+                  <button
+                    className="remove-btn"
+                    onClick={() => removeItem(item._id)}
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
               <div className="product-detail-price">
-                {new Intl.NumberFormat("vi-US", {
+                {new Intl.NumberFormat("en-US", {
                   style: "currency",
                   currency: "USD",
-                }).format(item.price)}
+                  maximumFractionDigits: 3,
+                }).format(total)}
               </div>
             </div>
-          )
+          );
         })}
-        
       </div>
-      
-      <div className='total'> Total :
-        {new Intl.NumberFormat("vi-US", {
+
+      <div className="total">
+        <b>Total</b>: &nbsp;
+        {new Intl.NumberFormat("en-US", {
           style: "currency",
           currency: "USD",
+          maximumFractionDigits: 3,
         }).format(total)}
       </div>
 
