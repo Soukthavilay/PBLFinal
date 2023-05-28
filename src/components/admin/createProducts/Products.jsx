@@ -40,7 +40,6 @@ const Products = () => {
     const [images, setImages] = useState(false);
     const [callback, setCallback] = state.productsAPI.callback;
     const [category] = state.categoriesAPI.categories;
-    const [edit, setEdit] = useState(false);
     const [productShow] = state.productsAPI.products;
 
     const handleUpload = async (e) => {

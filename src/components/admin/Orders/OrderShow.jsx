@@ -13,7 +13,7 @@ const OrderShow = (orders) => {
       return;
     }
     categories.map((item) => {
-      if (item._id === order.listOrderItems[0].category) {
+      if (item._id === order.listOrderItems[0]?.category) {
         setNewNameCate(item.name);
       }
     });
