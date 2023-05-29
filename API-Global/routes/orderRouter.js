@@ -20,7 +20,10 @@ router.route('/orders/admin')
 router.route('/orders/:id')
     .put(orderCtrl.updateOrder)
 
-router.route('/update-status/:id').put(orderCtrl.updateOrderStatusAdmin);
+// update order
+router.route('/orders/cancel-request/:id').put(auth,orderCtrl.userCancelOrder);
+router.route('/order/cancel-request').get(auth,authAdmin,orderCtrl.getOrdersWithCancelRequested)
+router.route('/update-status/:id').put(auth,authAdmin,orderCtrl.updateOrderStatusAdmin);
 
 router.route('/cart')
     .get(auth, orderCtrl.getCart)

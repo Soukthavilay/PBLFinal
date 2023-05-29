@@ -234,7 +234,31 @@ const orderCtrl = {
             }
     },
     userCancelOrder : async (req, res) => {
-
+        try {
+            const order_id = req.params.id;
+            const {cancellationReason} = req.body;
+            const order = await Orders.findById(order_id);
+            if(!order){
+                return res.status(404).json({ msg: 'Order not found.' });
+            }
+            if (order.status !== 'Pending') {
+                return res.status(400).json({ msg: 'Order cannot be canceled. Order has been confirmed' });
+            }
+            order.cancellationReason = cancellationReason;
+            order.status = 'Cancel Requested';
+            await order.save();
+            return res.json({ msg: 'Order cancellation requested.' });
+        } catch (error) {
+            res.status(500).json({ msg: error.message });
+        }
+    },
+    getOrdersWithCancelRequested: async (req, res) => {
+        try {
+            const orders = await Orders.find({ status: "Cancel Requested" });
+            res.json(orders);
+        } catch (error) {
+            res.status(500).json({ msg: error.message });
+        }
     },
     addTypeToOrder: async (req, res) => {
         try {
