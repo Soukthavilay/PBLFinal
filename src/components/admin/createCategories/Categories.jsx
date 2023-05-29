@@ -6,7 +6,6 @@ import axios from 'axios';
 
 const Categories = () => {
   const state = useContext(GlobalState);
-  console.log(state)
   const [categories] = state.categoriesAPI.categories
   const [category, setCategory] = useState('')
   const [token] = state.token

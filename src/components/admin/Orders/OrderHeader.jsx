@@ -9,12 +9,10 @@ const OrderHeader = (order) => {
 
 
     const handleConfirm = () => {
-        console.log(orderData._id);
         updateOrderStatus(orderData._id, "Confirmed");
     };
     
     const handleCancel = () => {
-        console.log(orderData._id);
         updateOrderStatus(orderData._id, "Cancelled");
     };
     const updateOrderStatus = (orderId, newStatus) => {

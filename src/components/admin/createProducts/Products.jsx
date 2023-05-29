@@ -66,7 +66,6 @@ const Products = () => {
     }
     const handleChangeInput = (e) => {
         const { name, value } = e.target;
-        console.log(e.target);
         setProduct({ ...product, [name]: value });
         setFeature({ ...feature, [name]: value });
     }

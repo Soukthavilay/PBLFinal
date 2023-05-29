@@ -23,8 +23,6 @@ const OrderDetail = () => {
       console.log("No match found");
     }
   }, [myOrder, param.id]);
-  console.log(data);
-  // console.log(data.status)
 
   return (
     <div className="profile">

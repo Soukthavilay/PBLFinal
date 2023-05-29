@@ -13,7 +13,6 @@ const PaymentMethod = () => {
     const handlePaymentMethodChange = (event) => {
         setSelectedPaymentMethod(event.target.value);
     };
-    console.log(state);
 
     const handleButtonClick = () => {
         if(selectedPaymentMethod === 'cod') {

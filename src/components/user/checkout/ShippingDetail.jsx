@@ -45,7 +45,6 @@ const handleSubmit = async (e) => {
         user_id: id
       });
       setItemOrder(res.data);
-      console.log(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -63,7 +62,6 @@ useEffect(() => {
     axios.post('http://localhost:5000/api/paypal', { ...orderNow })
       .then(response => {
         // Xử lý kết quả của API
-        console.log(response.data);
         window.open(response.data.url, '_blank');
         window.location.href = "/checkout-confirm";
       })
@@ -78,7 +76,6 @@ useEffect(() => {
 
   function selectPayment(e) {
     handleToggle();
-    console.log(e.target.value)
   }
 
   const [showHideComment, setShowHidePaymentMethod] = useState(false);
