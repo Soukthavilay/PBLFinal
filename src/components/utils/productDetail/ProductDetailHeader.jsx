@@ -1,7 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 import StarRatings from 'react-star-ratings';
 import { GlobalState } from '../../../GlobalState';
+import axios from 'axios';
 
 function ProductDetailHeader( detailProduct ) {
   var isInStock = true;
@@ -12,11 +13,37 @@ function ProductDetailHeader( detailProduct ) {
   const state = useContext(GlobalState);
   const product = detailProduct.detailProduct;
   const addCart = state.userAPI.addCart
+  const idProduct = product._id;
+  const [feedback,setFeedback] = useState([]);
+  const [result,setResult] = useState(0);
 
+  useEffect(()=>{
+    if(idProduct){
+      const getFeedback = async ()=>{
+        try {
+          const res = await axios.get(`http://localhost:5000/api/products/${idProduct}`);
+          setFeedback(res.data.feedback)
+        } catch (error) {
+          alert(error.response.data.msg);
+        }
+      }
+      getFeedback();
+    }
+  },[idProduct]);
   const handleChange = () => {
 
   }
 
+  useEffect(()=>{
+    
+    if (feedback && feedback.length){
+      var total = 0;
+      feedback?.map((FeedbackItem)=>{
+        total += FeedbackItem.rating;
+      })
+      setResult(total / feedback.length);
+    }
+  },[feedback]);
   return (
     <>
       <div className="detail-header">
@@ -35,12 +62,12 @@ function ProductDetailHeader( detailProduct ) {
             <div className="product-ratings">
               <StarRatings
                 name="rating"
-                rating={ratingStars}
+                rating={result}
                 starRatedColor="#fadb14"
                 starDimension="16px"
                 starSpacing="2px"
               />
-              <span className="number-comments">({ratingCommentNumber})</span>
+              <span className="number-comments">({feedback.length})</span>
             </div>
           </div>
           <div className="product-quantity">
