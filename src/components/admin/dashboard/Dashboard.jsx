@@ -18,11 +18,12 @@ const Dashboard = () => {
     <>
       <Router>
         <Switch>
-          <Route path="/admin/createProduct" component={isAdmin ? Products : Products} />
-          <Route path="/admin/createCategories" component={Categories} />
-          <Route path="/admin/orderList" component={Orders} />
-          <Route path="/admin/Report" component={Report} />
-        <Route path="/admin/edit_product/:id" component={EditProduct}/>
+          <Route path="/admin/createProduct" component={isAdmin ? Products : Notfound} />
+          <Route path="/admin/createCategories" component={isAdmin ? Categories : Notfound} />
+          <Route path="/admin/orderList" component={isAdmin ? Orders : Notfound} />
+          <Route path="/admin/Report" component={isAdmin ? Report : Notfound} />
+          <Route path="/admin/edit_product/:id" component={isAdmin ? EditProduct : Notfound}/>
+          <Route path="/admin/cancel-request" component={isAdmin ? Report : Notfound} />
         </Switch>
       </Router>
     </>
