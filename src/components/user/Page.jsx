@@ -30,7 +30,7 @@ const Page = () => {
   return (
     <Router>
       <Switch>
-        <Route path="/admin" component={isAdmin ? Admin : Admin} />
+        <Route path="/admin" component={isAdmin ? Admin : Notfound} />
         <Route path="/login" component={Login} />
         <Route path="/sign-in" component={LoginForm} />
         <Route path="/register" component={Register} />
@@ -43,7 +43,7 @@ const Page = () => {
         <Route path="/product-list/:id" component={ProductList} />
         <Route path="/order-detail/:id" component={OrderDetail} />
         <Route path="/profile" component={UserProfile} />
-        <Route path="/order-detail" component={OrderDetail} />
+        {/* <Route path="/order-detail" component={OrderDetail} /> */}
         <Route path="/myInfo" component={MyInfo} />
         <Route path="/review-product/:id" component={Review} />
         <Route path="/" component={Banner} />

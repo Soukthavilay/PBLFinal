@@ -104,7 +104,7 @@ function ProductList() {
                               to={`/detail/${_id}`}
                               className="btn btn--animated btn--primary--white btn--border--blue"
                             >
-                              Mua ngay
+                              Buy now
                             </Link>
                           </div>
                         </div>

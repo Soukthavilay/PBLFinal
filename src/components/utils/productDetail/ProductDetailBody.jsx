@@ -18,7 +18,7 @@ function ProductDetailBody(detailProduct) {
         </div>
         <div className="detail-body-right">
           <h3 className="product-specs-title">
-            <b>Thông số kỹ thuật</b>
+            <b>Specifications</b>
           </h3>
           <ProductSpecsTable feature={product.feature} />
         </div>
