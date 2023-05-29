@@ -111,9 +111,9 @@ const Header = () => {
         ) : (
           <div className="header__right">
             <Link target="_parent" to="/sign-in" className="user-sign">
-              <label>Sign in</label>
+              {/* <label>Sign in</label> */}
               <div className="my-account">
-                My account <FiUser />
+                Sign in <FiUser />
               </div>
             </Link>
             <div className="header-cart">
