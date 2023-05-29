@@ -28,7 +28,7 @@ function ProductDetailHeader( detailProduct ) {
           <h3 className="product-name">{product.title}</h3>
           <div className="product-price">
             <h4 className="product-price">
-              {new Intl.NumberFormat("vi-US", {
+              {new Intl.NumberFormat("en-US", {
                 style: "currency",
                 currency: "USD",
               }).format(product.price)}

@@ -51,9 +51,9 @@ const Recommand = () => {
                         <div className="product-detail">
                           <div className="product-detail-meta">
                             <p className="product-price">
-                              {price.toLocaleString("it-IT", {
+                              {price.toLocaleString("en-US", {
                                 style: "currency",
-                                currency: "VND",
+                                currency: "USD",
                               })}
                             </p>
                             <div className="product-ratings">
@@ -71,7 +71,7 @@ const Recommand = () => {
                             to={`/detail/${_id}`}
                             className="btn btn--animated btn--primary--white btn--border--blue"
                           >
-                            Mua ngay
+                            Buy Now
                           </Link>
                         </div>
                       </div>

@@ -68,9 +68,9 @@ const BestSeller = () => {
                         <div className="product-detail">
                           <div className="product-detail-meta">
                             <p className="product-price">
-                              {new Intl.NumberFormat("vi-VN", {
+                              {new Intl.NumberFormat("en-US", {
                                 style: "currency",
-                                currency: "VND",
+                                currency: "USD",
                               }).format(price)}
                             </p>
                             <div className="product-ratings">
@@ -85,7 +85,7 @@ const BestSeller = () => {
                             </div>
                           </div>
                           <a className="btn btn--animated btn--primary--white btn--border--blue">
-                            Mua ngay
+                            Buy now
                           </a>
                         </div>
                       </div>
