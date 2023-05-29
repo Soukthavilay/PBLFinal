@@ -1,11 +1,15 @@
 import React from 'react'
+import { RiTruckLine } from "react-icons/ri";
+import { BsCashStack } from "react-icons/bs";
+import { AiOutlineGift } from "react-icons/ai";
+import { RiCustomerService2Line } from "react-icons/ri";
 
 function ServiceList() {
   return (
     <div className="service-list">
       <div className="service-list-item">
         <div className="service-list-item_img">
-          <img src="" alt="" />
+          <RiTruckLine />
         </div>
         <div className="service-list-item_content">
           <h3>Low cost delivery</h3>
@@ -14,7 +18,7 @@ function ServiceList() {
       </div>
       <div className="service-list-item">
         <div className="service-list-item_img">
-          <img src="" alt="" />
+          <BsCashStack />
         </div>
         <div className="service-list-item_content">
           <h3>Cash on delivery</h3>
@@ -23,7 +27,7 @@ function ServiceList() {
       </div>
       <div className="service-list-item">
         <div className="service-list-item_img">
-          <img src="" alt="" />
+          <AiOutlineGift />
         </div>
         <div className="service-list-item_content">
           <h3>Free Gift Box</h3>
@@ -32,7 +36,7 @@ function ServiceList() {
       </div>
       <div className="service-list-item">
         <div className="service-list-item_img">
-          <img src="" alt="" />
+          <RiCustomerService2Line />
         </div>
         <div className="service-list-item_content">
           <h3>24/7</h3>

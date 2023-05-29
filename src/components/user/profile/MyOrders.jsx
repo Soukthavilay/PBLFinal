@@ -14,17 +14,31 @@ function MyOrders(order) {
             <div className="order-product-img">
               <img
                 src={orderItem.images.url}
-                alt={orderItem.images.url ? `${orderItem.images.url}` : "product-image"}
+                alt={
+                  orderItem.images.url
+                    ? `${orderItem.images.url}`
+                    : "product-image"
+                }
               />
             </div>
             <div className="order-product-info">
               <h3 className="product-name">
-                <Link to={`/order-detail/${myOrder._id}`}>{orderItem.title}</Link>
+                <Link to={`/order-detail/${myOrder._id}`}>
+                  {orderItem.title}
+                </Link>
               </h3>
               <span className="product-type">{orderItem.feature.color}</span>
             </div>
-            <div className="order-product-price">{orderItem.price} USD</div>
-            <div className="order-product-quantity">Qty: {orderItem.quantity}</div>
+            <div className="order-product-price">
+              {orderItem.price.toLocaleString("it-IT", {
+                style: "currency",
+                currency: "VND",
+              })}
+            </div>
+
+            <div className="order-product-quantity">
+              Qty: {orderItem.quantity}
+            </div>
           </div>
         ))}
       </div>

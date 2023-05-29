@@ -1,5 +1,14 @@
 $theme-color: #1464f4;
 
+.product-list-banner {
+  img {
+    height: 350px;
+    width: 100%;
+    object-position: center;
+    object-fit: cover;
+  }
+}
+
 .product-list {
   &-content {
     display: flex;
@@ -143,17 +152,24 @@ $theme-color: #1464f4;
   display: flex;
   justify-content: center;
   padding: 30px 50px;
-  border: 1px solid #1464f4;
+  border: 1px solid #ebebeb;
   width: fit-content;
-  margin: auto;
-  margin-top: 80px;
-  margin-bottom: 80px;
+  margin: 30px auto;
+  border-radius: 4px;
 
   &-item {
     display: flex;
     padding: 0 20px;
     border-right: 1px solid #ebebeb;
     color: #939ca3;
+    column-gap: 16px;
+
+    &_img {
+      svg {
+        height: 100%;
+        width: 24px;
+      }
+    }
 
     &:last-child {
       border: none;

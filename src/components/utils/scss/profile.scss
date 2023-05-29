@@ -104,7 +104,7 @@
       width: fit-content;
       .pwd-icon {
         position: absolute;
-        right: 0;
+        right: 8px;
         top: 0;
         height: 100%;
         display: flex;
@@ -246,6 +246,17 @@
         .order-product-quantity {
           font-size: 14px;
         }
+
+        .order-product-review {
+          .review-btn {
+            border: none;
+            outline: none;
+            color: #1464f4;
+            background-color: transparent;
+            padding: 0 8px 8px;
+            cursor: pointer;
+          }
+        }
       }
     }
 
@@ -319,6 +330,28 @@
         }
       }
       
+    }
+  }
+}
+
+#popup-root .popup-overlay .popup-content .review-modal {
+  height: fit-content !important;
+
+  h3 {
+    margin: 24px 0;
+  }
+
+  input {
+    padding: 15px;
+  }
+
+  textarea {
+    margin-top: 24px;
+    font-family: 'Mulish', sans-serif;
+
+    &::placeholder {
+      font-family: 'Mulish', sans-serif;
+      letter-spacing: 0.02em;
     }
   }
 }

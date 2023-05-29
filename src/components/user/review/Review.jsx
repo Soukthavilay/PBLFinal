@@ -1,7 +1,7 @@
 import StarRatings from "react-star-ratings"
 import { GlobalState } from "../../../GlobalState";
-import { useParams ,useHistory} from 'react-router-dom';
-import React ,{ useContext, useEffect, useState } from "react";
+import { useParams, useHistory } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from "react";
 import Loading from "../../utils/Loading/Loading";
 import axios from "axios";
 const Review = () => {
@@ -10,16 +10,16 @@ const Review = () => {
     const [pd] = state.productsAPI.products;
     const param = useParams();
     const [loading, setLoading] = useState(false);
-    const [images,setImages] = useState(false);
+    const [images, setImages] = useState(false);
     const [score, setScore] = useState(0);
-    const [productID,setProductID] = useState('');
-    const [content,setContent] = useState('');
+    const [productID, setProductID] = useState('');
+    const [content, setContent] = useState('');
     const history = useHistory();
 
     useEffect(() => {
         if (param.id) {
             pd.forEach((item) => {
-                if (item._id === param.id){
+                if (item._id === param.id) {
                     setProductID(item._id);
                 }
             });
@@ -37,7 +37,7 @@ const Review = () => {
                 return alert('The file is incorrect. Please check back');
             let formData = new FormData();
             formData.append('file', file);
-    
+
             setLoading(true);
             const res = await axios.post('http://localhost:5000/api/upload', formData, {
             });
@@ -64,55 +64,57 @@ const Review = () => {
             alert(err.response.data.msg);
         }
     };
-    const changeRating = (newRating) =>{
+    const changeRating = (newRating) => {
         setScore(Math.round(newRating));
     }
     const handleChangeInput = (e) => {
         const { value } = e.target;
         setContent(value);
     };
-      const handleFeedback = async (e) => {
+    const handleFeedback = async (e) => {
         const result = {
-          content: content,
-          image_url: images.url,
-          product_id: productID,
-          rating: score,
+            content: content,
+            image_url: images.url,
+            product_id: productID,
+            rating: score,
         };
         console.log(result);
         await axios.post(
-          'http://localhost:5000/api/feedback/create',
-          { ...result },
-          {
-            headers: { Authorization: token },
-          }
+            'http://localhost:5000/api/feedback/create',
+            { ...result },
+            {
+                headers: { Authorization: token },
+            }
         );
         console.log(result);
         alert('Thank you for your feedback !');
         history.push(`/order-detail/${productID}`);
-      };
-  return (
-    <>
-        <h3>Write a product review</h3>
-        <div className="comment-form">
-            <StarRatings
-                name="rating"
-                rating={score}
-                changeRating={changeRating}
-                starHoverColor="#fadb14"
-                starRatedColor="#fadb14"
-                starDimension="16px"
-                starSpacing="2px"
+    };
+    return (
+        <>
+            <h3>Write a product review</h3>
+
+            <div className="comment-form">
+                <input type="text" placeholder="Name" />
+                <StarRatings
+                    name="rating"
+                    rating={score}
+                    changeRating={changeRating}
+                    starHoverColor="#fadb14"
+                    starRatedColor="#fadb14"
+                    starDimension="16px"
+                    starSpacing="2px"
                 />
                 <textarea
-                name="content"
-                id="contentUser"
-                cols="30"
-                rows="5"
-                placeholder="Write comment about product..."
-                onChange={handleChangeInput}
+                    name="content"
+                    id="contentUser"
+                    cols="30"
+                    rows="5"
+                    placeholder="Write comment about product..."
+                    onChange={handleChangeInput}
                 // value={content}
                 ></textarea>
-                <div className="uploadImg">
+                {/* <div className="uploadImg">
                 <div className="upload">
                     <input type="file" name="file" id="file_up" onChange={handleUpload} />
                     {loading ? (
@@ -126,13 +128,13 @@ const Review = () => {
                     </div>
                     )}
                 </div>
-                </div>
+                </div> */}
                 <button type="button" onClick={handleFeedback} className="btn btn--animated btn--primary--blue btn--border--blue">
                     Submit a review
                 </button>
             </div>
-    </>
-  )
+        </>
+    )
 }
 
 export default Review

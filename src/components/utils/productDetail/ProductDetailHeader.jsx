@@ -22,10 +22,7 @@ function ProductDetailHeader( detailProduct ) {
     <>
       <div className="detail-header">
         <div className="detail-header-left">
-          <img
-            src={product.images.url}
-            alt={product.images.url}
-          />
+          <img src={product.images.url} alt={product.images.url} />
         </div>
         <div className="detail-header-right">
           <h3 className="product-name">{product.title}</h3>
@@ -54,7 +51,7 @@ function ProductDetailHeader( detailProduct ) {
             >
               -
             </button>
-            <input type="number" value={count} onChange={handleChange}/>
+            <input type="number" value={count} onChange={handleChange} />
             <button
               className="quantity-btn"
               onClick={() => setCount((c) => c + 1)}
@@ -88,9 +85,13 @@ function ProductDetailHeader( detailProduct ) {
               />
             </div>
           </div>
-          <button className="btn btn--animated btn--primary--blue btn--border--blue">
-            <Link to="/order-summary" onClick={()=> addCart(product)}>Add to Cart</Link>
-          </button>
+            <Link
+              to="/order-summary"
+              className="btn btn--animated btn--primary--blue btn--border--blue"
+              onClick={() => addCart(product)}
+            >
+              Add to Cart
+            </Link>
         </div>
       </div>
     </>

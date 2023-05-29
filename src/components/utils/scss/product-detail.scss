@@ -1,6 +1,6 @@
 .detail-header {
   max-width: 1440px;
-  margin: auto;
+  margin: 48px auto;
 
   display: flex;
   column-gap: 30px;
@@ -149,6 +149,10 @@
           width: 50%;
         }
       }
+
+      &-title {
+        margin-bottom: 24px;
+      }
     }
   }
 }
@@ -199,6 +203,7 @@
 
       button {
         width: 30%;
+        margin-top: 24px;
       }
     }
   }
@@ -242,7 +247,7 @@
     transition: .5s;
     overflow: hidden;
     &.show {
-      height: 375px;
+      height: 420px;
     }
 
     &.hide {
@@ -281,3 +286,4 @@
     }
   }
 }
+

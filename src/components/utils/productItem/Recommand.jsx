@@ -46,15 +46,15 @@ const Recommand = () => {
                       </div>
                       <div className="product-item-detail">
                         <h3 className="product-name">
-                            <Link to={`/detail/${_id}`}>{title}</Link>
+                          <Link to={`/detail/${_id}`}>{title}</Link>
                         </h3>
                         <div className="product-detail">
                           <div className="product-detail-meta">
                             <p className="product-price">
-                              {new Intl.NumberFormat("vi-US", {
+                              {price.toLocaleString("it-IT", {
                                 style: "currency",
-                                currency: "USD",
-                              }).format(price)}
+                                currency: "VND",
+                              })}
                             </p>
                             <div className="product-ratings">
                               <StarRatings
@@ -64,10 +64,13 @@ const Recommand = () => {
                                 starDimension="16px"
                                 starSpacing="2px"
                               />
-                              <span>({ sold })</span>
+                              <span>({sold})</span>
                             </div>
                           </div>
-                          <Link to={`/detail/${_id}`} className="btn btn--animated btn--primary--white btn--border--blue">
+                          <Link
+                            to={`/detail/${_id}`}
+                            className="btn btn--animated btn--primary--white btn--border--blue"
+                          >
                             Mua ngay
                           </Link>
                         </div>

@@ -1,10 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Popup from "reactjs-popup";
 import { GlobalState } from "../../../GlobalState";
 import ProfileOption from "./ProfileOption";
 import ip14 from "../../../assets/ip14.jpg";
 import "../../utils/scss/profile.scss";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Button } from "react-admin";
+import Review from "../review/Review";
 
 const OrderDetail = () => {
   const state = useContext(GlobalState);
@@ -58,15 +61,31 @@ const OrderDetail = () => {
                       </div>
                     </div>
                     <div className="order-product-price">
-                      {orderItem.price} USD
+                      {orderItem.price.toLocaleString("it-IT", {
+                        style: "currency",
+                        currency: "VND",
+                      })}
                     </div>
                     <div className="order-product-quantity">
                       Qty: {orderItem.quantity}
                     </div>
                     <div className="order-product-review">
-                      <Link to={`/review-product/${orderItem._id}`}>
-                        Review
-                      </Link>
+                      <Popup
+                        trigger={<button className="review-btn">Review</button>}
+                        modal
+                        nested
+                      >
+                        {(close) => (
+                          <div className="modal review-modal">
+                            <button className="close" onClick={close}>&times;</button>
+                            <div className="header">Review Product</div>
+                            <div className="content">
+                              {" "}
+                              <Review />
+                            </div>
+                          </div>
+                        )}
+                      </Popup>
                     </div>
                   </div>
                 ))}
@@ -95,7 +114,10 @@ const OrderDetail = () => {
                         Subtotal ({data.listOrderItems.length})
                       </span>
                       <span className="order-summary-price_item-right">
-                        {data.total} USD
+                        {data.total.toLocaleString("it-IT", {
+                          style: "currency",
+                          currency: "VND",
+                        })}
                       </span>
                     </div>
                     <div className="order-summary-price_item">
@@ -111,10 +133,15 @@ const OrderDetail = () => {
                         Total
                       </span>
                       <span className="order-summary-price_item-right">
-                        {data.total} USD
+                        {data.total.toLocaleString("it-IT", {
+                          style: "currency",
+                          currency: "VND",
+                        })}
                       </span>
                     </div>
-                    <span className="order-summary-price_method">Ship {data.paymentMethod ? data.paymentMethod : "COD"}</span>
+                    <span className="order-summary-price_method">
+                      Ship {data.paymentMethod ? data.paymentMethod : "COD"}
+                    </span>
                   </div>
                 </div>
               </>
