@@ -4,7 +4,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from "react";
 import Loading from "../../utils/Loading/Loading";
 import axios from "axios";
-const Review = () => {
+const Review = (product_id) => {
     const state = useContext(GlobalState);
     const [token] = state.token;
     const [pd] = state.productsAPI.products;
@@ -15,16 +15,17 @@ const Review = () => {
     const [productID, setProductID] = useState('');
     const [content, setContent] = useState('');
     const history = useHistory();
+    const idProduct = product_id.productID
 
     useEffect(() => {
-        if (param.id) {
+        if (idProduct) {
             pd.forEach((item) => {
-                if (item._id === param.id) {
+                if (item._id === idProduct) {
                     setProductID(item._id);
                 }
             });
         }
-    }, [param.id, pd]);
+    }, [idProduct, pd]);
     const handleUpload = async (e) => {
         e.preventDefault();
         try {
@@ -85,14 +86,14 @@ const Review = () => {
             }
         );
         alert('Thank you for your feedback !');
-        history.push(`/order-detail/${productID}`);
+        window.location.reload();
     };
     return (
         <>
             <h3>Write a product review</h3>
 
             <div className="comment-form">
-                <input type="text" placeholder="Name" />
+                {/* <input type="text" placeholder="Name" /> */}
                 <StarRatings
                     name="rating"
                     rating={score}
@@ -111,7 +112,7 @@ const Review = () => {
                     onChange={handleChangeInput}
                 // value={content}
                 ></textarea>
-                {/* <div className="uploadImg">
+                <div className="uploadImg">
                 <div className="upload">
                     <input type="file" name="file" id="file_up" onChange={handleUpload} />
                     {loading ? (
@@ -125,7 +126,7 @@ const Review = () => {
                     </div>
                     )}
                 </div>
-                </div> */}
+                </div>
                 <button type="button" onClick={handleFeedback} className="btn btn--animated btn--primary--blue btn--border--blue">
                     Submit a review
                 </button>

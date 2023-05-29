@@ -3,10 +3,7 @@ import { useParams } from "react-router-dom";
 import Popup from "reactjs-popup";
 import { GlobalState } from "../../../GlobalState";
 import ProfileOption from "./ProfileOption";
-import ip14 from "../../../assets/ip14.jpg";
 import "../../utils/scss/profile.scss";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import { Button } from "react-admin";
 import Review from "../review/Review";
 
 const OrderDetail = () => {
@@ -35,7 +32,7 @@ const OrderDetail = () => {
             <div className="order-header-item">
               Your package is preparing...
             </div>
-            <div className="order-header-item order-status">Pending</div>
+            <div className="order-header-item order-status">{}</div>
           </div>
           <div className="order-details-body">
             <div className="order-details-body_product">
@@ -79,7 +76,7 @@ const OrderDetail = () => {
                             <div className="header">Review Product</div>
                             <div className="content">
                               {" "}
-                              <Review />
+                              <Review productID={orderItem._id}/>
                             </div>
                           </div>
                         )}
@@ -97,7 +94,7 @@ const OrderDetail = () => {
                   <span className="order-details-info_date">
                     Placed on {new Date(data.createdAt).toLocaleDateString()}
                   </span>
-                  <span className="order-details-info_method">Ship COD</span>
+                  <span className="order-details-info_method">{data.paymentMethod ? data.paymentMethod : ""}</span>
                 </div>
                 <div className="order-details-summary">
                   <div className="order-details-summary_item order-summary-user">
@@ -138,7 +135,7 @@ const OrderDetail = () => {
                       </span>
                     </div>
                     <span className="order-summary-price_method">
-                      Ship {data.paymentMethod ? data.paymentMethod : "COD"}
+                      Ship {data.paymentMethod ? data.paymentMethod : ""}
                     </span>
                   </div>
                 </div>

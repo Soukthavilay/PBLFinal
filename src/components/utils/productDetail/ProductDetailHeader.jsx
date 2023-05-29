@@ -16,7 +16,6 @@ function ProductDetailHeader( detailProduct ) {
   const handleChange = () => {
 
   }
-  // console.log(product)
 
   return (
     <>
