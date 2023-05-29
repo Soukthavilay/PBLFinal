@@ -42,7 +42,6 @@ const Review = () => {
             const res = await axios.post('http://localhost:5000/api/upload', formData, {
             });
             setLoading(false);
-            console.log(res.data);
             setImages(res.data);
         } catch (err) {
             alert(err.response.data.msg);
@@ -78,7 +77,6 @@ const Review = () => {
             product_id: productID,
             rating: score,
         };
-        console.log(result);
         await axios.post(
             'http://localhost:5000/api/feedback/create',
             { ...result },
@@ -86,7 +84,6 @@ const Review = () => {
                 headers: { Authorization: token },
             }
         );
-        console.log(result);
         alert('Thank you for your feedback !');
         history.push(`/order-detail/${productID}`);
     };

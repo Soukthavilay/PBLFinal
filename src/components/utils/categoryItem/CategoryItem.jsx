@@ -6,7 +6,6 @@ const CategoryItem = () => {
   const state = useContext(GlobalState);
   const [categories] = state.categoriesAPI.categories;
   const [categoryIDs, setCategoryIDs] = useState([]);
-  // console.log(categories)
   useEffect(()=>{
     const categoryNames = ['Laptop', 'Phones', 'Devices', 'Headphones','Speakers'];
     const filteredIDs = categories.filter((item)=> categoryNames.includes(item.name)).map((item)=> item._id);
