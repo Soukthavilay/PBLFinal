@@ -28,10 +28,9 @@ const BestSeller = () => {
       console.log("error.message")
     }
   },[])
-
+  
   const product = data;
   var userStar = 5;
-  var numberComments = 12;
   return (
     <>
       <div className="featured-product">
@@ -84,9 +83,9 @@ const BestSeller = () => {
                               <span>({sold})</span>
                             </div>
                           </div>
-                          <a className="btn btn--animated btn--primary--white btn--border--blue">
+                          <Link to={`/detail/${_id}`} className="btn btn--animated btn--primary--white btn--border--blue">
                             Buy now
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </div>
