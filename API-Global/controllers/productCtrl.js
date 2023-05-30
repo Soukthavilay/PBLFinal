@@ -2,6 +2,7 @@ const Products = require('../models/productModel')
 const Type = require('../models/typeModel')
 const DetailProduct = require('../models/detailProductModel')
 const feedbackCtrl = require('./feedback/feedbackCtrl');
+const ProductRecommender = require('product-recommender');
 // Filter, sorting and paginating
 
 
@@ -70,6 +71,21 @@ const productCtrl = {
         try {
             const category = req.params.id;
             const products = await Products.find({ category: category });
+
+            res.json({
+                status: 'success',
+                result: products.length,
+                products: products
+            })
+
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    },
+    getProductsByBand: async (req, res) => {
+        try {
+            const band = req.params.id;
+            const products = await Products.find({ band: band });
 
             res.json({
                 status: 'success',
@@ -177,12 +193,16 @@ const productCtrl = {
     }, 
     searchProduct: async (req, res) => {
         try {
-            const { searchToken } = req.query;
-            const products = await Products.find({ title: { "$regex": searchToken, "$options": "i" } });
-            res.send(JSON.stringify(products));
-        }
-        catch (error) {
-            res.send(JSON.stringify(error))
+            const keyword = req.query.key;
+            const products = await Products.find({
+                $or: [
+                    { title: { $regex: keyword, $options: 'i' } },
+                    { band: { $regex: keyword, $options: 'i' } }
+                ]
+            });
+            res.json(products);
+        } catch (error) {
+            res.status(500).json({ message: 'Internal server error' });
         }
     },
     getDetailFeedback: async (req, res) => {

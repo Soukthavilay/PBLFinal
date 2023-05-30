@@ -19,6 +19,8 @@ router.route('/products/:id')
 
 router.route('/products/category/:id')
     .get(productCtrl.getProductsByCategory)
+router.route('/products/band/:id')
+    .get(productCtrl.getProductsByBand)
 
 
 module.exports = router
