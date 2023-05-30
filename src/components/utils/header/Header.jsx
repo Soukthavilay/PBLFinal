@@ -15,6 +15,8 @@ const Header = () => {
     const userDetail = state.userAPI.detail;
     const [cart] = state.userAPI.cart;
     const [cartCount, setCartCount] = useState(0);
+    const [searchKeyword, setSearchKeyword] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
 
     useEffect(() => {
         const count = cart.reduce((total, item) => total + item.quantity, 0);
@@ -26,6 +28,17 @@ const Header = () => {
         localStorage.removeItem("accessToken")
         // window.location.href = '/';
         window.location.reload();
+    };
+
+    const handleSearch = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/api/products/search?key=${searchKeyword}`
+        );
+        setSearchResults(response.data);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     const LogoutRouter = () => {
@@ -103,8 +116,27 @@ const Header = () => {
           <input
             className="input-search"
             placeholder="SEARCH HERE"
+            value={searchKeyword}
+            onChange={(e) => setSearchKeyword(e.target.value)}
             type="text"
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                handleSearch();
+              }
+            }}
           />
+          {searchResults.length > 0 && (
+            <div className="search-results">
+              {searchResults.map((product) => (
+                <Link target="_parent" key={product._id} to={`/detail/${product._id}`}>
+                  <div className="result-item">
+                    <p>{product.title}</p>
+                    <img src={product.images.url} alt={"image-product"} width={30}/>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
         {isLogged ? (
           LogoutRouter()

@@ -52,7 +52,7 @@ const OrderHeader = (order) => {
             <option value="Delivered">Delivered</option>
             <option value="Confirmed">Confirmed</option>
             <option value="Paid">Paid</option>
-            <option value="Cancel">Cancel</option>
+            <option value="Cancelled">Cancel</option>
           </select>
         </div>
         <div className="product-cell image">

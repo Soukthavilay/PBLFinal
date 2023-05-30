@@ -53,3 +53,44 @@ header.header{
         }
     }
 }
+
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 999;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    a {
+        .result-item{
+            display: flex;
+            flex-direction: row-reverse;
+            p{
+                font-size: 12px;
+                word-break: break-all;
+                width: 139px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            img{
+                object-fit: contain;
+                width: 23%;
+            }
+        }
+    }
+  }
+  
+  .search-results > a {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    color: #333;
+    text-decoration: none;
+  }
+  
+  .search-results a:hover {
+    background-color: #f0f0f0;
+  }

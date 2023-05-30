@@ -15,9 +15,7 @@ function MyOrders(order) {
               <img
                 src={orderItem.images.url}
                 alt={
-                  orderItem.images.url
-                    ? `${orderItem.images.url}`
-                    : "product-image"
+                  "product-image"
                 }
               />
             </div>

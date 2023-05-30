@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import OrderHeader from "./OrderHeader"
 import { GlobalState } from "../../../GlobalState";
+import { Link } from 'react-router-dom';
 
 const OrderShow = (orders) => {
   const order = orders.orders;
@@ -30,7 +31,10 @@ const OrderShow = (orders) => {
         <div className="product-cell price">Price</div>
       </div>
       {order.listOrderItems.map((item) => (
-        <div key={item._id} className="products-row">
+        <Link key={item._id} to={{
+          pathname: `/admin/orderDetail/${order._id}`,
+          state: { order }}}>
+        <div className="products-row">
           <div className="product-cell image">
             <img src={item.images.url} alt={item.images.url} />
             <span>{item.title}</span>
@@ -55,7 +59,7 @@ const OrderShow = (orders) => {
             <span className="cell-label">Price:</span>
             {item.price} USD
           </div>
-        </div>
+        </div></Link>
       ))}
       <span>
         <b>Total:</b> {order.total}
