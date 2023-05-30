@@ -40,6 +40,7 @@ const Products = () => {
     const [images, setImages] = useState(false);
     const [callback, setCallback] = state.productsAPI.callback;
     const [category] = state.categoriesAPI.categories;
+    const [bands] = state.BandAPI.bands;
     const [productShow] = state.productsAPI.products;
 
     const handleUpload = async (e) => {
@@ -186,7 +187,7 @@ const Products = () => {
                       </div>
                       <div className="row">
                         {/* <label htmlFor="band">Band</label> */}
-                        <input
+                        {/* <input
                           type="text"
                           name="band"
                           id="band"
@@ -194,7 +195,13 @@ const Products = () => {
                           value={product.band}
                           onChange={handleChangeInput}
                           placeholder="Band"
-                        />
+                        /> */}
+                        <select name="band" value={product.band} onChange={handleChangeInput}>
+                          <option>Band</option>
+                          {bands.map((band)=>{
+                            return <option value={band._id} key={band._id}>{band.name}</option>
+                          })}
+                        </select>
                       </div>
                       <div className="row">
                         {/* <label htmlFor="category">Categories</label> */}

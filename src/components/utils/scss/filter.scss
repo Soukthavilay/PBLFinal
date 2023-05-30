@@ -23,6 +23,26 @@
                     column-gap: 8px;
                 }
             }
+            .category-dropdown{
+                position: absolute;
+                // top: 100%;
+                left: 0;
+                z-index: 999;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                padding: 10px;
+                width: 100%;
+                max-height: 200px;
+                overflow-y: auto;
+                .option-menu{
+                    .option{
+                        a{
+                            text-decoration: none;
+                            color: black;
+                        }
+                    }
+                }
+            }
         }
         .Btnband{
             height: 100%;
@@ -32,6 +52,26 @@
                 display: flex;
                 flex-direction: column;
                 text-transform:uppercase;
+            }
+            .band-dropdown{
+                position: absolute;
+                // top: 100%;
+                left: 0;
+                z-index: 999;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                padding: 10px;
+                width: 100%;
+                max-height: 200px;
+                overflow-y: auto;
+                .option-menu{
+                    .option{
+                        a{
+                            text-decoration: none;
+                            color: black;
+                        }
+                    }
+                }
             }
         }
         .menu-choice{

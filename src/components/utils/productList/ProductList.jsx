@@ -12,34 +12,51 @@ import SideBar from "./SideBar";
 function ProductList() {
   const state = useContext(GlobalState);
   const [categories] = state.categoriesAPI.categories;
+  const [bands] = state.BandAPI.bands;
   const params = useParams();
   const [categoryList,setCategoryList] = useState();
+  const [band,setBand] = useState();
   const [pdcate,setPdcate] = useState();
   const [loading,setLoading] = useState(false);
 
   useEffect(()=>{
-    if(params.id && categories.length > 0){
+    if(params.id){
       const category = categories.find(category => category._id === params.id);
-      if (category) {
+      const band = bands.find(band => band._id === params.id);
+      if(band){
+        setBand(band._id);
+      } else if (category){
         setCategoryList(category._id);
       } else {
         console.log('No categories found for ID');
       }
     }
-  },[params.id, categories]);
+  },[categories,params.id,bands]);
 
 
   useEffect(()=>{
     setLoading(true);
-    if(categoryList){
-      const getProductByCategory = async ()=>{
-        const res = await axios.get(`http://localhost:5000/api/products/category/${categoryList}`)
-        setPdcate(res.data.products);
-        setLoading(false);
+    if(params.id === categoryList){
+      if(categoryList){
+        const getProductByCategory = async ()=>{
+          const res = await axios.get(`http://localhost:5000/api/products/category/${categoryList}`)
+          setPdcate(res.data.products);
+          setLoading(false);
+        }
+        getProductByCategory();
       }
-      getProductByCategory();
+    } else if(params.id === band){
+      if(band){
+        const getProductByCategory = async ()=>{
+          const res = await axios.get(`http://localhost:5000/api/products/band/${band}`)
+          console.log(res)
+          setPdcate(res.data.products);
+          setLoading(false);
+        }
+        getProductByCategory();
+      }
     }
-  },[categoryList]);
+  },[categoryList,band,params.id]);
   useEffect(()=>{
     if(pdcate?.length === 0 || pdcate === undefined){
       setLoading(true);

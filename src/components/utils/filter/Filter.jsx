@@ -5,8 +5,10 @@ import { GlobalState } from '../../../GlobalState';
 const Filter = () => {
   const state = useContext(GlobalState);
   const [categories] = state.categoriesAPI.categories;
+  const [bands] = state.BandAPI.bands;
   const [categoryIDs, setCategoryIDs] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenBand, setIsOpenBand] = useState(false);
   useEffect(() => {
     const categoryNames = ['Laptop', 'Phones', 'Devices', 'Headphones', 'Speakers'];
     const filteredIDs = categories.filter((item) => categoryNames.includes(item.name)).map((item) => item._id);
@@ -14,7 +16,12 @@ const Filter = () => {
   }, [categories]);
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
+    setIsOpenBand(false)
   };
+  const toggleDropdownBand = () => {
+    setIsOpenBand(!isOpenBand);
+    setIsOpen(false)
+  }
   return (
     <>
       <div className="menu-content">
@@ -31,9 +38,22 @@ const Filter = () => {
                 </span>
               </strong>
             </Link>
+            {isOpen && (
+              <div className="category-dropdown">
+                <ul className="option-menu">
+                  {categories.map((category) => (
+                    <li className="option" key={category._id}>
+                      <Link target="_parent" to={`/product-list/${category._id}`}>
+                        {category.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
           <div className="Btnband">
-            <Link to="/" className="btn-band">
+            <Link to="#" className="btn-band" onClick={toggleDropdownBand}>
               {/* <div className="all-menu">all</div> */}
               <strong>
                 brands{" "}
@@ -44,6 +64,19 @@ const Filter = () => {
                 </span>
               </strong>
             </Link>
+            {isOpenBand && (
+              <div className="band-dropdown">
+                <ul className="option-menu">
+                  {bands.map((band) => (
+                    <li className="option" key={band._id}>
+                      <Link target="_parent" to={`/product-list/${band._id}`}>
+                        {band.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
           <div className="menu-choice">
             <ul className="option-menu">
@@ -53,22 +86,22 @@ const Filter = () => {
                 </Link>
               </li>
               <li className="option">
-                <Link target="_parent" to={`/product-list/${categoryIDs[3]}`}>
+                <Link target="_parent" to={`/product-list/${categoryIDs[0]}`}>
                   Phones
                 </Link>
               </li>
               <li className="option">
-                <Link target="_parent" to={`/product-list/${categoryIDs[2]}`}>
+                <Link target="_parent" to={`/product-list/${categoryIDs[1]}`}>
                   Gaming
                 </Link>
               </li>
               <li className="option">
-                <Link target="_parent" to={`/product-list/${categoryIDs[1]}`}>
+                <Link target="_parent" to={`/product-list/${categoryIDs[2]}`}>
                   Devices
                 </Link>
               </li>
               <li className="option">
-                <Link target="_parent" to={`/product-list/${categoryIDs[0]}`}>
+                <Link target="_parent" to={`/product-list/${categoryIDs[3]}`}>
                   Hot Deals
                 </Link>
               </li>
