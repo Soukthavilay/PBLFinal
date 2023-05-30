@@ -5,6 +5,7 @@ import { GlobalState } from "../../../GlobalState";
 import ProfileOption from "./ProfileOption";
 import "../../utils/scss/profile.scss";
 import Review from "../review/Review";
+import Cancel from "../review/Cancel";
 
 const OrderDetail = () => {
   const state = useContext(GlobalState);
@@ -102,7 +103,7 @@ const OrderDetail = () => {
                   <span className="order-details-info_date">
                     Placed on {new Date(data.createdAt).toLocaleDateString()}
                   </span>
-                  <span className="order-details-info_method">{data.paymentMethod ? data.paymentMethod : ""}</span>
+                  <span className="order-details-info_method">Ship with {data.paymentMethod ? data.paymentMethod : ""}</span>
                 </div>
                 <div className="order-details-summary">
                   <div className="order-details-summary_item order-summary-user">
@@ -143,8 +144,28 @@ const OrderDetail = () => {
                       </span>
                     </div>
                     <span className="order-summary-price_method">
-                      Ship {data.paymentMethod ? data.paymentMethod : ""}
+                      Ship with {data.paymentMethod ? data.paymentMethod : ""}
                     </span>
+                    <div> 
+                      {data && data.status === 'Pending' ? 
+                        <Popup
+                        trigger={<button className="button btn btn--animated btn--primary--blue btn--border--blue">Cancel</button>}
+                        modal
+                        nested
+                      >
+                        {(close) => (
+                          <div className="modal review-modal">
+                            <button className="close" onClick={close}>&times;</button>
+                            <div className="header">Cancel Request</div>
+                            <div className="content">
+                              {" "}
+                              <Cancel orderId={data._id}/>
+                            </div>
+                          </div>
+                        )}
+                      </Popup>
+                      : ""}
+                    </div>
                   </div>
                 </div>
               </>
