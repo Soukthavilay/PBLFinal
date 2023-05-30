@@ -100,8 +100,6 @@ const orderCtrl = {
             if(product.amount < cart[i].quantity){
                 return res.status(400).json({ msg: 'Not enough products. please reduce.' });
             }
-            product.amount -= cart[i].quantity;
-            product.sold += cart[i].quantity;
             await product.save();
         }
         const order = new Orders({
@@ -112,7 +110,8 @@ const orderCtrl = {
             phone: phone,
             listOrderItems: cart,
             total: total,
-            status: 'Pending'
+            status: 'Pending',
+            paymentMethod: 'COD'
         });
         await order.save();
         user.cart = [];
@@ -131,7 +130,6 @@ const orderCtrl = {
                 return res.status(404).json({ msg: 'Order not found.' });
             }
             if(order.status === 'Delivered' || order.status === 'Confirmed' || order.status === 'Shipping' || order.status === 'Cancelled' || order.status === 'Paid'){
-                await order.save();
                 const user = await User.findById(order.user_id);
                 if (!user) {
                     return res.status(404).json({ msg: 'User not found.' });
@@ -155,66 +153,64 @@ const orderCtrl = {
                     subject: 'Notification order tracking ',
                     html: `
                     <html>
-
                     <body style="background-color:#e2e1e0;font-family: Open Sans, sans-serif;font-size:100%;font-weight:400;line-height:1.4;color:#000;">
-                      <table style="max-width:670px;margin:50px auto 10px;background-color:#fff;padding:50px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);-moz-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24); border-top: solid 10px green;">
-                        <thead>
-                          <tr>
-                            <th style="text-align:left;"><img style="max-width: 150px;" src="https://res.cloudinary.com/dkiofoako/image/upload/v1684836528/PBL/techinn_1_vtxuk0.svg" alt="Lao Technology" /></th>
-                            <th style="text-align:right;font-weight:400;">${currentTime}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td style="height:35px;">${order.status === "Cancelled" ? `<h2>Sorry for canceling your order because the store has a problem, so it can't deliver the goods to the customer. Try to buy new product again</h2>` : `<h2>Thank you for buying and trusting the shop. ${order.status === "Delivered" ? `<h2>Your item has been delivered</h2>` : ``}</h2>`}</td>
-                          </tr>
-                          <tr>
-                            <td colspan="2" style="border: solid 1px #ddd; padding:10px 20px;">
-                                ${order.status === "Cancelled" ? `<p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:150px">Order status</span><b style="color:red;font-weight:normal;margin:0">${order.status}</b></p>
-                                ` : `<p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:150px">Order status</span><b style="color:green;font-weight:normal;margin:0">${order.status}</b></p>
-                                `}
-                              <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Transaction ID</span> ${orderId}</p>
-                              <p style="font-size:14px;margin:0 0 0 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Order amount</span> USD. ${total}</p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td style="height:35px;"></td>
-                          </tr>
-                          <tr>
-                            <td style="width:50%;padding:20px;vertical-align:top">
-                              <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px">Name</span> ${name}</p>
-                              <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Email</span> ${email}</p>
-                              <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Phone</span> +${phone}</p>
-                              <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">ID No.</span> ${order.user_id}</p>
-                            </td>
-                            <td style="width:50%;padding:20px;vertical-align:top">
-                              <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Address</span> ${order.address}</p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td colspan="2" style="font-size:20px;padding:30px 15px 0 15px;">Items</td>
-                          </tr>
-                          <tr>
-                            <td colspan="2" style="padding:15px;">
-                                ${listOrderItems.map(item => `
-                                    <p style="font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;"><span style="display:block;font-size:13px;font-weight:normal;">${item.title}</span> USD. ${item.price} <b style="font-size:12px;font-weight:300;"> /${item.amount}</b></p>
-                                    <img src=${item.images.url} alt="order image" width=200px/>
-                                `)}
-                            </td>
-                          </tr>
-                        </tbody>
-                        <tfooter>
-                          <tr>
-                            <td colspan="2" style="font-size:14px;padding:50px 15px 0 15px;">
-                              <strong style="display:block;margin:0 0 10px 0;">Regards</strong> Lao Technology<br> Lao, Champasack, Pakse , 002132<br><br>
-                              <b>Phone:</b> 0888946837<br>
-                              <b>Email:</b> Soukthavilay2000@gmail.com
-                            </td>
-                          </tr>
-                        </tfooter>
-                      </table>
-                    </body>
-                    
+                    <table style="max-width:670px;margin:50px auto 10px;background-color:#fff;padding:50px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);-moz-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24); border-top: solid 10px green;">
+                      <thead>
+                        <tr>
+                          <th style="text-align:left;"><img style="max-width: 150px;" src="https://res.cloudinary.com/dkiofoako/image/upload/v1684836528/PBL/techinn_1_vtxuk0.svg" alt="Lao Technology" /></th>
+                          <th style="text-align:right;font-weight:400;">${currentTime}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td style="height:35px;">${order.status === "Cancelled" ? `<h2>Sorry for canceling your order because the store has a problem, so it can't deliver the goods to the customer. Try to buy new product again</h2>` : `<h2>Thank you for buying and trusting the shop. ${order.status === "Delivered" ? `<h2>Your item has been delivered</h2>` : ``}</h2>`}</td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" style="border: solid 1px #ddd; padding:10px 20px;">
+                              ${order.status === "Cancelled" ? `<p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:150px">Order status</span><b style="color:red;font-weight:normal;margin:0">${order.status}</b></p>
+                              ` : `<p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:150px">Order status</span><b style="color:green;font-weight:normal;margin:0">${order.status}</b></p>
+                              `}
+                            <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Transaction ID</span> ${orderId}</p>
+                            <p style="font-size:14px;margin:0 0 0 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Order amount</span> USD. ${total}</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="height:35px;"></td>
+                        </tr>
+                        <tr>
+                          <td style="width:50%;padding:20px;vertical-align:top">
+                            <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px">Name</span> ${name}</p>
+                            <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Email</span> ${email}</p>
+                            <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Phone</span> +${phone}</p>
+                            <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">ID No.</span> ${order.user_id}</p>
+                          </td>
+                          <td style="width:50%;padding:20px;vertical-align:top">
+                            <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Address</span> ${order.address}</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" style="font-size:20px;padding:30px 15px 0 15px;">Items</td>
+                        </tr>
+                        <tr>
+                          <td colspan="2" style="padding:15px;">
+                              ${listOrderItems.map(item => `
+                                  <p style="font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;"><span style="display:block;font-size:13px;font-weight:normal;">${item.title}</span> USD. ${item.price} <b style="font-size:12px;font-weight:300;"> /${item.amount}</b></p>
+                                  <img src=${item.images.url} alt="order image" width=200px/>
+                              `)}
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tfooter>
+                        <tr>
+                          <td colspan="2" style="font-size:14px;padding:50px 15px 0 15px;">
+                            <strong style="display:block;margin:0 0 10px 0;">Regards</strong> Lao Technology<br> Lao, Champasack, Pakse , 002132<br><br>
+                            <b>Phone:</b> 0888946837<br>
+                            <b>Email:</b> Soukthavilay2000@gmail.com
+                          </td>
+                        </tr>
+                      </tfooter>
+                    </table>
+                  </body>
                     </html>
                     `
                 };
@@ -228,6 +224,19 @@ const orderCtrl = {
                 }
                 });
             }
+            if(order.status === 'Delivered' || order.status === 'Confirmed'){
+                const od = order.listOrderItems;
+                for (let i = 0; i < od.length; i++){
+                    const product = await Products.findById(od[i]._id);
+                    if (!product) {
+                        return res.status(400).json({ msg: 'Product not found.' });
+                    }
+                    product.amount -= od[i].quantity;
+                    product.sold += od[i].quantity;
+                    await product.save();
+                }
+            }
+            await order.save();
             res.json({ msg: 'Order status updated successfully.', order });
             } catch (error) {
                 res.status(500).json({ msg: error.message });

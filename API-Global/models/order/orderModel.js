@@ -45,6 +45,7 @@ const orderSchema = new mongoose.Schema({
     },
     paymentMethod:{
         type: String,
+        enum: ['PayPal','COD']
     }
 }, {
     timestamps: true

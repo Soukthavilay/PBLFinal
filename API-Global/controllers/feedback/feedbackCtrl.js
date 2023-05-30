@@ -27,7 +27,7 @@ const feedbackCtrl = {
         user_id: user._id,
       });
       await feedback.save()
-      res.send(JSON.stringify(feedback));
+      res.json({feedback});
 
     } catch (error) {
       console.log(error);

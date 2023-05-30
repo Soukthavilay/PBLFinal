@@ -68,7 +68,7 @@ const paypalCtrl = {
             } else {
                 try {
                   const order_id = payment.transactions[0].item_list.items[0].name;
-                    await Orders.findByIdAndUpdate(order_id, { status: "Paid" },{ new: true });
+                    await Orders.findByIdAndUpdate(order_id, { status: "Paid" ,paymentMethod:"PayPal"},{ new: true });
                     res.send('Success');
                 }
                 catch (err) {

@@ -7,7 +7,7 @@ const authAdmin = require('../middleware/authAdmin')
 router.route('/feedback/create')
     .post(auth, feedbackCtrl.createFeedback)
 
-router.route('/feedback/id')
+router.route('/feedback/:id')
     .get(feedbackCtrl.getFeedbackByProductID)
 
 module.exports = router
