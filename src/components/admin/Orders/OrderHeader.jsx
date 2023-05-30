@@ -41,7 +41,12 @@ const OrderHeader = (order) => {
   return (
     <>
       <div className="products-header">
-        <div className="product-cell image">Order of User : {orderData.name}</div>
+        <div className="product-cell image">
+          Order of User : {orderData.name}
+        </div>
+        <div className="product-cell image">
+          {formattedDateTime} {minutesDifference}
+        </div>
         <div className="product-cell image">
           <select
             className="app-content-headerButton button"
@@ -54,9 +59,6 @@ const OrderHeader = (order) => {
             <option value="Paid">Paid</option>
             <option value="Cancelled">Cancel</option>
           </select>
-        </div>
-        <div className="product-cell image">
-          {formattedDateTime} {minutesDifference}
         </div>
       </div>
     </>

@@ -11,7 +11,7 @@ const OrderCancel = (order) => {
         <div className="product-cell image">Item</div>
         <div className="product-cell status-cell">Status</div>
         <div className="product-cell sales">Quantity</div>
-        <div className="product-cell stock">Band</div>
+        <div className="product-cell stock">Brand</div>
         <div className="product-cell price">Price</div>
         </div>
         {orderItem.listOrderItems.map((item) => (
