@@ -54,6 +54,7 @@ app.use('/api', require('./routes/address/district'))
 app.use('/api', require('./routes/address/province'))
 app.use('/api', require('./routes/orderRouter'))
 app.use("/api", require("./routes/paypalRouter"))
+app.use("/api", require("./routes/bandRouter"))
 
 
 
