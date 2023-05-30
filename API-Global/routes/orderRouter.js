@@ -14,6 +14,19 @@ router.route('/orders')
 
 router.route('/createOrder').post(orderCtrl.CreateOrderKoh)
 
+// thong ke 
+router.route('/statistics/sales')
+    .get(orderCtrl.sales)
+
+    router.route('/statistics/revenue')
+    .get(orderCtrl.revenue)
+
+router.route('/statistics/newUser')
+    .get(orderCtrl.newUser)
+
+router.route('/statistics/cate')
+    .get(orderCtrl.statisticsCate)
+
 router.route('/orders/admin')
     .get(auth, authAdmin, orderCtrl.getAllOrders)
 

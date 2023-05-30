@@ -670,6 +670,50 @@ const orderCtrl = {
             console.log(err)
             res.send({ message: err.message });
         }
+    },
+    sales: async (req, res) => {
+        try {
+            const sales = await Products.aggregate([
+                { $group: { _id: null, totalSold: { $sum: '$sold' }, products: { $push: '$$ROOT' } } }
+            ]);
+            const totalSales = sales.length > 0 ? sales[0].totalSold : 0;
+            const soldProducts = sales.length > 0 ? sales[0].products : [];
+            res.json({ totalSales, soldProducts });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+    revenue: async (req, res) => {
+        try {
+            const orders = await Orders.find({ status: 'Delivered' });
+            const totalRevenue = orders.reduce((total, order) => total + order.total, 0);
+            const deliveredOrders = orders;
+            res.json({ totalRevenue, deliveredOrders });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+    newUser: async (req, res)=>{
+        try {
+            const startDate = new Date();
+            startDate.setDate(startDate.getDate() - 7);
+            const newUsers = await User.find({ createdAt: { $gte: startDate } });
+            res.json(newUsers);
+        } catch (error) {
+            res.send({ message: error.message });
+        }
+    },
+    statisticsCate: async (req, res)=>{
+        try {
+            // Thực hiện truy vấn để lấy thông tin thống kê sản phẩm theo danh mục
+            const categoryStats = await Products.aggregate([
+            { $group: { _id: '$category', totalProducts: { $sum: 1 } } }
+        ]);
+        
+        res.json(categoryStats);
+        } catch (error) {
+        res.status(500).json({ message: 'Internal server error' });
+        }
     }
 
 
