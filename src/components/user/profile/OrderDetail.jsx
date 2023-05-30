@@ -20,7 +20,15 @@ const OrderDetail = () => {
       console.log("No match found");
     }
   }, [myOrder, param.id]);
-
+  if(data){
+    var style ={
+      background: data.status !== "Cancelled" && data.status !== "Cancel Requested" ? 'green' : 'red',
+    }
+  } else {
+    style = {
+      background : 'none'
+    }
+  }
   return (
     <div className="profile">
       <ProfileOption />
@@ -30,9 +38,9 @@ const OrderDetail = () => {
         <div className="order-details-content">
           <div className="order-details-header">
             <div className="order-header-item">
-              Your package is preparing...
+              {data ? <p>{data.status === "Cancelled" ? "Your package is cancelled" : "Your package is preparing..."}</p> : "Your package is cancelled"}
             </div>
-            <div className="order-header-item order-status">{}</div>
+            {data ? <div style={style} className="order-header-item order-status">{data.status}</div> : <div style={style} className="order-header-item order-status"></div>}
           </div>
           <div className="order-details-body">
             <div className="order-details-body_product">
