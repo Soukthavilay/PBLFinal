@@ -11,6 +11,7 @@ function ProductDetailHeader( detailProduct ) {
 
   let [count, setCount] = useState(1);
   const state = useContext(GlobalState);
+  const [isLogged] = state.userAPI.isLogged;
   const product = detailProduct.detailProduct;
   const addCart = state.userAPI.addCart
   const idProduct = product._id;
@@ -112,7 +113,7 @@ function ProductDetailHeader( detailProduct ) {
             </div>
           </div>
             <Link
-              to="/order-summary"
+              to={isLogged ? "/order-summary" : "/sign-in"}
               className="btn btn--animated btn--primary--blue btn--border--blue"
               onClick={() => addCart(product)}
             >
