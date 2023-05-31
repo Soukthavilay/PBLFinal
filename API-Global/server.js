@@ -26,7 +26,7 @@ app.use(morgan('tiny'));
 // app.disable('x-powered-by'); // less hackers know about our stack
 // app.use(cors());
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "https://splendid-puppy-f9941c.netlify.app",
     credentials: true,
 }));
 app.use(bodyParser.json());
@@ -88,7 +88,7 @@ if (process.env.NODE_ENV === "production") {
   }
 
   app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', "http://localhost:3000");
+    res.header('Access-Control-Allow-Origin', "https://splendid-puppy-f9941c.netlify.app");
     res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
