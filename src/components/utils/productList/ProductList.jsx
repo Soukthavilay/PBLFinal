@@ -49,7 +49,6 @@ function ProductList() {
       if(band){
         const getProductByCategory = async ()=>{
           const res = await axios.get(`http://localhost:5000/api/products/band/${band}`)
-          console.log(res)
           setPdcate(res.data.products);
           setLoading(false);
         }

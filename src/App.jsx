@@ -7,8 +7,22 @@ import TopHeader from './components/utils/top-header/TopHeader';
 import Header from './components/utils/header/Header';
 import Filter from './components/utils/filter/Filter';
 import { Footer } from './components/utils/footer/Footer';
+import Loading from './components/utils/Loading/Loading';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 const App = () => {
+  const [laoding,setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000); 
+  }, []);
+  
+  if (laoding) {
+    return <Loading/>
+  }
   return (
     <DataProvider>
       <Router>
