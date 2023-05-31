@@ -3,6 +3,7 @@ import { GlobalState } from '../../../GlobalState'
 import { useContext } from 'react'
 import { useState } from 'react';
 import axios from 'axios';
+import '../scss/category_create.scss'
 
 const Categories = () => {
   const state = useContext(GlobalState);
@@ -59,9 +60,9 @@ const Categories = () => {
           <div className='category_left'>
             <h3>Create category</h3>
             <div className='field_category'>
-            <input type="text" name="category" value={category} required
+            <input className='' type="text" name="category" value={category} required
                 onChange={e => setCategory(e.target.value)} />
-              <button type="submit" onClick={createCategory}>{onEdit? "Edit" : "Create"}</button>
+              <button className='app-content-headerButton button' type="submit" onClick={createCategory}>{onEdit? "Edit" : "Create"}</button>
             </div>
           </div>
           <div className='category_right'>
@@ -70,9 +71,9 @@ const Categories = () => {
               return (
                 <div key={category._id} className='category_list'>
                   <h5>{category.name}</h5>
-                  <div>
-                      <button onClick={() => editCategory(category._id, category.name)}>Edit</button>
-                      <button onClick={() => deleteCategory(category._id)}>Delete</button>
+                  <div className='button-category'>
+                      <button className='app-content-headerButton button' onClick={() => editCategory(category._id, category.name)}>Edit</button>
+                      <button className='app-content-headerButton button' onClick={() => deleteCategory(category._id)}>Delete</button>
                   </div>
                 </div>
               )
