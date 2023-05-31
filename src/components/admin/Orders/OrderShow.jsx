@@ -38,7 +38,8 @@ const OrderShow = (orders) => {
           </div>
           <div className="product-cell status-cell">
             <span className="cell-label">Status:</span>
-            <span className="status active">{order.status}</span>
+            {order.status === "Cancelled" ? <span className="status canceled">{order.status}</span> :
+              <span className="status active">{order.status}</span>}
           </div>
           <div className="product-cell sales">
             <span className="cell-label">Sales:</span>
@@ -54,8 +55,8 @@ const OrderShow = (orders) => {
           </div>
         </div></Link>
       ))}
-      <span>
-        <b>Total:</b> {order.total}
+      <span className="total-color">
+        <b>Total:</b> {order.total} USD
       </span>
     </>
   );

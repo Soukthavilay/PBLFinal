@@ -11,6 +11,9 @@ const Orders = () => {
     const [order,setOrder] = state.userAPI.history;
     const [token] = state.token;
     const [loading,setLoading] = useState(false)
+    const [sortOrder, setSortOrder] = useState('desc');
+    const [sortedOrders, setSortedOrders] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(()=>{
       if (token){
@@ -26,6 +29,28 @@ const Orders = () => {
       }
     },[token,setOrder]);
 
+    const handleSortOrder = () => {
+      const sorted = [...order].sort((a, b) => {
+        // Sắp xếp theo createdAt (ngày tạo đơn hàng)
+        if (sortOrder === 'asc') {
+          return new Date(a.createdAt) - new Date(b.createdAt);
+        } else {
+          return new Date(b.createdAt) - new Date(a.createdAt);
+        }
+      });
+      setSortedOrders(sorted);
+    };
+
+    const handleSearch = () => {
+      const filteredOrders = order.filter((orderItem) =>
+        orderItem.name?.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setSortedOrders(filteredOrders);
+    };
+    useEffect(() => {
+      handleSortOrder();
+    }, [order, sortOrder]);
+
     return (
       <>
       {loading ? <Loading/> : 
@@ -34,7 +59,24 @@ const Orders = () => {
           <h1 className="app-content-headerText">All Order</h1>
         </div>
         <div className="app-content-actions">
-          <input type="text" className="search-bar" />
+            <input
+              type="text"
+              className="search-bar"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search by user..."
+            />
+            <button className="app-content-headerButton button" onClick={handleSearch}>
+              Search
+            </button>
+          <select
+              className="sort-order app-content-headerButton button"
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
+            >
+              <option value="desc">Newest</option>
+              <option value="asc">Oldest</option>
+            </select>
         </div>
         <div className="product-area-wrapper tableView">
           <div className="products-header">
@@ -45,7 +87,7 @@ const Orders = () => {
             <div className="product-cell stock">Band</div>
             <div className="product-cell price">Price</div>
           </div>
-          {order.map((orderItem)=>{
+          {sortedOrders.map((orderItem)=>{
             return <OrderShow key={orderItem._id} orders={orderItem}/>
           })}
         </div>
