@@ -22,14 +22,7 @@ const OrderShow = (orders) => {
   return (
     <>
       <OrderHeader key={order._id} order={order} />
-      <div className="products-header">
-        <div className="product-cell image">Item</div>
-        <div className="product-cell category">Category</div>
-        <div className="product-cell status-cell">Status</div>
-        <div className="product-cell sales">Quantity</div>
-        <div className="product-cell stock">Band</div>
-        <div className="product-cell price">Price</div>
-      </div>
+      
       {order.listOrderItems.map((item) => (
         <Link key={item._id} to={{
           pathname: `/admin/orderDetail/${order._id}`,

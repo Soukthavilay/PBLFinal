@@ -29,6 +29,13 @@ const Report = () => {
           <input type="text" className="search-bar" />
         </div>
         <div className="product-area-wrapper tableView">
+          <div className="products-header">
+            <div className="product-cell image">Item</div>
+            <div className="product-cell status-cell">Status</div>
+            <div className="product-cell sales">Quantity</div>
+            <div className="product-cell stock">Brand</div>
+            <div className="product-cell price">Price</div>
+          </div>
           {order?.map((orderItem)=>{
             return <OrderCancel key={orderItem._id} orders={orderItem}/>
           })}

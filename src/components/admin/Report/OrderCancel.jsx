@@ -7,13 +7,6 @@ const OrderCancel = (order) => {
   return (
     <>
         <OrderHeader key={orderItem._id} order={orderItem} />
-        <div className="products-header">
-        <div className="product-cell image">Item</div>
-        <div className="product-cell status-cell">Status</div>
-        <div className="product-cell sales">Quantity</div>
-        <div className="product-cell stock">Brand</div>
-        <div className="product-cell price">Price</div>
-        </div>
         {orderItem.listOrderItems.map((item) => (
             <Link key={item._id} to={{
               pathname: `/admin/orderDetail/${orderItem._id}`,

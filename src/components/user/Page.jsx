@@ -21,12 +21,25 @@ import PaymentMethod from './checkout/PaymentMethod';
 import OrderDetail from './profile/OrderDetail';
 import MyInfo from './profile/MyInfo';
 import Review from './review/Review';
+import { useState } from 'react';
+import Loading from '../utils/Loading/Loading';
+import { useEffect } from 'react';
 
 const Page = () => {
   const state = useContext(GlobalState);
   const [isLogged] = state.userAPI.isLogged;
   const [isAdmin] = state.userAPI.isAdmin;
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1500); 
+  }, []);
   
+  if (isLoading) {
+    return <Loading/>
+  }
   return (
     <Router>
       <Switch>
