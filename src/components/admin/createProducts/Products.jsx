@@ -41,7 +41,20 @@ const Products = () => {
     const [callback, setCallback] = state.productsAPI.callback;
     const [category] = state.categoriesAPI.categories;
     const [bands] = state.BandAPI.bands;
+    const [searchKeyword, setSearchKeyword] = useState("");
+    const [searchResults, setSearchResults] = useState([]);
     const [productShow] = state.productsAPI.products;
+
+    const handleSearch = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:5000/api/products/search?key=${searchKeyword}`
+        );
+        setSearchResults(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
     const handleUpload = async (e) => {
         e.preventDefault();
@@ -435,7 +448,23 @@ const Products = () => {
             </Popup>
           </div>
           <div className="app-content-actions">
-            <input type="text" className="search-bar" />
+            <input type="text" 
+            className="search-bar"
+            placeholder="SEARCH HERE"
+            value={searchKeyword}
+            onChange={(e) => setSearchKeyword(e.target.value)}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                handleSearch();
+              }
+            }} />
+            {searchResults.length > 0 && (
+            <div className='product-area-wrapper tableView'>
+              {searchResults.map((productShow) => (
+                <ProductRow key={productShow._id} productShow={productShow}/>
+              ))}
+            </div>
+          )}
             <div className="app-content-actions-wrapper">
               <div className="filter-button-wrapper">
                 <button className="action-button filterJsFilter">
