@@ -44,7 +44,8 @@ router.route('/cart')
 
 router.route('/history')
     .get(auth, orderCtrl.getMyOrder)
-    .put(orderCtrl.getOrdersByTime)
+
+router.route('/orders/time').get(orderCtrl.getOrdersByTime)
 
 router.route('/cart/checkout')
     .post(auth, orderCtrl.checkoutOrder)

@@ -513,33 +513,33 @@ const orderCtrl = {
     },
     getOrdersByTime: async (req, res) => {
         try {
-            const { start, end } = req.body;
-            const userID = await authMe(req);
-            var endDate, startDate;
-            try {
-                endDate = new Date(end);
-                startDate = new Date(start);
-            }
-            catch (err) {
-                res.send({ message: "Wrong date format" });
-                return;
-            }
-            const orders = await Orders.find({
-                createdAt: { $gte: new Date(startDate), $lte: new Date(endDate) },
-                user_id: userID,
-                status: "Paid"
-            }, {
-                createdAt: 1,
-                total: 1,
-                status: 1,
-                listOrderItems: 1
-            });
-            res.send(orders);
+          const { start, end } = req.body;
+          const userID = await authMe(req);
+          var endDate, startDate;
+          try {
+            endDate = new Date(end);
+            startDate = new Date(start);
+          } catch (err) {
+            res.send({ err });
+            return;
+          }
+          const orders = await Orders.find({
+            createdAt: { $gte: startDate, $lte: endDate },
+            user_id: userID,
+          }, {
+            createdAt: 1,
+            total: 1,
+            status: 1,
+            listOrderItems: 1
+          })
+          .sort({ createdAt: -1 })
+          .exec();
+          res.send(orders);
         } catch (err) {
-            console.log(err);
-            return res.status(500).json({ msg: err.message });
+          console.log(err);
+          return res.status(500).json({ msg: err.message });
         }
-    },
+      },
     getMyOrder: async (req, res) => {
         try {
             const userID = await authMe(req);
