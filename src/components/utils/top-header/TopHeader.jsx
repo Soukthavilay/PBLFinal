@@ -10,14 +10,14 @@ const TopHeader = () => {
             <i className='fa fa-envelope'></i>
             <label> BouphaphanSoukthavilay@ui-lib.com</label>
             </div>
-            <div className='right row RText'>
+            {/* <div className='right row RText'>
             <label>Theme FAQ`s</label>
             <label>Need Help?</label>
             <span>🏳️</span>
             <label>EN</label>
             <span>🏳️</span>
             <label>USD</label>
-            </div>
+            </div> */}
         </div>
         </section>
     )

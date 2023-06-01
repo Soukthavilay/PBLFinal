@@ -93,7 +93,7 @@ function LoginForm() {
   };
 
   return (
-    <>
+    <div className="login-page">
     {loading && <Loading />} {/* Hiển thị component Loading khi loading là true */}
       <div
         className={
@@ -183,7 +183,7 @@ function LoginForm() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

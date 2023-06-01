@@ -31,10 +31,14 @@ const App = () => {
           {/* <Route path="/client" component={User} /> */}
           {/* <Route path="/admin" component={Admin} /> */}
         {/* </Switch> */}
-        <TopHeader/>
-        <Header/>
-        <Filter/>
-        <User/>
+        <div className="header">
+          <TopHeader/>
+          <Header/>
+        </div>
+        {/* <Filter/> */}
+        <div className="page-content">
+          <User/>
+        </div>
         <Footer/>
       </Router>
     </DataProvider>
