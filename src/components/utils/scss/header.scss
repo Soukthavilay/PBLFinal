@@ -138,6 +138,7 @@ header {
     .result-item {
       display: flex;
       flex-direction: row-reverse;
+      justify-content: space-around;
 
       p {
         font-size: 12px;

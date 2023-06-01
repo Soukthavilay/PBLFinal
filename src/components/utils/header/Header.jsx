@@ -117,8 +117,30 @@ const Header = () => {
               </label>
             </div>
             <div className="header-search header-item">
-              <input type="text" name="search" placeholder="Find product..." />
-              <button className="search-btn"><AiOutlineSearch/></button>
+              <input 
+                type="text" 
+                name="search" 
+                placeholder="Find product..." 
+                value={searchKeyword}
+                onChange={(e) => setSearchKeyword(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleSearch();
+                  }
+                }}/>
+                {searchResults.length > 0 && (
+                  <div className="search-results">
+                    {searchResults.map((product) => (
+                      <Link target="_parent" key={product._id} to={`/detail/${product._id}`}>
+                        <div className="result-item">
+                          <p>{product.title}</p>
+                          <img src={product.images.url} alt={"image-product"} width={30}/>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              <button onClick={handleSearch} className="search-btn"><AiOutlineSearch/></button>
             </div>
             
             {isLogged ? (
