@@ -625,3 +625,9 @@ $font-large: 24px;
 .canceled{
   background-color: #ff1616;
 }
+.header-status{
+  cursor: pointer;
+}
+.header-status:hover{
+  background-color: unset;
+}

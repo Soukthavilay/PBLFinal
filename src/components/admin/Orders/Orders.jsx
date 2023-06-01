@@ -14,6 +14,7 @@ const Orders = () => {
     const [sortOrder, setSortOrder] = useState('desc');
     const [sortedOrders, setSortedOrders] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [statusOrder, setStatusOrder] = useState('');
 
     useEffect(()=>{
       if (token){
@@ -47,6 +48,12 @@ const Orders = () => {
       );
       setSortedOrders(filteredOrders);
     };
+
+    const handleSortByStatus = (status) => {
+      const filteredOrders = order.filter((orderItem) => orderItem.status === status);
+      setSortedOrders(filteredOrders);
+      setStatusOrder(status);
+    };
     useEffect(() => {
       handleSortOrder();
     }, [order, sortOrder]);
@@ -79,6 +86,48 @@ const Orders = () => {
             </select>
         </div>
         <div className="product-area-wrapper tableView">
+        <div className="products-header">
+              <div
+                className="product-cell image header-status"
+                onClick={() => handleSortByStatus('Cancelled')}
+              >
+                Order cancelled
+              </div>
+              {/* <div
+                className="product-cell category header-status"
+                onClick={() => handleSortByStatus('Cancel Requested')}
+              >
+                Order request cancel
+              </div> */}
+              <div
+                className="product-cell status-cell header-status"
+                onClick={() => handleSortByStatus('Pending')}
+              >
+                Order Pending
+              </div>
+              <div
+                className="product-cell status-cell header-status"
+                onClick={() => handleSortByStatus('Confirmed')}
+              >
+                Order Confirmed
+              </div>
+              <div className="product-cell sales header-status" onClick={() => handleSortByStatus('Paid')}>
+                Paid
+              </div>
+              <div
+                className="product-cell stock header-status"
+                onClick={() => handleSortByStatus('Shipping')}
+              >
+                Shipping
+              </div>
+              <div
+                className="product-cell price header-status"
+                onClick={() => handleSortByStatus('Delivered')}
+              >
+                Delivered
+              </div>
+            </div>
+          <hr/>
           <div className="products-header">
             <div className="product-cell image">Item</div>
             <div className="product-cell category">Category</div>
