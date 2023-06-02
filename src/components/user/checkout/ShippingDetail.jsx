@@ -12,6 +12,7 @@ function ShippingDetail() {
   const email = userDetail.email; 
   const [phone,setPhone] = useState('');
   const [address,setAddress] = useState('');
+  const [voucher,setVoucher] = useState('');
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('cod');
   const [itemOrder,setItemOrder] = useState();
   const [loading, setLoading] = useState(false);
@@ -24,11 +25,15 @@ const handleSubmit = async (e) => {
   if (selectedPaymentMethod === 'cod') {
     try {
       setLoading(true);
-      await axios.post('http://localhost:5000/api/createOrder', {
+      let requestBody = {
         phone: phone,
         address: address,
         user_id: id
-      });
+      };
+      if (voucher) {
+        requestBody.voucherCode = voucher;
+      }
+      await axios.post('http://localhost:5000/api/createOrder',requestBody);
 
       window.location.href = "/checkout-confirm";
     } catch (error) {
@@ -39,11 +44,15 @@ const handleSubmit = async (e) => {
   } else if (selectedPaymentMethod === 'paypal') {
     try {
       setLoading(true);
-      const res = await axios.post('http://localhost:5000/api/createOrder', {
+      let requestBody = {
         phone: phone,
         address: address,
         user_id: id
-      });
+      };
+      if (voucher) {
+        requestBody.voucherCode = voucher;
+      }
+      const res = await axios.post('http://localhost:5000/api/createOrder',requestBody);
       setItemOrder(res.data);
     } catch (error) {
       console.log(error);
@@ -54,20 +63,24 @@ const handleSubmit = async (e) => {
 useEffect(() => {
   if (itemOrder && itemOrder.order?.listOrderItems?.length > 0) {
     const orderNow = {
-      amount: itemOrder.order.listOrderItems[0].quantity,
       order_id: itemOrder.order._id,
-      total: itemOrder.order.total,
-      price: itemOrder.order.listOrderItems[0].price
     };
     axios.post('http://localhost:5000/api/paypal', { ...orderNow })
       .then(response => {
-        // Xử lý kết quả của API
         window.open(response.data.url, '_blank');
         window.location.href = "/checkout-confirm";
       })
       .catch(error => {
-        // Xử lý lỗi nếu có
-        console.log(error);
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log('Error', error.message);
+        }
+        console.log(error.config);
       }).finally(() =>{
         setLoading(false);
       });
@@ -106,6 +119,10 @@ useEffect(() => {
           <div className="form-group">
             <label htmlFor="address">Address</label>
             <input name="address" type="text" value={address}  onChange={e => setAddress(e.target.value)}/>
+          </div>
+          <div className="form-group">
+            <label htmlFor="address">Voucher</label>
+            <input name="address" type="text" value={voucher}  onChange={e => setVoucher(e.target.value)}/>
           </div>
           <div className="form-group">
             <label htmlFor="payment-method">Payment methods</label>
