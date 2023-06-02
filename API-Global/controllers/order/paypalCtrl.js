@@ -1,12 +1,14 @@
 const paypal = require('paypal-rest-sdk')
-const Orders = require('../../models/order/orderModel')
+const Orders = require('../../models/order/orderModel');
+const voucherModel = require('../../models/voucherModel');
 
 const paypalCtrl = {
 
     payment: async (req, res) => {
         try {
-          const { amount, order_id ,price, total} = req.body;
+          const {order_id} = req.body;
           const Order = await Orders.findById(order_id);
+          const voucher = await voucherModel.find({code: Order.voucherCode})
           const payment = {
             intent: "sale",
             payer: {
@@ -23,22 +25,23 @@ const paypalCtrl = {
                   items: Order.listOrderItems.map((item) => ({
                     name: order_id,
                     sku: "001",
-                    price: item.price,
+                    price: item.price - item.price * voucher[0].discountPercentage / 100,
                     currency: "USD",
                     quantity: item.quantity,
                   })),
                 },
                 amount: {
                   currency: "USD",
-                  total: total,
+                  total: Order.total,
                 },
                 description: "This is the payment description.",
               },
             ],
           };
-      
+    
           paypal.payment.create(payment, function (error, payment) {
             if (error) {
+              console.log(error.response.details);  
               throw error;
             } else {
               for (let i = 0; i < payment.links.length; i++) {

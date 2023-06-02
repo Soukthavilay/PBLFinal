@@ -46,7 +46,11 @@ const orderSchema = new mongoose.Schema({
     paymentMethod:{
         type: String,
         enum: ['PayPal','COD']
-    }
+    },
+    voucherCode: {
+        type: String,
+        default: null,
+    },
 }, {
     timestamps: true
 });

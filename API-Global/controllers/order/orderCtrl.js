@@ -12,6 +12,7 @@ const axios = require('axios');
 const dotenv = require('dotenv');
 const nodemailer = require("nodemailer");
 const Mailgen = require('mailgen');
+const Voucher = require('../../models/voucherModel')
 
 const orderCtrl = {
     createOrder: async (req, res) => {
@@ -78,31 +79,32 @@ const orderCtrl = {
     },
     CreateOrderKoh: async (req, res) => {
         try {
-            const { phone, address ,user_id} = req.body;
-            const user = await User.findById(user_id);
-            if (!user) {
-                return res.status(400).json({ msg: 'User does not exist.' });
-            }
-        
-        const cart = user.cart;
-        let total = 0;
-        for (let i = 0; i < cart.length; i++){
+          const { phone, address, user_id, voucherCode } = req.body;
+          const user = await User.findById(user_id);
+          if (!user) {
+            return res.status(400).json({ msg: 'User does not exist.' });
+          }
+      
+          const cart = user.cart;
+          let total = 0;
+          for (let i = 0; i < cart.length; i++) {
             const product = await Products.findById(cart[i]._id);
             if (!product) {
-                return res.status(400).json({ msg: 'Product not found.' });
+              return res.status(400).json({ msg: 'Product not found.' });
             }
             const purchasedPrice = cart[i].price;
             total += purchasedPrice * cart[i].quantity;
             cart[i].price = purchasedPrice;
-            if(product.amount === 0){
-                return res.status(400).json({ msg: 'The product is out of stock.' });
+            if (product.amount === 0) {
+              return res.status(400).json({ msg: 'The product is out of stock.' });
             }
-            if(product.amount < cart[i].quantity){
-                return res.status(400).json({ msg: 'Not enough products. please reduce.' });
+            if (product.amount < cart[i].quantity) {
+              return res.status(400).json({ msg: 'Not enough products. please reduce.' });
             }
             await product.save();
-        }
-        const order = new Orders({
+          }
+      
+          const order = new Orders({
             user_id: user_id,
             email: user.email,
             name: user.name,
@@ -111,16 +113,31 @@ const orderCtrl = {
             listOrderItems: cart,
             total: total,
             status: 'Pending',
-            paymentMethod: 'COD'
-        });
-        await order.save();
-        user.cart = [];
-        await user.save();
-        return res.json({ msg: 'Order placed successfully.', order: order });
+            paymentMethod: 'COD',
+          });
+      
+          let voucher = null; // Khởi tạo biến voucher
+          if (voucherCode) {
+            voucher = await Voucher.findOne({ code: voucherCode });
+            if (!voucher) {
+              return res.status(400).json({ msg: 'Invalid voucher code' });
+            }
+            order.voucherCode = voucherCode; // Gán giá trị voucherCode vào order
+          }
+      
+          if (voucher) {
+            const discount = (total * voucher.discountPercentage) / 100;
+            order.total -= discount; // Áp dụng giảm giá vào order
+          }
+      
+          await order.save();
+          user.cart = [];
+          await user.save();
+          return res.json({ msg: 'Order placed successfully.', order: order });
         } catch (error) {
-            return res.status(500).json({ msg: error.message });
+          return res.status(500).json({ msg: error.message });
         }
-    },      
+      },                  
     updateOrderStatusAdmin: async (req,res) => {
         const orderId  = req.params.id;
         const {status} = req.body;
@@ -224,7 +241,7 @@ const orderCtrl = {
                 }
                 });
             }
-            if(order.status === 'Delivered' || order.status === 'Confirmed'){
+            if(order.status === 'Delivered'){
                 const od = order.listOrderItems;
                 for (let i = 0; i < od.length; i++){
                     const product = await Products.findById(od[i]._id);
