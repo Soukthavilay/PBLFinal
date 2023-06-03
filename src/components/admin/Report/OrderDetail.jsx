@@ -1,5 +1,6 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+import "../scss/order-detail.scss"
 
 const OrderDetail = () => {
   const location = useLocation();
@@ -14,47 +15,100 @@ const OrderDetail = () => {
         {/* làm trang này giúp em vs  */}
         {/* em get data xong hết rồi  */}
 
-        <div className="order-canceled-detail">
-          <div className="order-canceled-detail_product">
-            <div className="product-summary">
-              <div className="product-summary-left">
-                <img src="" alt="" />
-                <div className="oroduct-name">
-                  <h3>iPhone sieu to khong lo</h3>
-                  <span>Mau sac: </span>
+        <h3 className="order-title">
+          Order Number <span className="order-number">#256894</span>
+        </h3>
+        <div className="order-detail-admin">
+          <div className="order-detail-left">
+            <div className="order-item-summary frame">
+              <div className="order-item-summary_row">
+                <div className="order-item-summary_row-item title">Items Summary</div>
+                <div className="order-item-summary_row-item">Qty</div>
+                <div className="order-item-summary_row-item">Price</div>
+                <div className="order-item-summary_row-item">Total Price</div>
+              </div>
+              <div className="order-item-summary_row product">
+                <div className="order-item-summary_row-item">
+                  <img src="https://res.cloudinary.com/dkiofoako/image/upload/v1684992434/test/wxh3tdlbtt4uutjrh4te.jpg" alt="" />
+                  <h3>iPhone 14 Pro Max</h3>
+                </div>
+                <div className="order-item-summary_row-item">x 1</div>
+                <div className="order-item-summary_row-item">$200.00</div>
+                <div className="order-item-summary_row-item">$200.00</div>
+              </div>
+              <div className="order-item-summary_row product">
+                <div className="order-item-summary_row-item">
+                  <img src="https://res.cloudinary.com/dkiofoako/image/upload/v1684992434/test/wxh3tdlbtt4uutjrh4te.jpg" alt="" />
+                  <h3>iPhone 14 Pro Max</h3>
+                </div>
+                <div className="order-item-summary_row-item">x 1</div>
+                <div className="order-item-summary_row-item">$200.00</div>
+                <div className="order-item-summary_row-item">$200.00</div>
+              </div>
+              <div className="order-item-summary_row product">
+                <div className="order-item-summary_row-item">
+                  <img src="https://res.cloudinary.com/dkiofoako/image/upload/v1684992434/test/wxh3tdlbtt4uutjrh4te.jpg" alt="" />
+                  <h3>iPhone 14 Pro Max</h3>
+                </div>
+                <div className="order-item-summary_row-item">x 1</div>
+                <div className="order-item-summary_row-item">$200.00</div>
+                <div className="order-item-summary_row-item">$200.00</div>
+              </div>
+            </div>
+            <div className="order-customer-info frame">
+              <h3>Customer And Order Details</h3>
+              <div className="order-customer-info_item">
+                <span className="title">Customer Name</span>
+                <span className="subtitle">Koh Koh</span>
+              </div>
+              <div className="order-customer-info_item">
+                <span className="title">Phone Number</span>
+                <span className="subtitle">Phone Number</span>
+              </div>
+              <div className="order-customer-info_item">
+                <span className="title">Type Order</span>
+                <span className="subtitle">Ship Cod</span>
+              </div>
+              <div className="order-customer-info_item">
+                <span className="title">Note</span>
+                <span className="subtitle">Giao giờ hành chính</span>
+              </div>
+            </div>
+          </div>
+          <div className="order-detail-right">
+            <div className="order-summary frame">
+              <div className="order-summary-header">
+                <h3>Order Summary</h3>
+                <span className="order-status">
+                  Canceled
+                </span>
+              </div>
+              <div className="order-summary-content">
+                <div className="order-summary-content_item">
+                  <span className="title">Order Date</span>
+                  <span className="subtitle">04/06/2023</span>
+                </div>
+                <div className="order-summary-content_item">
+                  <span className="title">Subtotal</span>
+                  <span className="subtitle">$ 1000</span>
+                </div>
+                <div className="order-summary-content_item">
+                  <span className="title">Delivery Fee</span>
+                  <span className="subtitle">$ 0</span>
                 </div>
               </div>
-              <div className="product-summary-right">
-                <span className="summary-right-item">Qty: 1</span>
-                <span className="summary-right-item">2.000.000 VND</span>
+            </div>
+            <div className="order-total frame">
+              <span className="title">Total</span>
+              <span className="subtitle">$ 1000</span>
+            </div>
+            <div className="order-address frame">
+              <h3>Delivery Address</h3>
+              <div className="order-address-content">
+                <span className="title">Address: </span>
+                <span className="subtitle">Nguyen Tat Thanh, Thanh Khe, Da Nang</span>
               </div>
             </div>
-            <div className="product-summary">
-              <div className="product-summary-left">
-                <img src="" alt="" />
-                <div className="oroduct-name">
-                  <h3>iPhone sieu to khong lo</h3>
-                  <span>Mau sac: </span>
-                </div>
-              </div>
-              <div className="product-summary-right">
-                <span className="summary-right-item">Qty: 1</span>
-                <span className="summary-right-item">2.000.000 VND</span>
-              </div>
-            </div>
-            <div className="product-content">
-              <div className="product-content-left">
-                <h3>Thong tin nguoi mua</h3>
-                <div className="content-left-item">Name: </div>
-                <div className="content-left-item">Email: </div>
-                <div className="content-left-item">Phone: </div>
-                <div className="content-left-item">Payment Method: </div>
-              </div>
-              <div className="product-content-right">
-                <div className="content-right-item">Ly do huy: Abcxyz</div>
-              </div>
-            </div>
-            <div className="product-price-total">Total: 20.000.000 VND</div>
           </div>
         </div>
 
