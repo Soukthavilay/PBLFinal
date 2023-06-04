@@ -6,13 +6,13 @@ import OrderCancel from './OrderCancel';
 const Report = () => {
   const state = useContext(GlobalState);
   const [token] = state.token;
-  const [order,setOrder] = useState([]);
+  const [order, setOrder] = useState([]);
   const [sortOrder, setSortOrder] = useState('desc');
   const [sortedOrders, setSortedOrders] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  useEffect(()=>{
-    if (token){
-      const getOrder = async () =>{
+  useEffect(() => {
+    if (token) {
+      const getOrder = async () => {
         const res = await axios.get('http://localhost:5000/api/order/cancel-request', {
           headers: { Authorization: token },
         });
@@ -20,7 +20,7 @@ const Report = () => {
       }
       getOrder();
     }
-  },[token,setOrder]);
+  }, [token, setOrder]);
 
 
   const handleSortOrder = () => {
@@ -51,7 +51,8 @@ const Report = () => {
           <h1 className="app-content-headerText">All Order Cancel request</h1>
         </div>
         <div className="app-content-actions">
-        <input
+          <div className="search-action">
+            <input
               type="text"
               className="search-bar"
               value={searchQuery}
@@ -61,14 +62,15 @@ const Report = () => {
             <button className="app-content-headerButton button" onClick={handleSearch}>
               Search
             </button>
+          </div>
           <select
-              className="sort-order app-content-headerButton button"
-              value={sortOrder}
-              onChange={(e) => setSortOrder(e.target.value)}
-            >
-              <option value="desc">Newest</option>
-              <option value="asc">Oldest</option>
-            </select>
+            className="sort-order app-content-headerButton button"
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+          >
+            <option value="desc">Newest</option>
+            <option value="asc">Oldest</option>
+          </select>
         </div>
         <div className="product-area-wrapper tableView">
           <div className="products-header">
@@ -78,8 +80,8 @@ const Report = () => {
             <div className="product-cell stock">Brand</div>
             <div className="product-cell price">Price</div>
           </div>
-          {sortedOrders?.map((orderItem)=>{
-            return <OrderCancel key={orderItem._id} orders={orderItem}/>
+          {sortedOrders?.map((orderItem) => {
+            return <OrderCancel key={orderItem._id} orders={orderItem} />
           })}
         </div>
       </div>
