@@ -29,6 +29,9 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    discountPercentage:{
+      type: Number
+    },
     feature:{
       color:{
         type: String,

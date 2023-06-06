@@ -9,35 +9,68 @@ const paypalCtrl = {
           const {order_id} = req.body;
           const Order = await Orders.findById(order_id);
           const voucher = await voucherModel.find({code: Order.voucherCode})
-          const payment = {
-            intent: "sale",
-            payer: {
-              payment_method: "paypal",
-            },
-            redirect_urls: {
-              return_url: "http://localhost:5000/api/paypal/success",
-              cancel_url: "http://localhost:5000/api/paypal/cancel",
-            },
-            transactions: [
-              {
-                order_id:order_id,
-                item_list: {
-                  items: Order.listOrderItems.map((item) => ({
-                    name: order_id,
-                    sku: "001",
-                    price: item.price - item.price * voucher[0].discountPercentage / 100,
-                    currency: "USD",
-                    quantity: item.quantity,
-                  })),
-                },
-                amount: {
-                  currency: "USD",
-                  total: Order.total,
-                },
-                description: "This is the payment description.",
+          let payment;
+          if(Order.voucherCode){
+            payment = {
+              intent: "sale",
+              payer: {
+                payment_method: "paypal",
               },
-            ],
-          };
+              redirect_urls: {
+                return_url: "http://localhost:5000/api/paypal/success",
+                cancel_url: "http://localhost:5000/api/paypal/cancel",
+              },
+              transactions: [
+                {
+                  order_id:order_id,
+                  item_list: {
+                    items: Order.listOrderItems.map((item) => ({
+                      name: order_id,
+                      sku: "001",
+                      price: item.price - item.price * voucher[0].discountPercentage / 100,
+                      currency: "USD",
+                      quantity: item.quantity,
+                    })),
+                  },
+                  amount: {
+                    currency: "USD",
+                    total: Order.total,
+                  },
+                  description: "This is the payment description.",
+                },
+              ],
+            };
+          } else {
+            payment = {
+              intent: "sale",
+              payer: {
+                payment_method: "paypal",
+              },
+              redirect_urls: {
+                return_url: "http://localhost:5000/api/paypal/success",
+                cancel_url: "http://localhost:5000/api/paypal/cancel",
+              },
+              transactions: [
+                {
+                  order_id:order_id,
+                  item_list: {
+                    items: Order.listOrderItems.map((item) => ({
+                      name: order_id,
+                      sku: "001",
+                      price: item.price,
+                      currency: "USD",
+                      quantity: item.quantity,
+                    })),
+                  },
+                  amount: {
+                    currency: "USD",
+                    total: Order.total,
+                  },
+                  description: "This is the payment description.",
+                },
+              ],
+            };
+          }
     
           paypal.payment.create(payment, function (error, payment) {
             if (error) {

@@ -13,6 +13,7 @@ router.route('/orders')
     
 
 router.route('/createOrder').post(orderCtrl.CreateOrderKoh)
+router.route('/report/:year/:month').get(orderCtrl.monthlyReport)
 
 // thong ke 
 router.route('/statistics/sales')

@@ -731,9 +731,72 @@ const orderCtrl = {
         } catch (error) {
         res.status(500).json({ message: 'Internal server error' });
         }
-    }
-
-
+    },
+    monthlyReport: async (req, res) => {
+        try {
+            const { year, month } = req.params; // Truyền vào thông tin năm và tháng từ URL (vd: /api/report/2019/7)
+            const sales = await Products.aggregate([
+            {
+                $match: {
+                    $expr: {
+                        $and: [
+                            { $eq: ['$createdAt', new Date(year, month - 1, 1)] },
+                        ],
+                    },
+                },
+                },
+                {
+                    $group: {
+                        _id: null,
+                        totalSold: { $sum: '$sold' },
+                },
+            },
+        ]);
+            const totalSales = sales.length > 0 ? sales[0].totalSold : 0;
+          // Truy vấn dữ liệu doanh thu cho tháng và năm chỉ định
+            const orders = await Orders.find({
+                status: 'Delivered',
+                createdAt: {
+                    $gte: new Date(year, month - 1, 1),
+                    $lt: new Date(year, month, 1),
+                },
+            });
+            const totalRevenue = orders.reduce((total, order) => total + order.total, 0);
+            // Truy vấn dữ liệu người dùng mới cho tháng và năm chỉ định
+            const startDate = new Date(year, month - 1, 1);
+            const endDate = new Date(year, month, 0);
+            const newUsers = await User.find({ createdAt: { $gte: startDate, $lte: endDate } });
+            // Truy vấn dữ liệu thống kê sản phẩm theo danh mục cho tháng và năm chỉ định
+            const categoryStats = await Products.aggregate([
+                {
+                    $match: {
+                    $expr: {
+                        $and: [
+                            { $eq: ['$createdAt', new Date(year, month - 1, 1)] },
+                        ],
+                    },
+                    },
+                },
+                {
+                    $group: {
+                        _id: '$category',
+                        totalProducts: { $sum: 1 },
+                    },
+                },
+            ]);
+            const report = {
+                month,
+                year,
+                totalSales,
+                totalRevenue,
+                newUsersCount: newUsers.length,
+                categoryStats,
+            };
+            res.json(report);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
 }
 
 module.exports = orderCtrl
