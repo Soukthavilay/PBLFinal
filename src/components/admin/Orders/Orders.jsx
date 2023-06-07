@@ -135,6 +135,11 @@ const Orders = () => {
                     <p>Delivered</p>
                   </div>
                 </li>
+                <li onClick={() => handleSortByStatus('Cancel Requested')}>
+                  <div className="option">
+                    <p>Cancel Requested</p>
+                  </div>
+                </li>
               </ul>
             </div>
           </div>

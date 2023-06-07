@@ -25,8 +25,8 @@ const Dashboard = () => {
           <Route path="/admin/orderList" component={isAdmin ? Orders : Notfound} />
           <Route path="/admin/Report" component={isAdmin ? Report : Notfound} />
           <Route path="/admin/edit_product/:id" component={isAdmin ? EditProduct : Notfound}/>
-          <Route path="/admin/cancel-request" component={isAdmin ? Report : Notfound} />
-          {/* <Route path="/admin" component={Home}/> */}
+          {/* <Route path="/admin/cancel-request" component={isAdmin ? Report : Notfound} /> */}
+          <Route path="/admin/statistical" component={Home}/>
           <Route path="/admin/orderDetail/:id" component={OrderDetail}/>
         </Switch>
       </Router>

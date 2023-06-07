@@ -14,15 +14,15 @@ import { useEffect } from 'react';
 const App = () => {
   const [laoding,setLoading] = useState(true);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000); 
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 2000); 
+  // }, []);
   
-  if (laoding) {
-    return <Loading/>
-  }
+  // if (laoding) {
+  //   return <Loading/>
+  // }
   return (
     <DataProvider>
       <Router>

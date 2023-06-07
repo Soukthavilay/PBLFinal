@@ -37,7 +37,7 @@ const handleSubmit = async (e) => {
 
       window.location.href = "/checkout-confirm";
     } catch (error) {
-      console.log(error);
+      alert(error.response.data.msg);
     } finally {
       setLoading(false);
     }

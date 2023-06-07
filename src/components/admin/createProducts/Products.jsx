@@ -422,7 +422,7 @@ const Products = () => {
                       </button>
                     </form>
                     <div className="actions">
-                      <Popup
+                      {/* <Popup
                         trigger={
                           <button className="button btn btn--animated btn--primary--blue btn--border--blue">
                             {" "}
@@ -432,7 +432,7 @@ const Products = () => {
                         nested
                       >
                         <span>Success</span>
-                      </Popup>
+                      </Popup> */}
                       <button
                         className="button btn btn--animated btn--primary--white btn--border--blue"
                         onClick={() => {
@@ -467,7 +467,7 @@ const Products = () => {
           )}
             <div className="app-content-actions-wrapper">
               <div className="filter-button-wrapper">
-                <button className="action-button filterJsFilter">
+                {/* <button className="action-button filterJsFilter">
                   <span>Filter</span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -483,8 +483,8 @@ const Products = () => {
                   >
                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
                   </svg>
-                </button>
-                <div className="filter-menu">
+                </button> */}
+                {/* <div className="filter-menu">
                   <label htmlFor="Category">Category</label>
                   <select name="" id="">
                     <option>All Categories</option>
@@ -503,9 +503,9 @@ const Products = () => {
                     <button className="filter-button-reset">Reset</button>
                     <button className="filter-button-apply">Apply</button>
                   </div>
-                </div>
+                </div> */}
               </div>
-              <button className="active-button list active" title="List View">
+              {/* <button className="active-button list active" title="List View">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -525,8 +525,8 @@ const Products = () => {
                   <line x1="3" y1="12" x2="3.01" y2="12" />
                   <line x1="3" y1="18" x2="3.01" y2="18" />
                 </svg>
-              </button>
-              <button className="action-button grid" title="Grid View">
+              </button> */}
+              {/* <button className="action-button grid" title="Grid View">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -544,7 +544,7 @@ const Products = () => {
                   <rect x="14" y="14" width="7" height="7" />
                   <rect x="3" y="14" width="7" height="7" />
                 </svg>
-              </button>
+              </button> */}
             </div>
           </div>
           <div className="product-area-wrapper tableView">

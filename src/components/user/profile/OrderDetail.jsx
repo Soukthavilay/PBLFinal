@@ -30,6 +30,35 @@ const OrderDetail = () => {
       background : 'none'
     }
   }
+
+  let content;
+
+  switch (data && data.status) {
+    case 'Delivered':
+      content = <button className="review-btn">Review</button>;
+      break;
+    case 'Cancelled':
+      content = <div></div>;
+      break;
+    case 'Cancel Requested':
+      content = <div></div>;
+      break;
+    case 'Shipping':
+      content = <button className="review-btn">Review</button>;
+      break;
+    case 'Confirmed':
+      content = <button className="review-btn">Review</button>;
+      break;
+    case 'Pending':
+      content = <div></div>;
+      break;
+    case 'Paid':
+      content = <button className="review-btn">Review</button>;
+      break;  
+    default:
+      content = <div></div>;
+      break;
+  }
   return (
     <div className="profile">
       <ProfileOption />
@@ -75,7 +104,7 @@ const OrderDetail = () => {
                     </div>
                     <div className="order-product-review">
                       <Popup
-                        trigger={<button className="review-btn">Review</button>}
+                        trigger={content}
                         modal
                         nested
                       >

@@ -124,7 +124,13 @@
 
         .order-status {
           padding: 4px 8px;
-          background-color: #efa505;
+          background-color: #ef0505;
+          border-radius: 20px;
+          color: #fff;
+        }
+        .order-status-pass{
+          padding: 4px 8px;
+          background-color: green;
           border-radius: 20px;
           color: #fff;
         }

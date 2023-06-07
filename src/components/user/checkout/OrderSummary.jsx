@@ -103,7 +103,7 @@ function OrderSummary() {
                   style: "currency",
                   currency: "USD",
                   maximumFractionDigits: 3,
-                }).format(total)}
+                }).format(item.price * item.quantity)}
               </div>
             </div>
           );

@@ -22,7 +22,7 @@ const Recommand = () => {
   return (
     <>
       <div className="featured-product">
-        <p className="featured-product-title">Recommended for you</p>
+        <p className="featured-product-title">New Products</p>
         <div className="container-list">
           <Swiper
             spaceBetween={50}

@@ -43,7 +43,7 @@ const EditProduct = () => {
     const param = useParams();
     useEffect(()=>{
         if(param.id){
-            productShow.forEach(productItem => {
+            productShow && productShow?.forEach(productItem => {
                 if(productItem._id === param.id){
                     setEdit(productItem);
                     setImages(productItem.images);
@@ -142,7 +142,7 @@ const EditProduct = () => {
                     name="title"
                     id="title"
                     required
-                    value={edit.title}
+                    value={edit.title ? edit.title : "no have"}
                     onChange={handleChangeInput}
                     placeholder="Title"
                 />
@@ -153,7 +153,7 @@ const EditProduct = () => {
                     name="description"
                     id="description"
                     required
-                    value={edit.description}
+                    value={edit.description ? edit.description : "no have"}
                     rows="10"
                     onChange={handleChangeInput}
                     placeholder="Description"
@@ -169,7 +169,7 @@ const EditProduct = () => {
                     onChange={handleChangeInput}
                     placeholder="Band"
                 /> */}
-                <select name="band" value={edit.band} onChange={handleChangeInput}>
+                <select name="band" value={edit.band ? edit.band : "no have"} onChange={handleChangeInput}>
                     <option>Band</option>
                     {bands.map((band)=>{
                     return <option value={band._id} key={band._id}>{band.name}</option>
@@ -179,7 +179,7 @@ const EditProduct = () => {
                 <div className="row">
                 <select
                     name="category"
-                    value={edit.category}
+                    value={edit.category ? edit.category : "no have"}
                     onChange={handleChangeInput}
                 >
                     <option>Categories</option>
@@ -221,7 +221,7 @@ const EditProduct = () => {
                     type="text"
                     name="color"
                     id="color"
-                    value={edit.feature.color}
+                    value={edit.feature.color ? edit.feature.color : "null"}
                     onChange={handleChangeInput}
                     placeholder="Color"
                     />
@@ -231,7 +231,7 @@ const EditProduct = () => {
                     type="text"
                     name="typeOf"
                     id="typeOf"
-                    value={edit.feature.typeOf}
+                    value={edit.feature.typeOf ? edit.feature.typeOf : "null"}
                     onChange={handleChangeInput}
                     placeholder="typeOf"
                     />
@@ -241,7 +241,7 @@ const EditProduct = () => {
                     type="text"
                     name="SSDStorage"
                     id="SSDStorage"
-                    value={edit.feature.SSDStorage}
+                    value={edit.feature.SSDStorage ? edit.feature.SSDStorage : "null"}
                     onChange={handleChangeInput}
                     placeholder="SSD Storage"
                     />
@@ -251,7 +251,7 @@ const EditProduct = () => {
                     type="text"
                     name="processor"
                     id="processor"
-                    value={edit.feature.processor}
+                    value={edit.feature.processor ? edit.feature.processor : "null"}
                     onChange={handleChangeInput}
                     placeholder="Processor"
                     />
@@ -261,7 +261,7 @@ const EditProduct = () => {
                     type="text"
                     name="graphicSeries"
                     id="graphicSeries"
-                    value={edit.feature.graphicSeries}
+                    value={edit.feature.graphicSeries ? edit.feature.graphicSeries : "null"}
                     onChange={handleChangeInput}
                     placeholder="Graphic Series"
                     />
@@ -271,7 +271,7 @@ const EditProduct = () => {
                     type="text"
                     name="operatingSystem"
                     id="operatingSystem"
-                    value={edit.feature.operatingSystem}
+                    value={edit.feature.operatingSystem ? edit.feature.operatingSystem : "null"}
                     onChange={handleChangeInput}
                     placeholder="Operating System"
                     />
@@ -281,7 +281,7 @@ const EditProduct = () => {
                     type="text"
                     name="keyboardLanguage"
                     id="keyboardLanguage"
-                    value={edit.feature.keyboardLanguage}
+                    value={edit.feature.keyboardLanguage ? edit.feature.keyboardLanguage : "null"}
                     onChange={handleChangeInput}
                     placeholder="Keyboard Language"
                     />
@@ -291,7 +291,7 @@ const EditProduct = () => {
                     type="text"
                     name="hardDiscType"
                     id="hardDiscType"
-                    value={edit.feature.hardDiscType}
+                    value={edit.feature.hardDiscType ? edit.feature.hardDiscType : "null"}
                     onChange={handleChangeInput}
                     placeholder="Hard Disc Type"
                     />
@@ -301,7 +301,7 @@ const EditProduct = () => {
                     type="text"
                     name="ram"
                     id="ram"
-                    value={edit.feature.ram}
+                    value={edit.feature.ram ? edit.feature.ram : "null"}
                     onChange={handleChangeInput}
                     placeholder="Ram"
                     />
@@ -311,7 +311,7 @@ const EditProduct = () => {
                     type="text"
                     name="inches"
                     id="inches"
-                    value={edit.feature.inches}
+                    value={edit.feature.inches ? edit.feature.inches : "null"}
                     onChange={handleChangeInput}
                     placeholder="Inches"
                     />
@@ -321,7 +321,7 @@ const EditProduct = () => {
                     type="text"
                     name="storage"
                     id="storage"
-                    value={edit.feature.storage}
+                    value={edit.feature.storage ? edit.feature.storage : "null"}
                     onChange={handleChangeInput}
                     placeholder="Storage"
                     />
@@ -331,7 +331,7 @@ const EditProduct = () => {
                     type="text"
                     name="batteries"
                     id="batteries"
-                    value={edit.feature.batteries}
+                    value={edit.feature.batteries ? edit.feature.batteries : "null"}
                     onChange={handleChangeInput}
                     placeholder="Batteries"
                     />
@@ -341,7 +341,7 @@ const EditProduct = () => {
                     type="text"
                     name="connectivities"
                     id="connectivities"
-                    value={edit.feature.connectivities}
+                    value={edit.feature.connectivities ? edit.feature.connectivities : "null"}
                     onChange={handleChangeInput}
                     placeholder="Connectivities"
                     />
@@ -351,7 +351,7 @@ const EditProduct = () => {
                     type="text"
                     name="sim"
                     id="sim"
-                    value={edit.feature.sim}
+                    value={edit.feature.sim ? edit.feature.sim : "null"}
                     onChange={handleChangeInput}
                     placeholder="Sim"
                     />

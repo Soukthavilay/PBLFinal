@@ -4,19 +4,19 @@ import "../scss/order-detail.scss"
 
 const OrderDetail = () => {
   const location = useLocation();
-  const orderItem = location.state.orderItem;
+  const orderItem = location.state.order;
   console.log(orderItem);
+  const createdAtDateTime = new Date(orderItem.createdAt);
+  const currentDateTime = new Date();
+  const minutesDifference = Math.floor(
+    (createdAtDateTime - currentDateTime) / (1000 * 60)
+  );
+  const formattedDateTime = createdAtDateTime.toLocaleString();
   return (
     <>
       <div className="orderDetail-admin">
-        {/* làm trang này giúp em vs  */}
-        {/* làm trang này giúp em vs  */}
-        {/* làm trang này giúp em vs  */}
-        {/* làm trang này giúp em vs  */}
-        {/* em get data xong hết rồi  */}
-
         <h3 className="order-title">
-          Order Number <span className="order-number">#256894</span>
+          Order Number <span className="order-number">{orderItem._id}</span>
         </h3>
         <div className="order-detail-admin">
           <div className="order-detail-left">
@@ -27,51 +27,37 @@ const OrderDetail = () => {
                 <div className="order-item-summary_row-item">Price</div>
                 <div className="order-item-summary_row-item">Total Price</div>
               </div>
-              <div className="order-item-summary_row product">
-                <div className="order-item-summary_row-item">
-                  <img src="https://res.cloudinary.com/dkiofoako/image/upload/v1684992434/test/wxh3tdlbtt4uutjrh4te.jpg" alt="" />
-                  <h3>iPhone 14 Pro Max</h3>
-                </div>
-                <div className="order-item-summary_row-item">x 1</div>
-                <div className="order-item-summary_row-item">$200.00</div>
-                <div className="order-item-summary_row-item">$200.00</div>
-              </div>
-              <div className="order-item-summary_row product">
-                <div className="order-item-summary_row-item">
-                  <img src="https://res.cloudinary.com/dkiofoako/image/upload/v1684992434/test/wxh3tdlbtt4uutjrh4te.jpg" alt="" />
-                  <h3>iPhone 14 Pro Max</h3>
-                </div>
-                <div className="order-item-summary_row-item">x 1</div>
-                <div className="order-item-summary_row-item">$200.00</div>
-                <div className="order-item-summary_row-item">$200.00</div>
-              </div>
-              <div className="order-item-summary_row product">
-                <div className="order-item-summary_row-item">
-                  <img src="https://res.cloudinary.com/dkiofoako/image/upload/v1684992434/test/wxh3tdlbtt4uutjrh4te.jpg" alt="" />
-                  <h3>iPhone 14 Pro Max</h3>
-                </div>
-                <div className="order-item-summary_row-item">x 1</div>
-                <div className="order-item-summary_row-item">$200.00</div>
-                <div className="order-item-summary_row-item">$200.00</div>
-              </div>
+              {orderItem.listOrderItems?.map((item)=>{
+                return (
+                  <div key={item._id} className="order-item-summary_row product">
+                    <div className="order-item-summary_row-item">
+                      <img src={item.images.url} alt="order-image" />
+                      <h3>{item.title}</h3>
+                    </div>
+                    <div className="order-item-summary_row-item">x {item.quantity}</div>
+                    <div className="order-item-summary_row-item">${item.price}</div>
+                    <div className="order-item-summary_row-item">${item.price * item.quantity}</div>
+                  </div>
+                )
+              })}
             </div>
             <div className="order-customer-info frame">
               <h3>Customer And Order Details</h3>
               <div className="order-customer-info_item">
                 <span className="title">Customer Name</span>
-                <span className="subtitle">Koh Koh</span>
+                <span className="subtitle">{orderItem.name}</span>
               </div>
               <div className="order-customer-info_item">
                 <span className="title">Phone Number</span>
-                <span className="subtitle">Phone Number</span>
+                <span className="subtitle">{orderItem.phone}</span>
               </div>
               <div className="order-customer-info_item">
                 <span className="title">Type Order</span>
-                <span className="subtitle">Ship Cod</span>
+                <span className="subtitle">{orderItem.paymentMethod}</span>
               </div>
               <div className="order-customer-info_item">
                 <span className="title">Note</span>
-                <span className="subtitle">Giao giờ hành chính</span>
+                <span className="subtitle">{orderItem.status === "Delivered" ? "Delivered complete" : "Order is Processing"}</span>
               </div>
             </div>
           </div>
@@ -79,18 +65,20 @@ const OrderDetail = () => {
             <div className="order-summary frame">
               <div className="order-summary-header">
                 <h3>Order Summary</h3>
-                <span className="order-status">
-                  Canceled
-                </span>
+                {orderItem.status === "Cancelled" ? <span className="order-status">
+                  {orderItem.status}
+                </span> : <span className="order-status-pass">
+                  {orderItem.status}
+                </span>}
               </div>
               <div className="order-summary-content">
                 <div className="order-summary-content_item">
                   <span className="title">Order Date</span>
-                  <span className="subtitle">04/06/2023</span>
+                  <span className="subtitle">{formattedDateTime}</span>
                 </div>
                 <div className="order-summary-content_item">
                   <span className="title">Subtotal</span>
-                  <span className="subtitle">$ 1000</span>
+                  <span className="subtitle">$ {orderItem.total}</span>
                 </div>
                 <div className="order-summary-content_item">
                   <span className="title">Delivery Fee</span>
@@ -100,71 +88,17 @@ const OrderDetail = () => {
             </div>
             <div className="order-total frame">
               <span className="title">Total</span>
-              <span className="subtitle">$ 1000</span>
+              <span className="subtitle">$ {orderItem.total}</span>
             </div>
             <div className="order-address frame">
               <h3>Delivery Address</h3>
               <div className="order-address-content">
                 <span className="title">Address: </span>
-                <span className="subtitle">Nguyen Tat Thanh, Thanh Khe, Da Nang</span>
+                <span className="subtitle">{orderItem.address}</span>
               </div>
             </div>
           </div>
         </div>
-
-        {
-          // "total": 20,
-          // "listOrderItems": [
-          //     {
-          //         "feature": {
-          //             "color": "Red",
-          //             "typeOf": "",
-          //             "SSDStorage": "",
-          //             "processor": "",
-          //             "graphicSeries": "",
-          //             "operatingSystem": "iOS",
-          //             "keyboardLanguage": "",
-          //             "hardDiscType": "",
-          //             "ram": "6 GB",
-          //             "inches": "6.5-6.9",
-          //             "storage": "256 GB",
-          //             "batteries": "4001-5000 mAh",
-          //             "connectivities": "Bluetooth",
-          //             "sim": "Dual"
-          //         },
-          //         "types": [],
-          //         "checked": false,
-          //         "sold": 31,
-          //         "_id": "646c8d3d2a00916c70708f97",
-          //         "title": "Nitho Adonis BT PS4 Wireless Controller new",
-          //         "description": "Experience console gaming like never before with NITHO Adonis BT PS4 Wireless Controller Camo! The ultimate gaming accessory for every playstation enthusiast, this controller offers seamless wireless connectivity and precision controls to improve your gaming experience. Its sleek and ergonomic design provides a comfortable grip, allowing you to play for hours without experiencing any discomfort. The camo design adds an exciting touch to your gaming console and sets you apart from the rest. So, for the ultimate gaming experience, grab your NITHO Adonis BT PS4 Wireless Controller Camo now and take your gaming to the next level!\n\nDo you want to know which other related electronics and computers products Nitho has? At techinn, you can buy all the necessary Playstation items so that you can benefit from your activities without complications. Nitho Adonis BT PS4 Wireless Controller is at best price and in stock! Make us of our secure online payment system and benefit from our high qualified salesteam",
-          //         "images": {
-          //             "public_id": "test/acvuvhse7xgzon89nhhw",
-          //             "url": "https://res.cloudinary.com/dkiofoako/image/upload/v1685288859/test/acvuvhse7xgzon89nhhw.jpg"
-          //         },
-          //         "category": "6459f014aff6f728c08833f4",
-          //         "price": 20,
-          //         "amount": 25,
-          //         "band": "Nitho",
-          //         "createdAt": "2023-05-23T09:54:05.026Z",
-          //         "updatedAt": "2023-05-29T15:58:23.125Z",
-          //         "__v": 0,
-          //         "quantity": 1
-          //     }
-          // ],
-          // "status": "Cancel Requested",
-          // "_id": "6475a8fbb832975c7c81059e",
-          // "user_id": "64756d217fff2b52e89551d1",
-          // "email": "koke115019@gmail.com",
-          // "name": "kone",
-          // "address": "bach khoa",
-          // "phone": "10393722922",
-          // "paymentMethod": "COD",
-          // "createdAt": "2023-05-30T07:42:51.432Z",
-          // "updatedAt": "2023-05-30T08:00:05.366Z",
-          // "__v": 0
-        }
-        {/* data mẫu */}
       </div>
     </>
   );

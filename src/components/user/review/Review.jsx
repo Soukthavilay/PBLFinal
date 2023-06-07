@@ -51,6 +51,11 @@ const Review = (product_id) => {
     const styleUpload = {
         display: images ? 'block' : 'none',
     };
+    const xStyle = {
+        color: 'red',
+        left: '69px',
+        top: '-20px',
+    }
     const handleDestroy = async () => {
         try {
             setLoading(true);
@@ -115,6 +120,7 @@ const Review = (product_id) => {
                 <div className="uploadImg">
                 <div className="upload">
                     <input type="file" name="file" id="file_up" onChange={handleUpload} />
+                    <label htmlFor="file_up" className="upload-img-btn">Upload files</label>
                     {loading ? (
                     <div id="file_img">
                         <Loading />
@@ -122,7 +128,7 @@ const Review = (product_id) => {
                     ) : (
                     <div id="file_img" style={styleUpload}>
                         <img src={images ? images.url : ''} alt="" />
-                        <span onClick={handleDestroy}>X</span>
+                        <span style={xStyle} onClick={handleDestroy}>X</span>
                     </div>
                     )}
                 </div>
