@@ -17,6 +17,8 @@ import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 const BestSeller = () => {
   const [data,setData] = useState();
+  const [savePd,setSavePd] = useState([]);
+  const [rating,setRating] = useState();
   useEffect(()=>{
     try {
       const getProducts = async()=>{
@@ -27,10 +29,54 @@ const BestSeller = () => {
     } catch (error) {
       console.log("error.message")
     }
-  },[])
-  
-  const product = data;
-  var userStar = 5;
+  },[]);
+
+  useEffect(() => {
+    if(data){
+    const fetchProductData = async () => {
+      try {
+        const productDataList = await Promise.all(data.map(async (product) => {
+          const productId = product._id;
+          const response = await axios.get(`http://localhost:5000/api/products/${productId}`);
+          const productData = response.data;
+          return { productId, productData };
+        }));
+        setSavePd(productDataList);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchProductData();
+  }
+  }, [data]);
+
+  useEffect(() => {
+    if (savePd.length > 0) {
+      data.forEach((product) => {
+        const productData = savePd.find((pd) => pd.productId === product._id);
+        if (productData) {
+          const feedbackData = productData.productData.feedback;
+          setRating(feedbackData);
+        }
+      });
+    }
+  }, [savePd, data]);
+
+  const getTotalRating = (feedbackData) => {
+    let totalRating = 0;
+    if (feedbackData.length > 0) {
+      feedbackData?.forEach((feedback) => {
+        totalRating += feedback.rating;
+      });
+      var result = {
+        totalRating: totalRating / feedbackData.length,
+        total: feedbackData.length
+      }
+      return result;
+    }
+    return 0;
+  };
+
   return (
     <>
       <div className="featured-product">
@@ -50,6 +96,11 @@ const BestSeller = () => {
             {data &&
               data.map((item) => {
                 const { _id, title, images, price ,sold } = item;
+                const productData = savePd.find((pd) => pd.productId === _id);
+                const feedbackData = productData
+                  ? productData.productData.feedback
+                  : [];
+                const totalRating = getTotalRating(feedbackData);
                 return (
                   <SwiperSlide key={_id}>
                     <div className="product-item">
@@ -75,14 +126,15 @@ const BestSeller = () => {
                             <div className="product-ratings">
                               <StarRatings
                                 name="rating"
-                                rating={userStar}
+                                rating={totalRating.totalRating}
                                 starRatedColor="#fadb14"
                                 starDimension="16px"
                                 starSpacing="2px"
                               />
-                              <span>({sold})</span>
+                              <span>({totalRating.total})</span>
                             </div>
                           </div>
+                          <span>sold : {sold}</span>
                           <Link to={`/detail/${_id}`} className="btn btn--animated btn--primary--white btn--border--blue">
                             Buy now
                           </Link>
