@@ -3,6 +3,7 @@ import '../scss/adminDash.scss'
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { AiOutlineSearch } from "react-icons/ai";
 
 const Home = () => {
   const [totalSales, setTotalSales] = useState(0);
@@ -52,67 +53,68 @@ const Home = () => {
   };
   return (
     <>
-      <div className='dashboard-admin'>
-      <h1>Dashboard</h1>
-      <div>
-        <h2 style={{color: + "red"}}>Select Month and Year</h2>
-        <DatePicker
-          selected={selectedDate}
-          onChange={handleDateChange}
-          dateFormat="MM/yyyy"
-          showMonthYearPicker
-        />
-        <button onClick={fetchData}>Fetch Report</button>
+      <div className='dashboard'>
+        <h1>Dashboard</h1>
+        <div className="dashboard-search">
+          {/* <h2 style={{color: + "red"}}>Select Month and Year</h2> */}
+          <DatePicker
+            selected={selectedDate}
+            onChange={handleDateChange}
+            dateFormat="MM/yyyy"
+            placeholderText={'Select Month and Year'}
+            showMonthYearPicker
+          />
+          <button className="search-btn" onClick={fetchData}><AiOutlineSearch /></button>
+        </div>
+
+        <div className='statistical'>
+          <div className='statistical-card'>
+            <h2>Total Sales</h2>
+            <p>{totalSales}</p>
+          </div>
+
+          <div className='statistical-card'>
+            <h2>Sold Products</h2>
+            <ul>
+              {soldProducts.map((product) => (
+                <li key={product._id}>- {product.title}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className='statistical-card'>
+            <h2>Total Revenue</h2>
+            <p>{totalRevenue} $</p>
+          </div>
+
+          <div className='statistical-card'>
+            <h2>Delivered Orders</h2>
+            <ul>
+              {deliveredOrders.map((order) => (
+                <li key={order._id}>{order.orderNumber}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className='statistical-card'>
+            <h2>New Users</h2>
+            <ul>
+              {newUsers.map((user) => (
+                <li key={user._id}>- {user.name}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className='statistical-card'>
+            <h2>Category Statistics</h2>
+            <ul>
+              {categoryStats.map((category) => (
+                <li key={category._id}>- {category._id}: {category.totalProducts}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
-
-      <div className='statistical'>
-        <div className='statistical-card'>
-          <h2>Total Sales</h2>
-          <p>{totalSales}</p>
-        </div>
-
-        <div className='statistical-card'>
-          <h2>Sold Products</h2>
-          <ul>
-            {soldProducts.map((product) => (
-              <li key={product._id}>- {product.title}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div className='statistical-card'>
-          <h2>Total Revenue</h2>
-          <p>{totalRevenue} $</p>
-        </div>
-
-        <div className='statistical-card'>
-          <h2>Delivered Orders</h2>
-          <ul>
-            {deliveredOrders.map((order) => (
-              <li key={order._id}>{order.orderNumber}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div className='statistical-card'>
-          <h2>New Users</h2>
-          <ul>
-            {newUsers.map((user) => (
-              <li key={user._id}>- {user.name}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div className='statistical-card'>
-          <h2>Category Statistics</h2>
-          <ul>
-            {categoryStats.map((category) => (
-              <li key={category._id}>- {category._id}: {category.totalProducts}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
     </>
   )
 }
