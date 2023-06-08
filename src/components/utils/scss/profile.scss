@@ -115,6 +115,28 @@
   }
 
   .orders {
+    .order-wrapper{
+      display: flex;
+      justify-content: space-between;
+      .order-select{
+        display: flex;
+        gap: 5px;
+      }
+      .order-search{
+        input{
+          height: 45px;
+          border-radius: 10px;
+          border: none;
+          background-color: #F2F2F2;
+          width: 300px;
+          padding: 20px;
+        }
+      }
+      .select-status{
+        height: 45px;
+        border-radius: 10px;
+      }
+    }
     .order-item {
       // padding: 16px;
       border: 1px solid #bbbbbb;
@@ -124,9 +146,10 @@
       &-header {
         display: flex;
         justify-content: space-between;
-        padding-bottom: 16px;
+        // padding-bottom: 16px;
         border-bottom: 1px solid #bbbbbb;
-        margin-bottom: 16px;
+        // margin-bottom: 16px;
+        padding: 15px;
 
         .order-number {
           padding: 16px 0 0 16px;
@@ -178,7 +201,7 @@
   }
 
   .order-status {
-    margin: 16px 16px 0 0;
+    // margin: 16px 16px 0 0;
     padding: 4px 8px;
     background-color: #bbbbbb;
     color: #FFFFFF;

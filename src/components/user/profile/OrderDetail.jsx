@@ -59,6 +59,33 @@ const OrderDetail = () => {
       content = <div></div>;
       break;
   }
+  let status;
+  switch (data && data.status) {
+    case 'Pending':
+      status = <div className="order-header-item order-status order-pending">{data.status}</div>;
+      break;
+    case 'Delivered':
+      status = <div className="order-header-item order-status order-confirmed">{data.status}</div>;
+      break;
+    case 'Cancelled':
+      status = <div className="order-header-item order-status order-cancelled">{data.status}</div>;
+      break;
+    case 'Cancel Requested':
+      status = <div className="order-header-item order-status order-cancelled">{data.status}</div>;
+      break;
+    case 'Shipping':
+      status = <div className="order-header-item order-status order-confirmed">{data.status}</div>;
+      break;
+    case 'Confirmed':
+      status = <div className="order-header-item order-status order-confirmed">{data.status}</div>;
+      break;
+    case 'Paid':
+      status = <div className="order-header-item order-status order-confirmed">{data.status}</div>;
+      break;  
+    default:
+      content = <div></div>;
+      break;
+  }
   return (
     <div className="profile">
       <ProfileOption />
@@ -70,7 +97,7 @@ const OrderDetail = () => {
             <div className="order-header-item">
               {data ? <p>{data.status === "Cancelled" ? "Your package is cancelled" : "Your package is preparing..."}</p> : "Your package is cancelled"}
             </div>
-            {data ? <div style={style} className="order-header-item order-status">{data.status}</div> : <div style={style} className="order-header-item order-status"></div>}
+            {status}
           </div>
           <div className="order-details-body">
             <div className="order-details-body_product">
@@ -81,9 +108,7 @@ const OrderDetail = () => {
                       <img
                         src={orderItem.images.url}
                         alt={
-                          orderItem.images.url
-                            ? `${orderItem.images.url}`
-                            : "product-image"
+                          "product-image"
                         }
                       />
                       <div className="order-product-info_detail">
@@ -94,10 +119,7 @@ const OrderDetail = () => {
                       </div>
                     </div>
                     <div className="order-product-price">
-                      {orderItem.price.toLocaleString("it-IT", {
-                        style: "currency",
-                        currency: "VND",
-                      })}
+                      ${orderItem.price * orderItem.quantity}
                     </div>
                     <div className="order-product-quantity">
                       Qty: {orderItem.quantity}
@@ -147,9 +169,9 @@ const OrderDetail = () => {
                         Subtotal ({data.listOrderItems.length})
                       </span>
                       <span className="order-summary-price_item-right">
-                        {data.total.toLocaleString("it-IT", {
+                        {data.total.toLocaleString("en-US", {
                           style: "currency",
-                          currency: "VND",
+                          currency: "USD",
                         })}
                       </span>
                     </div>
@@ -166,9 +188,9 @@ const OrderDetail = () => {
                         Total
                       </span>
                       <span className="order-summary-price_item-right">
-                        {data.total.toLocaleString("it-IT", {
+                        {data.total.toLocaleString("en-US", {
                           style: "currency",
-                          currency: "VND",
+                          currency: "USD",
                         })}
                       </span>
                     </div>

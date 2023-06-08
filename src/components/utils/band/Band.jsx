@@ -18,7 +18,6 @@ const Band = () => {
 
     fetchBandList();
   }, []);
-  console.log(bandList)
 
   return (
     <>
