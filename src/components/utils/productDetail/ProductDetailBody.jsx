@@ -10,7 +10,7 @@ function ProductDetailBody(detailProduct) {
       <div className="detail-body">
         <div className="detail-body-left">
           <h3 className="product-detail-title">
-            Product description {product.title}
+            {/* Product description {product.title} */}
           </h3>
           <div className="product-detail-content">
             {parse(`${product.description}`)}

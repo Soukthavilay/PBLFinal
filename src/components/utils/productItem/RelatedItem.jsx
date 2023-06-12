@@ -17,12 +17,13 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
 
-const Recommand = () => {
+const RelatedItem = (categories) => {
   const state = useContext(GlobalState);
-  const [products, setProducts] = state.productsAPI.products;
+  const categoryID = categories.category;
+  const [products] = state.productsAPI.products;
   const [savePd,setSavePd] = useState([]);
   const [rating,setRating] = useState();
-  let [updatePrice , setUpdatePrice] = useState();
+  const [pdCate,setPdCate] = useState([]);
   console.log(products)
   useEffect(() => {
     if(products){
@@ -55,6 +56,16 @@ const Recommand = () => {
       });
     }
   }, [savePd, products]);
+  
+  useEffect(()=>{
+    if(categoryID){
+        const getProductByCategory = async ()=>{
+            const res = await axios.get(`http://localhost:5000/api/products/category/${categoryID}`)
+            setPdCate(res.data.products)
+        }
+        getProductByCategory();
+    }
+  },[categoryID])
 
   const getTotalRating = (feedbackData) => {
     let totalRating = 0;
@@ -70,11 +81,10 @@ const Recommand = () => {
     }
     return 0;
   };
-
   return (
     <>
       <div className="featured-product">
-        <p className="featured-product-title">New Products</p>
+        <p className="featured-product-title">Related Products</p>
         <div className="container-list">
           <Swiper
             spaceBetween={50}
@@ -84,8 +94,8 @@ const Recommand = () => {
             className="featured-product-slide"
             modules={[Navigation]}
           >
-            {products &&
-              products.map((item) => {
+            {pdCate &&
+              pdCate.map((item) => {
                 const { _id, title, images, price ,sold,discountPercentage,discountExpiration} = item;
                 const productData = savePd.find((pd) => pd.productId === _id);
                 const feedbackData = productData
@@ -162,4 +172,4 @@ const Recommand = () => {
   );
 };
 
-export default Recommand;
+export default RelatedItem;

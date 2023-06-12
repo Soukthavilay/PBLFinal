@@ -26,6 +26,9 @@
     .product-price {
       font-size: 24px;
       margin: 0;
+      .coupon-save{
+        font-size: 18px;
+      }
     }
 
     .product-ratings {
@@ -43,7 +46,7 @@
     }
 
     .product-quantity {
-      margin-top: 48px;
+      margin-top: 25px;
       display: flex;
       .quantity-btn {
         border: none;
@@ -69,7 +72,7 @@
 
     .product-color-main {
       font-size: 14px;
-      margin: 8px 0 40px;
+      // margin: 8px 0 40px;
     }
 
     .stock {

@@ -4,6 +4,7 @@ import axios from "axios"
 import { useContext, useEffect, useState } from "react"
 import "../scss/edit-product.scss"
 import Loading from "../../utils/Loading/Loading"
+import DatePicker from 'react-datepicker';
 
 const EditProduct = () => {
     const state = useContext(GlobalState);
@@ -23,6 +24,8 @@ const EditProduct = () => {
         category: '',
         price: 0,
         amount: 0,
+        discountPercentage: 0,
+        discountExpiration: null,
         feature: {
             color: '',
             typeOf: '',
@@ -158,6 +161,24 @@ const EditProduct = () => {
                     onChange={handleChangeInput}
                     placeholder="Description"
                 />
+                </div>
+                <div className="row">
+                <input
+                    type="text"
+                    name="discountPercentage"
+                    id="discountPercentage"
+                    value={edit.discountPercentage || ''}
+                    onChange={handleChangeInput}
+                    placeholder="discountPercentage"
+                    />
+                </div>
+                <div className="row">
+                    <DatePicker
+                        selected={edit.discountExpiration ? new Date(edit.discountExpiration) : null}
+                        onChange={date => setEdit({ ...edit, discountExpiration: date })}
+                        placeholderText="Discount Expiration"
+                        className="datepicker-input"
+                    />
                 </div>
                 <div className="row">
                 {/* <input

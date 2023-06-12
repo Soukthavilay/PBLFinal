@@ -7,6 +7,7 @@ import { GlobalState } from '../../../GlobalState';
 import { useParams } from 'react-router-dom';
 
 import "../../utils/scss/product-detail.scss";
+import RelatedItem from '../../utils/productItem/RelatedItem';
 
 function ProductDetail() {
   const params = useParams();
@@ -31,7 +32,7 @@ function ProductDetail() {
         <ProductDetailHeader detailProduct={detailProduct}/>
         <ProductDetailBody detailProduct={detailProduct}/>
         <ProductReviews detailProduct={detailProduct}/>
-        <Recommand />
+        <RelatedItem  category={detailProduct.category}/>
       </div>
     </>
   );
