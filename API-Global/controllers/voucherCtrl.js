@@ -3,7 +3,7 @@ const Voucher = require('../models/voucherModel');
 const voucherCtrl = {
     createVoucher : async (req, res)=>{
         try {
-            const { code, discountPercentage, applicableCategory, expirationDate, description, conditions } = req.body;
+            const { code, discountPercentage, applicableCategory, expirationDate, description, conditions,priceConditions } = req.body;
             const existingVoucher = await Voucher.findOne({ code });
             if (existingVoucher) {
                 return res.status(400).json({ msg: 'Voucher code already exists' });
@@ -15,6 +15,7 @@ const voucherCtrl = {
                 expirationDate,
                 description,
                 conditions,
+                priceConditions,
             });
             await newVoucher.save();
             res.json({ msg: 'Voucher created', voucher: newVoucher });

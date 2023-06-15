@@ -8,6 +8,10 @@ const bandSchema = new mongoose.Schema({
         trim: true,
         unique: true
     },
+    logo:{
+        type: Object,
+        required: true,
+    }
 }, {
     timestamps: true
 })

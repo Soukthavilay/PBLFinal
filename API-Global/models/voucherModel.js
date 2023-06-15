@@ -26,6 +26,10 @@ const voucherSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  priceConditions:{
+    type: Number,
+    required: true,
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Voucher', voucherSchema);

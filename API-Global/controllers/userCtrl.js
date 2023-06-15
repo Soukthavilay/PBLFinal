@@ -67,7 +67,22 @@ const userCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
-
+  editPassword: async(req, res) => {
+    try {
+      const { oldPassword, newPassword, userId } = req.body;
+      const user = await Users.findById(userId);
+      const isMatch = await bcrypt.compare(oldPassword, user.password);
+      if (!isMatch) {
+        return res.status(400).json({ msg: 'Old password is incorrect.' });
+      }
+      const newPasswordHash = await bcrypt.hash(newPassword, 10);
+      user.password = newPasswordHash;
+      await user.save();
+      res.json({ msg: 'Password updated successfully.' });
+    } catch (error) {
+      return res.status(500).json({ msg: error.message });
+    }
+  },
   logout: async (req, res) => {
     try {
       res.clearCookie('refreshtoken', { path: '/user/refresh_token' });
@@ -135,17 +150,12 @@ const userCtrl = {
 
   updateUser: async (req, res) => {
     try {
-      const userID = await authMe(req);
-      const { pet, avatar, birthday, sex, fullName, phone, address } = req.body;
+      const { name, email, phone , userID } = req.body;
       const user = await Users.findById(userID);
       if (!user) return res.status(400).json({ message: "User does not exist." })
-      if (pet) user.pet = pet;
-      if (avatar) user.avatar = avatar;
-      if (birthday) user.birthday = birthday;
-      if (sex) user.sex = sex;
-      if (fullName) user.fullName = fullName;
+      if (name) user.name = name;
+      if (email) user.email = email;
       if (phone) user.phone = phone;
-      if (address) user.address = address;
       await user.save();
       res.json(user);
     }

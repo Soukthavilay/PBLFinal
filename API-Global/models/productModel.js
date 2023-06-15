@@ -32,6 +32,12 @@ const productSchema = new mongoose.Schema(
     discountPercentage:{
       type: Number
     },
+    discountExpiration: {
+      type:Date,
+    },
+    updatedPrice:{
+      type:Number,
+    },
     feature:{
       color:{
         type: String,

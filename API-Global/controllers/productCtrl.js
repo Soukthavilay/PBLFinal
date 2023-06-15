@@ -142,44 +142,70 @@ const productCtrl = {
             return res.status(500).json({ msg: err.message })
         }
     },
+    getProductByCategoryBandTitle :async (req,res) => {
+        try {
+            const { category, band } = req.body;
+            const products = await Products.find({
+                category: category,
+                band: band,
+            });
+            res.json(products);
+        } catch (error) {
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    },
     updateProduct: async (req, res) => {
         try {
-            const productId = req.params.id;
-            const { title, price, amount, description, images, category, feature, band } = req.body;
-            console.log(productId)
-            // Check if the product exists
-            const existingProduct = await Products.findById(productId);
-            if (!existingProduct) {
-                return res.status(404).json({ message: 'Product not found' });
-            }
-        
-            // Check if images are provided
-            // if (!images || !images.length) {
-            //     return res.status(400).json({ message: 'Images are required' });
-            // }
-        
-            // Update the product
-            const updatedProduct = await Products.findByIdAndUpdate(
-                productId,
-                {
-                title,
-                price,
-                amount,
-                description,
-                images,
-                category,
-                feature,
-                band,
-                },
-                { new: true }
-            );
-        
-            res.json({ message: 'Product updated successfully', data: updatedProduct });
-            } catch (err) {
-            console.log(err);
-            res.status(500).json({ message: 'Internal server error' });
+          const productId = req.params.id;
+          const {
+            title,
+            price,
+            amount,
+            description,
+            images,
+            category,
+            feature,
+            band,
+            discountPercentage,
+            discountExpiration,
+          } = req.body;
+      
+          // Check if the product exists
+          const existingProduct = await Products.findById(productId);
+          if (!existingProduct) {
+            return res.status(404).json({ message: 'Product not found' });
+          }
+      
+          // Calculate the reduced price
+          let updatedPrice = price;
+          if (discountPercentage) {
+            const discountAmount = (price * discountPercentage) / 100;
+            updatedPrice = price - discountAmount;
+          }
+      
+          // Construct the update object
+          const update = {
+            title,
+            price: updatedPrice,
+            amount,
+            description,
+            images,
+            category,
+            feature,
+            band,
+            discountPercentage,
+            discountExpiration,
+          };
+      
+          // Update the product
+          const updatedProduct = await Products.findByIdAndUpdate(productId, update, { new: true });
+      
+          res.json({ message: 'Product updated successfully', data: updatedProduct });
+        } catch (err) {
+          console.log(err);
+          res.status(500).json({ message: 'Internal server error' });
         }
-    },    
+      },
     getTopSoldProduct : async (req,res)=>{
         try {
             const products = await Products.aggregate([
