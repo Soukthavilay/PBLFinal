@@ -359,6 +359,17 @@
 
 #popup-root .popup-overlay .popup-content .review-modal {
   height: fit-content !important;
+  .voucher-popup{
+    ul{
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      li{
+        border: 1px solid #c7c7c7;
+        padding: 10px;
+      }
+    }
+  }
 
   h3 {
     margin: 24px 0;

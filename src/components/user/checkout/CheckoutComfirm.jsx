@@ -1,5 +1,6 @@
 import React from 'react'
 import StepTracker from './StepTracker'
+import {Link} from 'react-router-dom';
 
 function CheckoutConfirm() {
   return (
@@ -12,9 +13,11 @@ function CheckoutConfirm() {
 
       <h3>Thank you for trusting our purchase!</h3>
 
-      <button className="btn btn--animated btn--primary--blue btn--border--blue">
-        Continue to shopping
-      </button>
+      <Link to='/'>
+        <button className="btn btn--animated btn--primary--blue btn--border--blue">
+          Continue to shopping
+        </button>
+      </Link>
     </div>
   );
 }

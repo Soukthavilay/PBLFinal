@@ -1,12 +1,18 @@
 import { useContext, useEffect, useState } from 'react'
+import Popup from "reactjs-popup";
 import StepTracker from './StepTracker'
 import { GlobalState } from '../../../GlobalState';
 import axios from 'axios';
 import Loading from '../../utils/Loading/Loading';
+import moment from 'moment';
+import { Link } from 'react-router-dom';
+
 
 function ShippingDetail() {
   const state = useContext(GlobalState)
-  const [userDetail] = state.userAPI.detail
+  const [token] = state.token;
+  const [userDetail] = state.userAPI.detail;
+  const [cart, setCart] = state.userAPI.cart;
   const id = userDetail._id;
   const name = userDetail.name;
   const email = userDetail.email; 
@@ -16,6 +22,10 @@ function ShippingDetail() {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState('cod');
   const [itemOrder,setItemOrder] = useState();
   const [loading, setLoading] = useState(false);
+  const [hasVoucher, setHasVoucher] = useState(false);
+  const [vouchers, setVouchers] = useState([]);
+  const [showVoucherPopup, setShowVoucherPopup] = useState(false);
+  const [total, setTotal] = useState(0);
 
   const handlePaymentMethodChange = (event) => {
     setSelectedPaymentMethod(event.target.value);
@@ -96,17 +106,48 @@ useEffect(() => {
     setShowHidePaymentMethod(!showHideComment);
   };
 
+  useEffect(() => {
+    if(token){
+      const fetchVouchers = async () => {
+        try {
+          const response = await axios.get('http://localhost:5000/api/voucher',{headers: { Authorization: token }});
+          setVouchers(response.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    fetchVouchers();
+    }
+  }, [token]);
+  const handleVoucherSelection = (selectedVoucher) => {
+    setVoucher(selectedVoucher);
+  };
+  const handleVoucherPopupOpen = () => {
+    setShowVoucherPopup(true);
+  };
+  const handleVoucherPopupClose = () => {
+    setShowVoucherPopup(false);
+  };
+  useEffect(() => {
+    if (cart) {
+      let total = 0;
+      cart.forEach((item) => {
+        total += item.price * item.quantity;
+      });
+      setTotal(total);
+    }
+  }, [cart]);
   return (
     <>
       {loading ? <>{loading && <Loading/>}</> : <>
       <div className="shipping-detail">
       <StepTracker current={2} />
-      <h3 className="shipping-detail-title">Thông tin giao hàng</h3>
+      <h3 className="shipping-detail-title">Shipping Information</h3>
       <form onSubmit={handleSubmit}>
         <div className="shipping-detail-form">
           <div className="form-group">
-            <label htmlFor="fullname">Họ Tên</label>
-            <input type="text" name="fullname" placeholder="Họ và tên" value={name} readOnly/>
+            <label htmlFor="fullname">First Name && Last Name</label>
+            <input type="text" name="fullname" placeholder="First Name && Last Name" value={name} readOnly/>
           </div>
           <div className="form-group">
             <label htmlFor="email">Email</label>
@@ -114,16 +155,88 @@ useEffect(() => {
           </div>
           <div className="form-group">
             <label htmlFor="phonenumber">Phone number</label>
-            <input type="number" name="phonenumber" value={phone}  onChange={e => setPhone(e.target.value)}/>
+            <input required type="number" name="phonenumber" value={phone}  onChange={e => setPhone(e.target.value)}/>
           </div>
           <div className="form-group">
             <label htmlFor="address">Address</label>
-            <input name="address" type="text" value={address}  onChange={e => setAddress(e.target.value)}/>
+            <input required name="address" type="text" value={address}  onChange={e => setAddress(e.target.value)}/>
+          </div>
+          <div className='form-group'>
+            <label htmlFor="voucher">Voucher</label>
+            {voucher ? <input
+              name="voucher"
+              type="text"
+              value={voucher ? voucher : ""}
+              readOnly
+            /> : <></>}
+            <Popup
+            trigger={<a className="button btn btn--animated btn--primary--blue btn--border--blue">Select Voucher</a>}
+            modal
+            nested
+            open={showVoucherPopup} onClose={handleVoucherPopupClose}
+          >
+            {(close) => (
+              <div className="modal review-modal">
+                <button className="close" onClick={close}>&times;</button>
+                <div className="voucher-popup">
+                <h4>Select a Voucher</h4>
+                <ul>
+                  {vouchers.map((voucher) => (
+                    <li key={voucher._id}>
+                      <div>
+                        <strong>{voucher.code}</strong>
+                        <p>{voucher.description}</p>
+                        <p>{voucher.conditions}</p>
+                        <p><strong>Expiration date:</strong> {moment(voucher.expirationDate).format('DD/MM/YYYY')}</p>
+                        <strong>OFF {voucher.discountPercentage}%</strong>
+                        <button className='button' disabled={voucher.priceConditions >= total} onClick={() => handleVoucherSelection(voucher.code)}>Select</button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              </div>
+            )}
+          </Popup>
+          </div>
+          {/* <div className="form-group">
+            <label htmlFor="has-voucher">
+              <input
+                type="checkbox"
+                id="has-voucher"
+                checked={hasVoucher}
+                onChange={(e) => setHasVoucher(e.target.checked)}
+              />
+              
+            </label>
           </div>
           <div className="form-group">
-            <label htmlFor="address">Voucher</label>
-            <input name="address" type="text" value={voucher}  onChange={e => setVoucher(e.target.value)}/>
-          </div>
+            <label htmlFor="voucher">Voucher</label>
+            <input
+              name="voucher"
+              type="text"
+              value={voucher}
+              onChange={(e) => setVoucher(e.target.value)}
+              disabled={!hasVoucher}
+              onClick={handleVoucherPopupOpen}
+            />
+          </div> */}
+          {/* {showVoucherPopup && (
+            <div className="voucher-popup">
+              <h4>Select a Voucher</h4>
+              <ul>
+                {vouchers.map((voucher) => (
+                  <li
+                    key={voucher._id}
+                    onClick={() => handleVoucherSelection(voucher.code)}
+                  >
+                    {voucher.code}
+                  </li>
+                ))}
+              </ul>
+              <button onClick={handleVoucherPopupClose}>Close</button>
+            </div>
+          )} */}
           <div className="form-group">
             <label htmlFor="payment-method">Payment methods</label>
             <select
@@ -138,10 +251,10 @@ useEffect(() => {
         </div>
           <div className="checkout-buttons">
             <button className="btn btn--animated btn--primary--blue btn--border--blue">
-              Tiếp tục mua
+              <Link to='/order-summary'>Back</Link>
             </button>
             <button type='submit' className="btn btn--animated btn--primary--white btn--border--blue">
-              Tiếp theo
+              Next
             </button>
           </div>
         </div>

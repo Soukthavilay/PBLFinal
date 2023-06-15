@@ -121,7 +121,7 @@ function OrderSummary() {
 
       <div className="checkout-buttons">
         <button className="btn btn--animated btn--primary--blue btn--border--blue">
-          Continue to product
+          <Link to='/'>Continue to product</Link>
         </button>
         <button className="btn btn--animated btn--primary--white btn--border--blue">
           <Link to="/shipping-detail">NEXT</Link>
