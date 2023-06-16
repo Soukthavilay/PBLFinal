@@ -1,36 +1,92 @@
 .dashboard-admin {
-    // padding: 20px;
-    h1 {
-        font-size: 24px;
-        margin-bottom: 20px;
-        color: #f5f5f5;
-      }
-      .statistical {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-        .statistical-card {
-            background-color: #f5f5f5;
-            padding: 20px;
-            border-radius: 8px;
-            height: 300px;
-            overflow: auto;
-            h2 {
-                font-size: 18px;
-                margin-bottom: 10px;
-                
-              }
-              ul {
-                margin: 0;
-                padding: 0;
-                // list-style-type: none;
-                li {
-                    margin-bottom: 5px;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                  }
-              }
-          }
-      }
+  // padding: 20px;
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #f5f5f5;
   }
+
+  .statistical-card {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    height: 220px;
+    overflow: auto;
+    width: 100%; 
+    margin-bottom: 24px;
+    h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    ul {
+      margin: 0;
+      padding: 0;
+      // list-style-type: none;
+      li {
+        margin-bottom: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+    &.sold-product,
+    &.statistics {
+      padding: 0 0px 20px 0px;
+      h2 {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        padding: 10px 20px;
+        background-color: #f5f5f5;
+      }
+
+      li {
+        padding: 6px 20px;
+
+        &:nth-child(odd) {
+          background-color: #dcdcdc;
+        }
+      }
+    }
+  }
+
+  .dashboard-summary {
+    display: flex;
+    flex-wrap: nowrap;
+    column-gap: 16px;
+    margin-bottom: 24px;
+
+    .statistical-card {
+      height: 140px;
+      padding: 20px 20px 4px 20px;
+
+      p {
+        font-weight: 600;
+        font-size: 32px;
+        padding-bottom: 16px;
+      }
+
+      small {
+        font-size: 16px;
+      }
+
+      &:nth-child(1) p {
+          
+          border-bottom: 4px solid green;
+      }
+      &:nth-child(2) p {
+          border-bottom: 4px solid rgb(198, 131, 77);
+      }
+      &:nth-child(3) p {
+          border-bottom: 4px solid #1464f4;
+      }
+      &:nth-child(4) p {
+          border-bottom: 4px solid green;
+      }
+    }
+  }
+}
+
+.dashboard {
+  margin: auto;
+}
