@@ -61,7 +61,8 @@ function OrderSummary() {
     <div className="order-summary">
       <StepTracker current={1} />
       <h2 className="order-summary-title">Cart Information</h2>
-      <p className="order-summary-subtitle">Check the products in your cart</p>
+      {total ? <>
+        <p className="order-summary-subtitle">Check the products in your cart</p>
 
       <div className="order-summary-product">
         {cart.map((item) => {
@@ -127,6 +128,14 @@ function OrderSummary() {
           <Link to="/shipping-detail">NEXT</Link>
         </button>
       </div>
+      </> : <>
+        <div className="cart-no-have">
+          <h2 className='order-summary-title'>Not have product select</h2>
+          <button className="btn btn--animated btn--primary--white btn--border--blue">
+            <Link to="/">Continues to Shop</Link>
+          </button>
+        </div>
+      </>}
     </div>
   );
 }

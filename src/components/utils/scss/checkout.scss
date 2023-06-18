@@ -259,7 +259,15 @@
     }
   }
 }
-
+.cart-no-have{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  button{
+    margin: 0 auto;
+    width: 200px;
+  }
+}
 .checkout-confirm {
   text-align: center;
   height: 58vh;

@@ -30,6 +30,9 @@ body {
 .order-cancelled{
   background-color: red !important;
 }
+.error-message{
+  color: #f65e2b;
+}
 .d_flex{
   display: flex;
   justify-content: space-around;

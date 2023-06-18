@@ -45,6 +45,22 @@
       margin-bottom: 24px;
       font-weight: 500;
     }
+    .image-user{
+      .profile-image{
+        cursor: pointer;
+        img{
+          border-radius: 50%;
+        }
+        .uploadImg{
+          input{
+            display:none;
+          }
+          label{
+            cursor: pointer;
+          }
+        }
+      }
+    }
   }
 
   .profile-content-item {

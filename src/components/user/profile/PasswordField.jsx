@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { FaRegEyeSlash } from "react-icons/fa";
 
-function PasswordField({ inputName, placeholder }) {
+function PasswordField({ inputName, placeholder,autocomplete,value,onChange }) {
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePassword = () => {
     setPasswordShown(!passwordShown);
@@ -12,7 +12,10 @@ function PasswordField({ inputName, placeholder }) {
       <input
         type={!passwordShown ? "password" : "text"}
         name={inputName}
-        placeholder={placeholder}
+        placeholder={placeholder ? placeholder : "Enter your password"}
+        autoComplete={autocomplete ? autocomplete : ""}
+        value={value ? value : ""}
+        onChange={onChange ? onChange : ""}
       />
       <span className="pwd-icon" onClick={togglePassword}>
         {passwordShown ? <AiOutlineEye /> : <FaRegEyeSlash/>}
