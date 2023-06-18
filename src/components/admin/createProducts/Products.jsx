@@ -5,6 +5,7 @@ import { GlobalState } from '../../../GlobalState';
 import '../scss/createProduct.scss'
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import SuccessPopup from '../../utils/NotFound/SuccessPopup';
 const initialState = {
     _id: '',
     title: '',
@@ -44,6 +45,8 @@ const Products = () => {
     const [searchKeyword, setSearchKeyword] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [productShow] = state.productsAPI.products;
+    const [error, setError] = useState("");
+    const [alert,setAlert] = useState("");
 
     const handleSearch = async () => {
       try {
@@ -59,11 +62,11 @@ const Products = () => {
     const handleUpload = async (e) => {
         e.preventDefault();
         try {
-            if (!isAdmin) return alert('You are not admin');
+            if (!isAdmin) return setError('You are not admin');
             const file = e.target.files[0];
-            if (!file) return alert('The file is not correct.');
-            if (file.size > 1024 * 1024) return alert('Image is large. Please try again');
-            if (file.type !== 'image/jpeg' && file.type !== 'image/png') return alert('The file is not correct.Please check again ');
+            if (!file) return setError('The file is not correct.');
+            if (file.size > 1024 * 1024) return setError('Image is large. Please try again');
+            if (file.type !== 'image/jpeg' && file.type !== 'image/png') return setError('The file is not correct.Please check again ');
             let formData = new FormData();
             formData.append('file', file);
             const res = await axios.post('http://localhost:5000/api/upload', formData, {
@@ -86,40 +89,52 @@ const Products = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+          if(product.category === '' || product.band === ''){
+            setError('Please select a category and band');
+          } else {
             const result = {
-                title: product.title,
-                description: product.description,
-                band: product.band,
-                category: product.category,
-                price: product.price,
-                amount: product.amount,
-                feature: {
-                    color: feature.color,
-                    typeOf: feature.typeOf,
-                    SSDStorage: feature.SSDStorage,
-                    processor: feature.processor,
-                    graphicSeries: feature.graphicSeries,
-                    operatingSystem: feature.operatingSystem,
-                    keyboardLanguage: feature.keyboardLanguage,
-                    hardDiscType: feature.hardDiscType,
-                    ram: feature.ram,
-                    inches: feature.inches,
-                    storage: feature.storage,
-                    batteries: feature.batteries,
-                    connectivities: feature.connectivities,
-                    sim: feature.sim
-                },
-            }
-            await axios.post("http://localhost:5000/api/products", { ...result, images });
-            setCallback(!callback);
-            alert("created " + result);
-            window.location.href = '/admin/createProduct';
+              title: product.title,
+              description: product.description,
+              band: product.band,
+              category: product.category,
+              price: product.price,
+              amount: product.amount,
+              feature: {
+                  color: feature.color,
+                  typeOf: feature.typeOf,
+                  SSDStorage: feature.SSDStorage,
+                  processor: feature.processor,
+                  graphicSeries: feature.graphicSeries,
+                  operatingSystem: feature.operatingSystem,
+                  keyboardLanguage: feature.keyboardLanguage,
+                  hardDiscType: feature.hardDiscType,
+                  ram: feature.ram,
+                  inches: feature.inches,
+                  storage: feature.storage,
+                  batteries: feature.batteries,
+                  connectivities: feature.connectivities,
+                  sim: feature.sim
+              },
+          }
+          await axios.post("http://localhost:5000/api/products", { ...result, images });
+          setCallback(!callback);
+          setError("");
+          setAlert("Created Product Success");
+          window.location.href = '/admin/createProduct';
+          }
         } catch (error) {
-            console.log(error.response.data.msg);
+            setError(error.response.data.msg);
         }
     }
+    const handleSuccessPopupClose = () => {
+      setError("");
+      setAlert("");
+      // window.location.reload();
+    };
     return (
       <>
+      {error && (<SuccessPopup successMessage={error} onClose={handleSuccessPopupClose} />)}
+      {alert && (<SuccessPopup successMessage={alert} onClose={handleSuccessPopupClose} />)}
         <div className="app-content">
           <div className="app-content-header">
             <h1 className="app-content-headerText">Products</h1>

@@ -12,7 +12,7 @@ const SuccessPopup = ({ successMessage, onClose }) => {
   return (
     <div className="success-popup">
       <div className="success-popup-content">
-        <h3>Success</h3>
+        <h3>Notification</h3>
         <p>{successMessage}</p>
         <button className="close-button" onClick={handleClose}>Close</button>
       </div>
