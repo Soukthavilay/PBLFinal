@@ -238,6 +238,24 @@
         h5 {
           margin: 0;
         }
+        .reply-feedback {
+          // margin-top: 16px;
+      
+          button {
+            background-color: transparent;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #1464f4;
+      
+            svg {
+              margin-right: 4px;
+            }
+          }
+        }
 
         p {
           margin: 0;
@@ -245,6 +263,7 @@
       }
     }
   }
+
 
   .comment-container {
     transition: .5s;
@@ -290,3 +309,8 @@
   }
 }
 
+.delete{
+    position: relative;
+    left: -8px;
+    top: -38px;
+}

@@ -58,7 +58,7 @@ const Header = () => {
                     <MdLogout/>
                 </Link>
                 <div className="header-cart">
-                    <Link to="/order-summary">
+                    <Link target="_parent" to="/order-summary">
                         <AiOutlineShoppingCart />
                         <span className="header-cart-count">{cartCount}</span>
                     </Link>
@@ -157,7 +157,7 @@ const Header = () => {
                   </div>
                 </Link>
                 <div className="header-cart">
-                  <Link to="/order-summary">
+                  <Link target="_parent" to="/order-summary">
                     <AiOutlineShoppingCart />
                     <span className="header-cart-count">0</span>
                   </Link>

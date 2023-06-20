@@ -6,6 +6,7 @@ import axios from 'axios';
 import ErrorPopup from '../../utils/NotFound/PopupError';
 import Loading from '../../utils/Loading/Loading';
 import SuccessPopup from '../../utils/NotFound/SuccessPopup';
+import ConfirmPopup from '../../utils/NotFound/ConfirmPopup'
 
 const ProductRow = ( productShow ) => {
   const state = useContext(GlobalState);
@@ -17,6 +18,7 @@ const ProductRow = ( productShow ) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [alert,setAlert] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleClick = async () => {
     try {
@@ -49,6 +51,18 @@ const ProductRow = ( productShow ) => {
     });
   }, [categories, product]);
 
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  const handleConfirm = () => {
+    handleClick();
+    setModalOpen(false);
+  };
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
   const handleSuccessPopupClose = () => {
     setError("");
     setAlert("");
@@ -80,7 +94,12 @@ const ProductRow = ( productShow ) => {
           <div className="product-cell price"><span className="cell-label">Price:</span>{product.price}</div>
         </div>
       </Link>
-      <div className="product-cell delete"><button className='' onClick={handleClick}><AiFillCloseCircle /></button></div>
+      <div className="delete"><button className='' onClick={handleOpenModal}><AiFillCloseCircle /></button></div>
+      { modalOpen && (<ConfirmPopup
+        isOpen={modalOpen}
+        onClose={handleCloseModal}
+        onConfirm={handleConfirm}
+        />)}
       {error && (<SuccessPopup successMessage={error} onClose={handleSuccessPopupClose} />)}
       {alert && (<SuccessPopup successMessage={alert} onClose={handleSuccessPopupClose} />)}
     </>
