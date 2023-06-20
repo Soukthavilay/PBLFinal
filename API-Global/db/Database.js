@@ -6,7 +6,8 @@ const connectDatabase = () => {
         useCreateIndex: true,
         useFindAndModify: false,
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        serverSelectionTimeoutMS: 30000,
       })
       .then((data) => {
         console.log(`mongod connected with server: ${data.connection.host}`);

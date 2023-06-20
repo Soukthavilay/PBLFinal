@@ -121,7 +121,23 @@ const userCtrl = {
       return res.status(500).json({ msg: err.message });
     }
   },
+  getAllUserAdmin: async (req, res) => {
+    try {
+      try {
+        const users = await Users.find();
+        res.json({
+            status: 'success',
+            result: users.length,
+            users: users
+        })
 
+    } catch (err) {
+        return res.status(500).json({ msg: err.message })
+    }
+    } catch (error) {
+      return res.status(500).json({ msg: err.message });
+    }
+  },
   addCart: async (req, res) => {
     try {
       const user = await Users.findById(req.user.id);
@@ -150,18 +166,18 @@ const userCtrl = {
 
   updateUser: async (req, res) => {
     try {
-      const { name, email, phone , userID } = req.body;
+      const { name, email, phone, userID, avatar } = req.body;
       const user = await Users.findById(userID);
-      if (!user) return res.status(400).json({ message: "User does not exist." })
+      if (!user) return res.status(400).json({ message: "User does not exist." });
       if (name) user.name = name;
       if (email) user.email = email;
       if (phone) user.phone = phone;
+      if (avatar) user.avatar = avatar;
       await user.save();
       res.json(user);
-    }
-    catch (err) {
-      console.log(err)
-      res.status(500).json({ error: "Internal Server Error" })
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: "Internal Server Error" });
     }
   },
 };
