@@ -21,6 +21,7 @@ router.route('/products/category/:id')
     .get(productCtrl.getProductsByCategory)
 router.route('/products/band/:id')
     .get(productCtrl.getProductsByBand)
-
+router.route('/products/recommender/:uid')
+    .get(productCtrl.recommender)
 
 module.exports = router

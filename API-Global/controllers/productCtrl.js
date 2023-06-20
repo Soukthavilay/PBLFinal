@@ -3,6 +3,7 @@ const Type = require('../models/typeModel')
 const DetailProduct = require('../models/detailProductModel')
 const feedbackCtrl = require('./feedback/feedbackCtrl');
 const ProductRecommender = require('product-recommender');
+const Recommender = require('../helpers/recommender.js');
 // Filter, sorting and paginating
 
 
@@ -259,6 +260,18 @@ const productCtrl = {
         //     });
         //     return true
         // }
+    },
+    recommender: async (req, res) => {
+        try {
+            const userId = req.params.uid;
+            var topProduct = await Recommender.recommender(userId);
+            var listProductId = topProduct.map(item => item[0]);
+            var result = await Products.find({ _id: { $in: listProductId } });
+            res.status(200).json({result})
+        }
+        catch (error) {
+            res.send(JSON.stringify(error))
+        }
     }
 
 }
