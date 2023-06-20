@@ -3,10 +3,13 @@ import "../utils/scss/login.scss";
 import axios from "axios";
 import { GlobalState } from "../../GlobalState";
 import Loading from "../utils/Loading/Loading";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function LoginForm() {
   const [active, setActive] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [registerSuccess, setRegisterSuccess] = useState(false);
   const addClass = () => {
     if (!active) setActive(true);
   };
@@ -30,8 +33,6 @@ function LoginForm() {
   const handleLoginSubmit = async (event) => {
     event.preventDefault();
     try {
-      // await axios.post('http://localhost:5000/user/login', { ...loginFormData });
-      // localStorage.setItem("accessToken", true);
       setLoading(true);
       const response = await axios.post(
         "http://localhost:5000/user/login",
@@ -41,22 +42,21 @@ function LoginForm() {
       const token = response.data.accesstoken;
       localStorage.removeItem("accessToken");
       localStorage.setItem("accessToken", token);
-      // window.location.href = '/';
+
       if (isAdmin) {
         window.location.href = "admin/createProduct";
       } else {
         window.location.href = "/";
       }
     } catch (error) {
-      alert(error.response.data.msg);
+      toast.error(error.response.data.msg); // Display error message in ToastContainer
     } finally {
-      setLoading(false); // Tắt trạng thái loading
+      setLoading(false);
     }
   };
 
   // REGISTER
   const registerState = useContext(GlobalState);
-  console.log(registerState);
   const [registerFormData, setRegisterFormData] = useState({
     name: "",
     email: "",
@@ -79,6 +79,7 @@ function LoginForm() {
       const token = response.data.accesstoken;
       localStorage.removeItem("accessToken");
       localStorage.setItem("accessToken", token);
+      setRegisterSuccess(true);
 
       if (isAdmin) {
         window.location.href = "/Admin";
@@ -86,15 +87,16 @@ function LoginForm() {
         window.location.href = "/";
       }
     } catch (error) {
-      alert(error.response.data.msg);
+      toast.error(error.response.data.msg); // Display error message in ToastContainer
     } finally {
-      setLoading(false); // Tắt trạng thái loading
+      setLoading(false);
     }
   };
 
   return (
     <div className="login-page">
-    {loading && <Loading />} {/* Hiển thị component Loading khi loading là true */}
+      {loading && <Loading />}
+      <ToastContainer /> {/* Render the ToastContainer for displaying error messages */}
       <div
         className={
           active
@@ -156,6 +158,7 @@ function LoginForm() {
               placeholder="Password"
               onChange={handleLoginChange}
               value={loginFormData.password}
+              required
             />
             <button
               className="btn btn--animated btn--primary--blue btn--border--blue"
@@ -175,7 +178,7 @@ function LoginForm() {
             </div>
             <div className="overlay-right">
               <h1>Hello, Friend</h1>
-              <p>Enter your personal detail and start journey with us</p>
+              <p>Enter your personal detail and start the journey with us</p>
               <button id="register" onClick={addClass}>
                 Register
               </button>
