@@ -1,3 +1,4 @@
+import React from "react";
 import StarRatings from "react-star-ratings";
 import { useState } from 'react';
 
@@ -13,6 +14,12 @@ function ProductReviewDetail(fd) {
   const handleToggle = () => {
     setShowHideComment(!showHideComment);
   };
+
+  const handleReplyFeedback = () => {
+    // Xử lý logic khi người dùng nhấp vào nút "Reply Feedback"
+    // Ví dụ: Hiển thị một giao diện để nhập và gửi phản hồi
+  };
+
   return (
     <>
       <div className="product-reviews-detail">
@@ -84,4 +91,4 @@ function ProductReviewDetail(fd) {
   );
 }
 
-export default ProductReviewDetail
+export default ProductReviewDetail;

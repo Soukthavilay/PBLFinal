@@ -12,6 +12,7 @@ import Notfound from '../../utils/NotFound/Notfound';
 import EditProduct from '../createProducts/EditProduct';
 import Home from '../AdminHome/Home';
 import OrderDetail from '../Report/OrderDetail';
+import Users from '../users/Users';
 const Dashboard = () => {
   const state = useContext(GlobalState);
   const [isLogged] = state.userAPI.isLogged;
@@ -28,6 +29,7 @@ const Dashboard = () => {
           {/* <Route path="/admin/cancel-request" component={isAdmin ? Report : Notfound} /> */}
           <Route path="/admin/statistical" component={Home}/>
           <Route path="/admin/orderDetail/:id" component={OrderDetail}/>
+          <Route path="/admin/allUser" component={Users}/>
         </Switch>
       </Router>
     </>
