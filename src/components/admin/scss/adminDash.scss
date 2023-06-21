@@ -3,7 +3,7 @@
   h1 {
     font-size: 24px;
     margin-bottom: 20px;
-    color: #f5f5f5;
+    // color: #f5f5f5;
   }
 
   .statistical-card {
@@ -51,7 +51,8 @@
   }
 
   .dashboard-summary {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     flex-wrap: nowrap;
     column-gap: 16px;
     margin-bottom: 24px;

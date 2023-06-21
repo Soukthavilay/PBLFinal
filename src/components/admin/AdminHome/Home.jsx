@@ -4,6 +4,7 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { AiOutlineSearch } from "react-icons/ai";
+import { BsCalendar3 } from "react-icons/bs";
 
 const Home = () => {
   const [totalSales, setTotalSales] = useState(0);
@@ -53,18 +54,21 @@ const Home = () => {
   };
   return (
     <>
-      <div className='dashboard'>
-        <h1>Dashboard</h1>
-        <div className="dashboard-search">
-          {/* <h2 style={{color: + "red"}}>Select Month and Year</h2> */}
-          <DatePicker
-            selected={selectedDate}
-            onChange={handleDateChange}
-            dateFormat="MM/yyyy"
-            placeholderText={'Select Month and Year'}
-            showMonthYearPicker
-          />
-          <button className="search-btn" onClick={fetchData}><AiOutlineSearch /></button>
+      <div className="dashboard">
+        <div className="dashboard-summary-header">
+          <h1>Dashboard</h1>
+          <div className="dashboard-search">
+            {/* <h2 style={{color: + "red"}}>Select Month and Year</h2> */}
+            <BsCalendar3 className='calendar-icon' />
+            <DatePicker
+              selected={selectedDate}
+              onChange={handleDateChange}
+              dateFormat="MM/yyyy"
+              placeholderText={' Select Month and Year'}
+              showMonthYearPicker
+            />
+            <button className="search-btn" onClick={fetchData}><AiOutlineSearch /></button>
+          </div>
         </div>
 
         <div className="dashboard-summary">
