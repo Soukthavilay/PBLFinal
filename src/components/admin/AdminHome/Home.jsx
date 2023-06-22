@@ -5,6 +5,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsCalendar3 } from "react-icons/bs";
+import ProductChart from './ProductChart';
 
 const Home = () => {
   const [totalSales, setTotalSales] = useState(0);
@@ -98,14 +99,16 @@ const Home = () => {
           </div>
         </div>
 
-        <div className='statistical-card sold-product'>
+        {/* <div className='statistical-card sold-product'>
           <h2>Sold Products</h2>
           <ul>
             {soldProducts.map((product) => (
               <li key={product._id}>{product.title}</li>
             ))}
           </ul>
-        </div>
+        </div> */}
+
+        <ProductChart />
 
         <div className='statistical-card statistics'>
           <h2>Category Statistics</h2>
