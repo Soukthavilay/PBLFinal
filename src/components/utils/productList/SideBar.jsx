@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 function SideBar() {
   const state = useContext(GlobalState);
   const [bands] = state.BandAPI.bands;
+  const [categories] = state.categoriesAPI.categories;
   const [selectedBand, setSelectedBand] = useState('');
   const [id,setId] = useState('');
 
@@ -21,23 +22,25 @@ function SideBar() {
   },[selectedBand,bands,id])
 
   return (
-    <div className="sidebar">
+    <div className="sidebar" style={{width: "400px"}}>
       <div className="sidebar-item">
         <h3 className="sidebar-item-title">Laptop</h3>
         <ul className="sidebar-item-list">
-          <li onClick={() => handleClick("Lenovo")}><Link to={`/product-list/${id}`}>Lenovo</Link></li>
-          <li onClick={() => handleClick("Macbook")}><Link to={`/product-list/${id}`}>Macbook</Link></li>
-          <li onClick={() => handleClick("Asus")}><Link to={`/product-list/${id}`}>Asus</Link></li>
-          <li onClick={() => handleClick("HP")}><Link to={`/product-list/${id}`}>HP</Link></li>
+          {categories?.map((category)=>{
+            return (
+              <Link key={category._id} to={`/product-list/${category._id}`}><li >{category.name}</li></Link>
+            )
+          })}
         </ul>
       </div>
       <div className="sidebar-item">
         <h3 className="sidebar-item-title">Phone</h3>
         <ul className="sidebar-item-list">
-          <li>iPhone</li>
-          <li>Samsung</li>
-          <li>Xiaomi</li>
-          <li>Opppo</li>
+        {bands?.map((band)=>{
+            return (
+              <Link key={band._id} to={`/product-list/${band._id}`}><li >{band.name}</li></Link>
+            )
+          })}
         </ul>
       </div>
     </div>

@@ -12,12 +12,14 @@ import SideBar from "./SideBar";
 function ProductList() {
   const state = useContext(GlobalState);
   const [categories] = state.categoriesAPI.categories;
+  const [products] = state.productsAPI.products;
   const [bands] = state.BandAPI.bands;
   const params = useParams();
   const [categoryList,setCategoryList] = useState();
   const [band,setBand] = useState();
   const [pdcate,setPdcate] = useState();
   const [loading,setLoading] = useState(false);
+  const [savePd,setSavePd] = useState([]);
 
   useEffect(()=>{
     if(params.id){
@@ -56,6 +58,30 @@ function ProductList() {
       }
     }
   },[categoryList,band,params.id]);
+
+  useEffect(() => {
+    if(products){
+    const fetchProductData = async () => {
+      try {
+        setLoading(true);
+        const productDataList = await Promise.all(products.map(async (product) => {
+          const productId = product._id;
+          const response = await axios.get(`http://localhost:5000/api/products/${productId}`);
+          const productData = response.data;
+          return { productId, productData };
+          
+        }));
+        setLoading(false);
+        setSavePd(productDataList);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    fetchProductData();
+  }
+  }, [products]);
+
   useEffect(()=>{
     if(pdcate?.length === 0 || pdcate === undefined){
       setLoading(true);
@@ -63,61 +89,89 @@ function ProductList() {
       setLoading(false);
     }
   },[pdcate])
-  var userStar = 5;
-  return (
-    <>
-      <div className="product-list-banner">
-        <img
-          src="https://res.cloudinary.com/dkiofoako/image/upload/v1685333973/PBL/Apple-iPhone-14-iPhone-14-Plus-5up-hero-220907_Full-Bleed-Image.jpg.xlarge_t3xlcx.jpg"
-          alt="apple"
-        />
-      </div>
-      <div className="product-list">
-        {/* <h2>Product list</h2> */}
-        <ServiceList />
-        <div className="product-list-content">
-          <SideBar />
 
-          {loading ? (
-            <>{loading && <Loading />}</>
-          ) : (
-            <>
+  useEffect(() => {
+    if(pdcate === undefined || pdcate.length === 0){
+      setTimeout(() => {
+        setLoading(false);
+      }, 2500);
+    }
+  }, [pdcate]);
+  const getTotalRating = (feedbackData) => {
+    let totalRating = 0;
+    if (feedbackData.length > 0) {
+      feedbackData?.forEach((feedback) => {
+        totalRating += feedback.rating;
+      });
+      var result = {
+        totalRating: totalRating / feedbackData.length,
+        total: feedbackData.length
+      }
+      return result;
+    }
+    return 0;
+  };
+  const HasProduct = () =>{
+    return (
               <div className="product-list-items">
                 {pdcate &&
                   pdcate.map((item) => {
-                    const { _id, title, images, price, sold } = item;
+                    const productData = savePd.find((pd) => pd.productId === item._id);
+                    const feedbackData = productData
+                      ? productData.productData.feedback
+                      : [];
+                    const totalRating = getTotalRating(feedbackData);
                     return (
-                      <div className="product-item" key={_id}>
+                      <div style={{height: "fit-content"}} className="product-item" key={item._id}>
                         <div className="product-item-image">
-                          <Link to={`/detail/${_id}`}>
-                            <img src={images.url} alt={images.url} />
+                          <Link to={`/detail/${item._id}`}>
+                            <img src={item.images.url} alt={"product-image"} />
                           </Link>
+                          {item.discountPercentage && item.discountExpiration ? 
+                          <div className="coupon">
+                            <span>{item.discountPercentage}%</span>
+                            <span>OFF</span>
+                          </div> : null
+                        }
                         </div>
                         <div className="product-item-detail">
                           <h3 className="product-name">
-                            <Link to={`/detail/${_id}`}>{title}</Link>
+                            <Link to={`/detail/${item._id}`}>{item.title}</Link>
                           </h3>
                           <div className="product-detail">
                             <div className="product-detail-meta">
-                              <p className="product-price">
-                                {new Intl.NumberFormat("vi-LA", {
+                            {item.discountPercentage ? 
+                              <div className="price-both">
+                                <span style={{ textDecoration: 'line-through' }}>{((item.price) / (1 - (item.discountPercentage / 100))).toLocaleString("en-US", {
                                   style: "currency",
-                                  currency: "KIP",
-                                }).format(price)}
-                              </p>
+                                  currency: "USD",
+                                })}</span>
+                                <span className="product-price">{item.price.toLocaleString("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                                })}</span>
+                                </div> : 
+                                <span className="product-price">
+                                  {item.price.toLocaleString("en-US", {
+                                  style: "currency",
+                                  currency: "USD",
+                                })}
+                                </span>
+                              }
                               <div className="product-ratings">
                                 <StarRatings
                                   name="rating"
-                                  rating={userStar}
+                                  rating={totalRating.totalRating ? totalRating.totalRating : 0}
                                   starRatedColor="#fadb14"
                                   starDimension="12px"
                                   starSpacing="2px"
                                 />
-                                <span>({sold})</span>
+                                <span>({totalRating.total ? totalRating.total : 0})</span>
                               </div>
                             </div>
+                            <span>sold : {item.sold}</span>
                             <Link
-                              to={`/detail/${_id}`}
+                              to={`/detail/${item._id}`}
                               className="btn btn--animated btn--primary--white btn--border--blue"
                             >
                               Buy now
@@ -128,8 +182,29 @@ function ProductList() {
                     );
                   })}
               </div>
+    )
+  }
+  return (
+    <>
+      <div className="product-list-banner">
+        <img
+          src="https://res.cloudinary.com/dkiofoako/image/upload/v1685333973/PBL/Apple-iPhone-14-iPhone-14-Plus-5up-hero-220907_Full-Bleed-Image.jpg.xlarge_t3xlcx.jpg"
+          alt="apple"
+        />
+      </div>
+      <div className="product-list">
+        <ServiceList />
+        <div className="product-list-content">
+          <SideBar />
+          {loading === true ? 
+            <Loading />
+          : 
+            <>
+            {pdcate === undefined || pdcate.length === 0 ? <><div className="service-list">Sorry dear. please choose another category because this one is not ready</div></> : 
+              <HasProduct/>
+            }
             </>
-          )}
+          }
         </div>
       </div>
     </>

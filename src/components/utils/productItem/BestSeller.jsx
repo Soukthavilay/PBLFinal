@@ -126,12 +126,12 @@ const BestSeller = () => {
                             <div className="product-ratings">
                               <StarRatings
                                 name="rating"
-                                rating={totalRating.totalRating}
+                                rating={totalRating.totalRating ? totalRating.totalRating : 0}
                                 starRatedColor="#fadb14"
                                 starDimension="16px"
                                 starSpacing="2px"
                               />
-                              <span>({totalRating.total})</span>
+                              <span>({totalRating.total ? totalRating.total : 0})</span>
                             </div>
                           </div>
                           <span>sold : {sold}</span>
