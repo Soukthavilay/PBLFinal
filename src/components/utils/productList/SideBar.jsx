@@ -24,7 +24,7 @@ function SideBar() {
   return (
     <div className="sidebar" style={{width: "400px"}}>
       <div className="sidebar-item">
-        <h3 className="sidebar-item-title">Laptop</h3>
+        <h3 className="sidebar-item-title">Categories</h3>
         <ul className="sidebar-item-list">
           {categories?.map((category)=>{
             return (
@@ -34,7 +34,7 @@ function SideBar() {
         </ul>
       </div>
       <div className="sidebar-item">
-        <h3 className="sidebar-item-title">Phone</h3>
+        <h3 className="sidebar-item-title">Bands</h3>
         <ul className="sidebar-item-list">
         {bands?.map((band)=>{
             return (
