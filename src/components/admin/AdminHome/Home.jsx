@@ -6,13 +6,18 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { AiOutlineSearch } from "react-icons/ai";
 import { BsCalendar3 } from "react-icons/bs";
 import ProductChart from './ProductChart';
+import DashboardSummary from './DashboardSummary';
+import CategoriesChart from './CategoriesChart';
 
 const Home = () => {
+
   const [totalSales, setTotalSales] = useState(0);
   const [soldProducts, setSoldProducts] = useState([]);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [deliveredOrders, setDeliveredOrders] = useState([]);
   const [newUsers, setNewUsers] = useState([]);
+
+
   const [categoryStats, setCategoryStats] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null);
 
@@ -72,7 +77,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="dashboard-summary">
+        {/* <div className="dashboard-summary">
           <div className='statistical-card'>
             <h2>Total Sales</h2>
             <p>{totalSales} <small>items</small></p>
@@ -97,7 +102,9 @@ const Home = () => {
               ))}
             </ul>
           </div>
-        </div>
+        </div> */}
+
+        <DashboardSummary />
 
         {/* <div className='statistical-card sold-product'>
           <h2>Sold Products</h2>
@@ -108,7 +115,42 @@ const Home = () => {
           </ul>
         </div> */}
 
-        <ProductChart />
+
+        <div className="summary-left">
+          <div className="chart-left">
+            <h2>Product Sales</h2>
+            <ProductChart />
+          </div>
+          <div className="chart-right">
+            <h2>Sales by Category</h2>
+            <CategoriesChart />
+            <div className="color-explain">
+              <div className="color-explain-item">
+                <div className="color">
+                </div>
+                <div className='category-type'>Phone</div>
+              </div>
+              <div className="color-explain-item">
+                <div className="color">
+                </div>
+                <div className='category-type'>Laptop</div>
+              </div>
+              <div className="color-explain-item">
+                <div className="color">
+                </div>
+                <div className='category-type'>Game Console</div>
+              </div>
+              <div className="color-explain-item">
+                <div className="color">
+                </div>
+                <div className='category-type'>Other</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="summary-right">
+        </div>
 
         <div className='statistical-card statistics'>
           <h2>Category Statistics</h2>
