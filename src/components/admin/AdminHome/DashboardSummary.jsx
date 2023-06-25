@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';;
 import axios from 'axios';
-import { PiShoppingBag } from "react-icons/pi";
+import { PiShoppingBag, PiShoppingCartLight } from "react-icons/pi";
+import { BsCash } from "react-icons/bs";
+import { AiOutlineUser } from "react-icons/ai";
 
 function DashboardSummary() {
 
@@ -55,7 +57,7 @@ function DashboardSummary() {
       <div className="dashboard-summary-item">
         <div className="item-content">
           <div className="title">
-            <PiShoppingBag />
+            <BsCash />
             <h2>Revenue</h2>
           </div>
           <p>{price.toLocaleString("en-US", {
@@ -66,7 +68,7 @@ function DashboardSummary() {
       <div className="dashboard-summary-item">
         <div className="item-content">
           <div className="title">
-            <PiShoppingBag />
+            <AiOutlineUser />
             <h2>Total User</h2>
           </div>
           <p>{totalSales} <small>user</small></p>
@@ -75,7 +77,7 @@ function DashboardSummary() {
       <div className="dashboard-summary-item">
         <div className="item-content">
           <div className="title">
-            <PiShoppingBag />
+            <PiShoppingCartLight />
             <h2>Total Orders</h2>
           </div>
           <p>{totalSales} <small>orders</small></p>
