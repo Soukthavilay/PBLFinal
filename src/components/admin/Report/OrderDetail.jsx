@@ -16,7 +16,7 @@ const OrderDetail = () => {
     <>
       <div className="orderDetail-admin">
         <h3 className="order-title">
-          Order Number <span className="order-number">{orderItem._id}</span>
+          Order Number: <span className="order-number">{orderItem._id}</span>
         </h3>
         <div className="order-detail-admin">
           <div className="order-detail-left">

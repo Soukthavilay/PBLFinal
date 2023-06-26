@@ -116,7 +116,7 @@ const Home = () => {
         </div> */}
 
 
-        <div className="summary-left">
+        <div className="summary-chart">
           <div className="chart-left">
             <h2>Product Sales</h2>
             <ProductChart />
@@ -149,16 +149,88 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="summary-right">
-        </div>
-
-        <div className='statistical-card statistics'>
+        {/* <div className='statistical-card statistics'>
           <h2>Category Statistics</h2>
           <ul>
             {categoryStats.map((category) => (
               <li key={category._id}>{category._id}: {category.totalProducts}</li>
             ))}
           </ul>
+        </div> */}
+
+        <div className="summary-list">
+          <div className="summary-list-left">
+            <div className="dashboard-orders">
+              <div className="dashboard-orders-header">
+                <h2 className="title">Recent Orders</h2>
+              </div>
+              <div className="dashboard-orders-content">
+                <div className="orders-content-table">
+                  <div className="table-header">
+                    <div className="table-header-item table-item">No.</div>
+                    <div className="table-header-item table-item">ID order</div>
+                    <div className="table-header-item table-item">Customer name</div>
+                    <div className="table-header-item table-item">Order date</div>
+                    <div className="table-header-item table-item">Status</div>
+                    <div className="table-header-item table-item">Amount</div>
+                  </div>
+                  <div className="table-content">
+                    <div className="table-row">
+                      <div className="row-item table-item">1</div>
+                      <div className="row-item table-item">#1234</div>
+                      <div className="row-item table-item">Admin</div>
+                      <div className="row-item table-item">25/06/2023</div>
+                      <div className="row-item table-item">
+                        <span className="done">Delivered</span>
+                      </div>
+                      <div className="row-item table-item">$1000</div>
+                    </div>
+                    <div className="table-row">
+                      <div className="row-item table-item">1</div>
+                      <div className="row-item table-item">#1234</div>
+                      <div className="row-item table-item">Admin</div>
+                      <div className="row-item table-item">25/06/2023</div>
+                      <div className="row-item table-item">
+                        <span className="processing">Pending</span>
+                      </div>
+                      <div className="row-item table-item">$1000</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="summary-list-right">
+            <h2>Top Product</h2>
+            <div className="list-product-item">
+              <div className="product-item-img">
+                <img src="https://images.unsplash.com/photo-1637329428580-8fddec26fa67?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="" />
+              </div>
+              <div className="product-item-content">
+                <h4 className="product-name">Macbook</h4>
+                <span className="product-quantity"># 123</span>
+              </div>
+            </div>
+            <div className="list-product-item">
+              <div className="product-item-img">
+                <img src="https://images.unsplash.com/photo-1637329428580-8fddec26fa67?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="" />
+              </div>
+              <div className="product-item-content">
+                <h4 className="product-name">Macbook</h4>
+                <span className="product-quantity"># 123</span>
+              </div>
+            </div>
+            <div className="list-product-item">
+              <div className="product-item-img">
+                <img src="https://images.unsplash.com/photo-1637329428580-8fddec26fa67?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="" />
+              </div>
+              <div className="product-item-content">
+                <h4 className="product-name">Macbook</h4>
+                <span className="product-quantity"># 123</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
