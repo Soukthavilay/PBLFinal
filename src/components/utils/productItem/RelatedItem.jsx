@@ -31,7 +31,7 @@ const RelatedItem = (categories) => {
       try {
         const productDataList = await Promise.all(products.map(async (product) => {
           const productId = product._id;
-          const response = await axios.get(`http://localhost:5000/api/products/${productId}`);
+          const response = await axios.get(`https://pbl-technology-988327da4050.herokuapp.com/api/products/${productId}`);
           const productData = response.data;
           return { productId, productData };
         }));
@@ -60,7 +60,7 @@ const RelatedItem = (categories) => {
   useEffect(()=>{
     if(categoryID){
         const getProductByCategory = async ()=>{
-            const res = await axios.get(`http://localhost:5000/api/products/category/${categoryID}`)
+            const res = await axios.get(`https://pbl-technology-988327da4050.herokuapp.com/api/products/category/${categoryID}`)
             setPdCate(res.data.products)
         }
         getProductByCategory();

@@ -16,7 +16,7 @@ const Users = () => {
   useEffect(() => {
     const getAllUsers = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/user/allUser', {
+        const res = await axios.get('https://pbl-technology-988327da4050.herokuapp.com/user/allUser', {
           headers: {
             Authorization: token,
           },

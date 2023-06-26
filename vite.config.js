@@ -13,7 +13,7 @@ export default defineConfig({
     },
   },
   proxy: {
-      target: 'http://localhost:5000',
+      target: 'https://pbl-technology-988327da4050.herokuapp.com/',
       changeOrigin: true,
       secure: false,      
       ws: true,

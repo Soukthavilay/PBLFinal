@@ -22,7 +22,7 @@ const BestSeller = () => {
   useEffect(()=>{
     try {
       const getProducts = async()=>{
-        const res = await axios.get("http://localhost:5000/api/products/top-sold");
+        const res = await axios.get("https://pbl-technology-988327da4050.herokuapp.com/api/products/top-sold");
         setData(res.data);
       }
       getProducts();
@@ -37,7 +37,7 @@ const BestSeller = () => {
       try {
         const productDataList = await Promise.all(data.map(async (product) => {
           const productId = product._id;
-          const response = await axios.get(`http://localhost:5000/api/products/${productId}`);
+          const response = await axios.get(`https://pbl-technology-988327da4050.herokuapp.com/api/products/${productId}`);
           const productData = response.data;
           return { productId, productData };
         }));

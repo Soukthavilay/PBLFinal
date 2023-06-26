@@ -7,7 +7,7 @@ function BandAPI() {
 
     useEffect(() =>{
         const getCategories = async () =>{
-            const res = await axios.get('http://localhost:5000/api/band')
+            const res = await axios.get('https://pbl-technology-988327da4050.herokuapp.com/api/band')
             setBands(res.data)
         }
         getCategories()

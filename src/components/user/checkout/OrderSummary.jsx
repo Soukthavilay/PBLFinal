@@ -23,7 +23,7 @@ function OrderSummary() {
     },[cart])
     const addToCart = async (cart) => {
         await axios.patch(
-            'http://localhost:5000/user/addcart',
+            'https://pbl-technology-988327da4050.herokuapp.com/user/addcart',
             { cart },
             {
                 headers: { Authorization: token },

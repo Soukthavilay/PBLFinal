@@ -51,7 +51,7 @@ const Products = () => {
     const handleSearch = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/products/search?key=${searchKeyword}`
+          `https://pbl-technology-988327da4050.herokuapp.com/api/products/search?key=${searchKeyword}`
         );
         setSearchResults(response.data);
       } catch (error) {
@@ -69,7 +69,7 @@ const Products = () => {
             if (file.type !== 'image/jpeg' && file.type !== 'image/png') return setError('The file is not correct.Please check again ');
             let formData = new FormData();
             formData.append('file', file);
-            const res = await axios.post('http://localhost:5000/api/upload', formData, {
+            const res = await axios.post('https://pbl-technology-988327da4050.herokuapp.com/api/upload', formData, {
                 headers: {
                     'content-type': 'multipart/form-data',
                     //   Authorization: token,
@@ -116,7 +116,7 @@ const Products = () => {
                   sim: feature.sim
               },
           }
-          await axios.post("http://localhost:5000/api/products", { ...result, images });
+          await axios.post("https://pbl-technology-988327da4050.herokuapp.com/api/products", { ...result, images });
           setCallback(!callback);
           setError("");
           setAlert("Created Product Success");

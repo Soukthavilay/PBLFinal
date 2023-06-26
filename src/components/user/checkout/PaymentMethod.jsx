@@ -20,7 +20,7 @@ const PaymentMethod = () => {
         } else if (selectedPaymentMethod === 'paypal') {
             const callPaypalApi = async () => {
                 try {
-                    const response = await axios.get('http://localhost:5000/api/paypal');
+                    const response = await axios.get('https://pbl-technology-988327da4050.herokuapp.com/api/paypal');
                 } catch (error) {
                     console.log(error);
                 }

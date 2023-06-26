@@ -13,7 +13,7 @@ const Report = () => {
   useEffect(() => {
     if (token) {
       const getOrder = async () => {
-        const res = await axios.get('http://localhost:5000/api/order/cancel-request', {
+        const res = await axios.get('https://pbl-technology-988327da4050.herokuapp.com/api/order/cancel-request', {
           headers: { Authorization: token },
         });
         setOrder(res.data);

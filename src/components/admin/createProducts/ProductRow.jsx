@@ -23,13 +23,13 @@ const ProductRow = ( productShow ) => {
   const handleClick = async () => {
     try {
       const destroyImg = axios.post(
-        'http://localhost:5000/api/destroy',
+        'https://pbl-technology-988327da4050.herokuapp.com/api/destroy',
         { public_id },
         {
           headers: { Authorization: token },
         }
       );
-      const deleteProduct = axios.delete(`http://localhost:5000/api/products/${product._id}`, {
+      const deleteProduct = axios.delete(`https://pbl-technology-988327da4050.herokuapp.com/api/products/${product._id}`, {
         headers: { Authorization: token },
       });
 

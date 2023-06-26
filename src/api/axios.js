@@ -1,4 +1,4 @@
 import axios from "axios";
 export default axios.create({
-    baseURL: 'http://localhost:5000'
+    baseURL: 'https://pbl-technology-988327da4050.herokuapp.com/'
 });

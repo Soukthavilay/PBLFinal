@@ -40,7 +40,7 @@ const Review = (product_id) => {
             formData.append('file', file);
 
             setLoading(true);
-            const res = await axios.post('http://localhost:5000/api/upload', formData, {
+            const res = await axios.post('https://pbl-technology-988327da4050.herokuapp.com/api/upload', formData, {
             });
             setLoading(false);
             setImages(res.data);
@@ -60,7 +60,7 @@ const Review = (product_id) => {
         try {
             setLoading(true);
             await axios.post(
-                'http://localhost:5000/api/destroy',
+                'https://pbl-technology-988327da4050.herokuapp.com/api/destroy',
                 { public_id: images.public_id },
             );
             setLoading(false);
@@ -84,7 +84,7 @@ const Review = (product_id) => {
             rating: score,
         };
         await axios.post(
-            'http://localhost:5000/api/feedback/create',
+            'https://pbl-technology-988327da4050.herokuapp.com/api/feedback/create',
             { ...result },
             {
                 headers: { Authorization: token },

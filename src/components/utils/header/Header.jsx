@@ -27,7 +27,7 @@ const Header = () => {
     }, [cart]);
 
     const logoutUser = async () => {
-        await axios.get('http://localhost:5000/user/logout');
+        await axios.get('https://pbl-technology-988327da4050.herokuapp.com/user/logout');
         localStorage.removeItem("accessToken")
         // window.location.href = '/';
         window.location.reload();
@@ -36,7 +36,7 @@ const Header = () => {
     const handleSearch = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/products/search?key=${searchKeyword}`
+          `https://pbl-technology-988327da4050.herokuapp.com/api/products/search?key=${searchKeyword}`
         );
         setSearchResults(response.data);
       } catch (error) {

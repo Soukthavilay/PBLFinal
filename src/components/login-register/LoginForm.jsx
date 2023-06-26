@@ -35,7 +35,7 @@ function LoginForm() {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:5000/user/login",
+        "https://pbl-technology-988327da4050.herokuapp.com/user/login",
         { ...loginFormData },
         { withCredentials: true }
       );
@@ -72,7 +72,7 @@ function LoginForm() {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://localhost:5000/user/register",
+        "https://pbl-technology-988327da4050.herokuapp.com/user/register",
         { ...registerFormData },
         { withCredentials: true }
       );

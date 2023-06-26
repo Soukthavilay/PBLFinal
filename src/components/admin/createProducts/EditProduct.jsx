@@ -65,7 +65,7 @@ const EditProduct = () => {
             let formData = new FormData();
             formData.append('file', file);
             setLoading(true);
-            const res = await axios.post('http://localhost:5000/api/upload', formData, {
+            const res = await axios.post('https://pbl-technology-988327da4050.herokuapp.com/api/upload', formData, {
                 headers: {
                     'content-type': 'multipart/form-data',
                 },
@@ -84,7 +84,7 @@ const EditProduct = () => {
         e.preventDefault();
         try {
             setLoading(true);
-            await axios.put(`http://localhost:5000/api/products/${edit._id}`, { ...edit, images },{
+            await axios.put(`https://pbl-technology-988327da4050.herokuapp.com/api/products/${edit._id}`, { ...edit, images },{
                 headers: { Authorization: token },
             });
             setCallback(!callback);
@@ -99,7 +99,7 @@ const EditProduct = () => {
             if (!isAdmin) return alert('you not admin');
             setLoading(true);
             await axios.post(
-                'http://localhost:5000/api/destroy',
+                'https://pbl-technology-988327da4050.herokuapp.com/api/destroy',
                 { public_id: images.public_id },
                 {
                     headers: { Authorization: token },

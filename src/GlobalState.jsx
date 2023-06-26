@@ -14,7 +14,7 @@ export const DataProvider = ({ children }) => {
         const refres = localStorage.getItem("accessToken");
         if (refres) {
             const refreshToken = async () => {
-                const res = await axios.get('http://localhost:5000/user/refresh_token', { withCredentials: true });
+                const res = await axios.get('https://pbl-technology-988327da4050.herokuapp.com/user/refresh_token', { withCredentials: true });
                 setToken(res.data.accesstoken);
     
                 setTimeout(()=>{

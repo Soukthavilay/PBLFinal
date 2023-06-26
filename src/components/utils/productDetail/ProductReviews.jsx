@@ -17,7 +17,7 @@ function ProductReviews(detailProduct) {
     if (idProduct) {
       const getFeedback = async () => {
         try {
-          const res = await axios.get(`http://localhost:5000/api/products/${idProduct}`);
+          const res = await axios.get(`https://pbl-technology-988327da4050.herokuapp.com/api/products/${idProduct}`);
           setFeedback(res.data.feedback);
         } catch (error) {
           alert(error.response.data.msg);

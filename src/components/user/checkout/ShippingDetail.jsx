@@ -43,7 +43,7 @@ const handleSubmit = async (e) => {
       if (voucher) {
         requestBody.voucherCode = voucher;
       }
-      await axios.post('http://localhost:5000/api/createOrder',requestBody);
+      await axios.post('https://pbl-technology-988327da4050.herokuapp.com/api/createOrder',requestBody);
 
       window.location.href = "/checkout-confirm";
     } catch (error) {
@@ -62,7 +62,7 @@ const handleSubmit = async (e) => {
       if (voucher) {
         requestBody.voucherCode = voucher;
       }
-      const res = await axios.post('http://localhost:5000/api/createOrder',requestBody);
+      const res = await axios.post('https://pbl-technology-988327da4050.herokuapp.com/api/createOrder',requestBody);
       setItemOrder(res.data);
     } catch (error) {
       console.log(error);
@@ -75,7 +75,7 @@ useEffect(() => {
     const orderNow = {
       order_id: itemOrder.order._id,
     };
-    axios.post('http://localhost:5000/api/paypal', { ...orderNow })
+    axios.post('https://pbl-technology-988327da4050.herokuapp.com/api/paypal', { ...orderNow })
       .then(response => {
         window.open(response.data.url, '_blank');
         window.location.href = "/checkout-confirm";
@@ -110,7 +110,7 @@ useEffect(() => {
     if(token){
       const fetchVouchers = async () => {
         try {
-          const response = await axios.get('http://localhost:5000/api/voucher',{headers: { Authorization: token }});
+          const response = await axios.get('https://pbl-technology-988327da4050.herokuapp.com/api/voucher',{headers: { Authorization: token }});
           setVouchers(response.data);
         } catch (error) {
           console.log(error);

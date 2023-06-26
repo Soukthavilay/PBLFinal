@@ -14,7 +14,7 @@ const OrderHeader = (order) => {
   };
 
   const updateOrderStatus = (orderId, newStatus) => {
-    const url = `http://localhost:5000/api/update-status/${orderId}`;
+    const url = `https://pbl-technology-988327da4050.herokuapp.com/api/update-status/${orderId}`;
     const config = {
       headers: {
         Authorization: token,

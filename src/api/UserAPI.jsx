@@ -12,7 +12,7 @@ function UserAPI(token){
         if (token) {
             const getUser = async () => {
                 try {
-                const res = await axios.get('http://localhost:5000/user/infor', {
+                const res = await axios.get('https://pbl-technology-988327da4050.herokuapp.com/user/infor', {
                     headers: { Authorization: token },
                 });
                 setDetail(res.data);
@@ -35,7 +35,7 @@ function UserAPI(token){
         if(token){
             try {
                 const getMyorder = async ()=>{
-                    const res = await axios.get("http://localhost:5000/api/orders",{
+                    const res = await axios.get("https://pbl-technology-988327da4050.herokuapp.com/api/orders",{
                     headers: {
                         Authorization: token,
                     },
@@ -61,7 +61,7 @@ function UserAPI(token){
         });
         if(check){
             setCart([...cart, {...product, quantity:count}]);
-            await axios.patch('http://localhost:5000/user/addcart',{cart:[...cart, {...product, quantity: count}]},{
+            await axios.patch('https://pbl-technology-988327da4050.herokuapp.com/user/addcart',{cart:[...cart, {...product, quantity: count}]},{
                 headers:{
                     Authorization: token
                 }

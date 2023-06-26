@@ -9,7 +9,7 @@ const Band = () => {
   useEffect(() => {
     const fetchBandList = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/band");
+        const response = await axios.get("https://pbl-technology-988327da4050.herokuapp.com/api/band");
         setBandList(response.data);
       } catch (error) {
         console.log(error.message);

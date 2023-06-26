@@ -13,7 +13,7 @@ const Cancel = (orderId) => {
     };
     const handleCancel = async () => {
         await axios.put(
-            `http://localhost:5000/api/orders/cancel-request/${id}`,
+            `https://pbl-technology-988327da4050.herokuapp.com/api/orders/cancel-request/${id}`,
             { ...cancellationReason },
             {
                 headers: { Authorization: token },

@@ -30,21 +30,21 @@ const Home = () => {
   };
   const fetchStatistics = async () => {
     try {
-      const salesResponse = await axios('http://localhost:5000/api/statistics/sales');
+      const salesResponse = await axios('https://pbl-technology-988327da4050.herokuapp.com/api/statistics/sales');
       const salesData = salesResponse.data;
       setTotalSales(salesData.totalSales);
       setSoldProducts(salesData.soldProducts);
 
-      const revenueResponse = await axios('http://localhost:5000/api/statistics/revenue');
+      const revenueResponse = await axios('https://pbl-technology-988327da4050.herokuapp.com/api/statistics/revenue');
       const revenueData = revenueResponse.data;
       setTotalRevenue(revenueData.totalRevenue);
       setDeliveredOrders(revenueData.deliveredOrders);
 
-      const newUserResponse = await axios('http://localhost:5000/api/statistics/newUser');
+      const newUserResponse = await axios('https://pbl-technology-988327da4050.herokuapp.com/api/statistics/newUser');
       const newUserData = newUserResponse.data;
       setNewUsers(newUserData);
 
-      const statisticsCateResponse = await axios('http://localhost:5000/api/statistics/cate');
+      const statisticsCateResponse = await axios('https://pbl-technology-988327da4050.herokuapp.com/api/statistics/cate');
       const statisticsCateData = statisticsCateResponse.data;
       setCategoryStats(statisticsCateData);
     } catch (error) {

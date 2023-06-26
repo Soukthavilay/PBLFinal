@@ -21,7 +21,7 @@ const Orders = () => {
     if (token) {
       const getOrder = async () => {
         setLoading(true);
-        const res = await axios.get('http://localhost:5000/api/orders/admin', {
+        const res = await axios.get('https://pbl-technology-988327da4050.herokuapp.com/api/orders/admin', {
           headers: { Authorization: token },
         });
         setLoading(false);

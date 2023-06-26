@@ -7,7 +7,7 @@ function CategoriesAPI() {
 
     useEffect(() =>{
         const getCategories = async () =>{
-            const res = await axios.get('http://localhost:5000/api/category')
+            const res = await axios.get('https://pbl-technology-988327da4050.herokuapp.com/api/category')
             setCategories(res.data)
         }
         getCategories()

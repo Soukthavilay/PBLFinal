@@ -19,12 +19,12 @@ const Categories = () => {
     e.preventDefault()
     try {
         if(onEdit){
-            await axios.put(`http://localhost:5000/api/category/${id}`, {name: category}, {
+            await axios.put(`https://pbl-technology-988327da4050.herokuapp.com/api/category/${id}`, {name: category}, {
                 headers: {Authorization: token}
             })
             alert("Success")
         }else{
-            await axios.post('http://localhost:5000/api/category', {name: category}, {
+            await axios.post('https://pbl-technology-988327da4050.herokuapp.com/api/category', {name: category}, {
                 headers: {Authorization: token}
             })
             alert("Success")
@@ -39,7 +39,7 @@ const Categories = () => {
   }
   const deleteCategory = async id =>{
     try {
-        const res = await axios.delete(`http://localhost:5000/api/category/${id}`, {
+        const res = await axios.delete(`https://pbl-technology-988327da4050.herokuapp.com/api/category/${id}`, {
             headers: {Authorization: token}
         })
         alert(res.data.msg)

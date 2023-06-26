@@ -37,7 +37,7 @@ function MyInfo() {
           userId: userDetail._id,
         };
         const response = await axios.put(
-          "http://localhost:5000/user/changePassword",
+          "https://pbl-technology-988327da4050.herokuapp.com/user/changePassword",
           formData,
           {
             headers: {
@@ -70,7 +70,7 @@ function MyInfo() {
       }
       let formData = new FormData();
       formData.append('file', file);
-      const res = await axios.post('http://localhost:5000/api/upload', formData, {
+      const res = await axios.post('https://pbl-technology-988327da4050.herokuapp.com/api/upload', formData, {
         headers: {
           'content-type': 'multipart/form-data',
           Authorization: token,
@@ -103,7 +103,7 @@ function MyInfo() {
       if (!hasEmptyField) {
         if (token) {
           const response = await axios.put(
-            "http://localhost:5000/user/infor",
+            "https://pbl-technology-988327da4050.herokuapp.com/user/infor",
             {
               name: name,
               email: email,

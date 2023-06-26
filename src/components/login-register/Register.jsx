@@ -22,7 +22,7 @@ const Register = () => {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/user/register",
+        "https://pbl-technology-988327da4050.herokuapp.com/user/register",
         { ...formData },
         { withCredentials: true }
       );

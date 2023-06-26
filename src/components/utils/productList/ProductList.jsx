@@ -41,7 +41,7 @@ function ProductList() {
     if(params.id === categoryList){
       if(categoryList){
         const getProductByCategory = async ()=>{
-          const res = await axios.get(`http://localhost:5000/api/products/category/${categoryList}`)
+          const res = await axios.get(`https://pbl-technology-988327da4050.herokuapp.com/api/products/category/${categoryList}`)
           setPdcate(res.data.products);
           setLoading(false);
         }
@@ -50,7 +50,7 @@ function ProductList() {
     } else if(params.id === band){
       if(band){
         const getProductByCategory = async ()=>{
-          const res = await axios.get(`http://localhost:5000/api/products/band/${band}`)
+          const res = await axios.get(`https://pbl-technology-988327da4050.herokuapp.com/api/products/band/${band}`)
           setPdcate(res.data.products);
           setLoading(false);
         }
@@ -66,7 +66,7 @@ function ProductList() {
         setLoading(true);
         const productDataList = await Promise.all(products.map(async (product) => {
           const productId = product._id;
-          const response = await axios.get(`http://localhost:5000/api/products/${productId}`);
+          const response = await axios.get(`https://pbl-technology-988327da4050.herokuapp.com/api/products/${productId}`);
           const productData = response.data;
           return { productId, productData };
           
