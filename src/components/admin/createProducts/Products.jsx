@@ -28,7 +28,7 @@ const initialFeature = {
     inches: '6.5-6.9',
     storage: '256 GB',
     batteries: '4001-5000 mAh',
-    connectivities: 'Bluetooth',
+    connectivities: 'Bluetooth, NFC, WIFI, 4G',
     sim: 'Dual'
 }
 
