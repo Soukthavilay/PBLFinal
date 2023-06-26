@@ -29,7 +29,11 @@ const feedbackSchema = new mongoose.Schema({
     },
     reply:{
         type: String,
-    }
+    },
+    replies: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'FeedbackReply',
+    }],
 }, {
     timestamps: true
 })

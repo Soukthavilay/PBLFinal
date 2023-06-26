@@ -2,6 +2,7 @@ const Feedbacks = require("../../models/feedback/feedbackModel");
 const Products = require("../../models/productModel");
 const authMe = require("../../middleware/authMe");
 const User = require("../../models/userModel");
+const FeedbackReply = require('../../models/feedback/replyFeedbackModel');
 
 const feedbackCtrl = {
   createFeedback: async (req, res) => {
@@ -32,6 +33,38 @@ const feedbackCtrl = {
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Internal Server" });
+    }
+  },
+  replyFeedback : async (req, res) => {
+    try {
+      const { content, feedback_id, user_id } = req.body;
+      const user =  await User.findById(user_id)// Lấy thông tin người dùng từ middleware xác thực (ví dụ: auth)
+  
+      const feedbackReply = new FeedbackReply({
+        content,
+        feedback_id,
+        username : user.name,
+        user_id : user._id,
+      });
+  
+      await feedbackReply.save();
+  
+      res.json({ message: 'Reply feedback created successfully', feedbackReply });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  },
+  getReplyFeedbackByFeedbackID : async (req, res) => {
+    try {
+      const { id } = req.params.id;
+  
+      const feedbackReplies = await FeedbackReply.find({ feedback_id: id });
+  
+      res.json({ feedbackReplies });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
     }
   },
   getFeedbackByProductID: async (productId) => {
