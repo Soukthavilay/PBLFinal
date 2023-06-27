@@ -734,69 +734,150 @@ const orderCtrl = {
     },
     monthlyReport: async (req, res) => {
         try {
-            const { year, month } = req.params; // Truyền vào thông tin năm và tháng từ URL (vd: /api/report/2019/7)
-            const sales = await Products.aggregate([
+          let { year, month } = req.params;
+          let startDate, endDate;
+      
+          // Check if year and month are provided
+          if (!year || !month || typeof year === 'undefined' || typeof month === 'undefined') {
+            // If not provided, get all statistics
+            startDate = new Date(1970, 0, 1); // Set a default start date
+            endDate = new Date(); // Set the current date as the end date
+            year = 'All';
+            month = 'All';
+          } else {
+            // If year and month are provided, calculate the start and end dates
+            startDate = new Date(year, month - 1, 1);
+            endDate = new Date(year, month, 0);
+          }
+      
+          const sales = await Products.aggregate([
             {
-                $match: {
-                    $expr: {
-                        $and: [
-                            { $eq: ['$createdAt', new Date(year, month - 1, 1)] },
-                        ],
-                    },
+              $match: {
+                $expr: {
+                  $and: [
+                    { $gte: ['$createdAt', startDate] },
+                    { $lte: ['$createdAt', endDate] },
+                  ],
                 },
-                },
-                {
-                    $group: {
-                        _id: null,
-                        totalSold: { $sum: '$sold' },
-                },
+              },
             },
-        ]);
-            const totalSales = sales.length > 0 ? sales[0].totalSold : 0;
-          // Truy vấn dữ liệu doanh thu cho tháng và năm chỉ định
-            const orders = await Orders.find({
-                status: 'Delivered',
-                createdAt: {
-                    $gte: new Date(year, month - 1, 1),
-                    $lt: new Date(year, month, 1),
+            {
+              $group: {
+                _id: null,
+                totalSold: { $sum: '$sold' },
+              },
+            },
+          ]);
+      
+          const totalSales = sales.length > 0 ? sales[0].totalSold : 0;
+      
+          const orders = await Orders.find({
+            status: 'Delivered',
+            createdAt: {
+              $gte: startDate,
+              $lte: endDate,
+            },
+          })
+            .sort({ createdAt: -1 })
+            .limit(8); // Get the 8 most recent orders
+      
+          const totalRevenue = orders.reduce((total, order) => total + order.total, 0);
+      
+          const newUsers = await User.find({
+            createdAt: {
+              $gte: startDate,
+              $lte: endDate,
+            },
+          });
+      
+          const categoryStats = await Products.aggregate([
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    { $gte: ['$createdAt', startDate] },
+                    { $lte: ['$createdAt', endDate] },
+                  ],
                 },
-            });
-            const totalRevenue = orders.reduce((total, order) => total + order.total, 0);
-            // Truy vấn dữ liệu người dùng mới cho tháng và năm chỉ định
-            const startDate = new Date(year, month - 1, 1);
-            const endDate = new Date(year, month, 0);
-            const newUsers = await User.find({ createdAt: { $gte: startDate, $lte: endDate } });
-            // Truy vấn dữ liệu thống kê sản phẩm theo danh mục cho tháng và năm chỉ định
-            const categoryStats = await Products.aggregate([
-                {
-                    $match: {
-                    $expr: {
-                        $and: [
-                            { $eq: ['$createdAt', new Date(year, month - 1, 1)] },
-                        ],
+              },
+            },
+            {
+              $group: {
+                _id: '$category',
+                totalProducts: { $sum: 1 },
+                totalSold: { $sum: '$sold' },
+              },
+            },
+            {
+              $project: {
+                category: '$_id',
+                totalProducts: 1,
+                totalSold: 1,
+                soldPercentage: {
+                  $cond: {
+                    if: { $ne: [{ $sum: '$totalSold' }, 0] }, // Check if the sum is not zero
+                    then: {
+                      $multiply: [
+                        { $divide: ['$totalSold', { $sum: '$totalSold' }] },
+                        100,
+                      ],
                     },
-                    },
+                    else: 0, // If sum is zero, set soldPercentage to 0
+                  },
                 },
-                {
-                    $group: {
-                        _id: '$category',
-                        totalProducts: { $sum: 1 },
-                    },
-                },
-            ]);
-            const report = {
-                month,
-                year,
-                totalSales,
-                totalRevenue,
-                newUsersCount: newUsers.length,
-                categoryStats,
-            };
-            res.json(report);
+              },
+            },
+          ]);
+      
+          const productData = await Products.find({
+            createdAt: {
+              $gte: startDate,
+              $lte: endDate,
+            },
+          }).select('name sold');
+      
+          const report = {
+            month,
+            year,
+            totalSales,
+            totalRevenue,
+            totalUsers: newUsers.length,
+            totalOrders: orders.length,
+            recentOrders: orders,
+            categoryStats,
+            productData,
+          };
+      
+          res.json(report);
         } catch (error) {
-            res.status(500).json({ message: error.message });
+          res.status(500).json({ message: error.message });
         }
-    },
+      },
+      monthlyStatistics: async (req, res) => {
+        try {
+          const currentYear = new Date().getFullYear();
+          const statistics = [];
+      
+          for (let month = 1; month <= 12; month++) {
+            const startDate = new Date(currentYear, month - 1, 1);
+            const endDate = new Date(currentYear, month, 0);
+      
+            const orders = await Orders.countDocuments({
+              status: 'Delivered',
+              createdAt: {
+                $gte: startDate,
+                $lte: endDate,
+              },
+            });
+      
+            statistics.push({ month, totalOrders: orders });
+          }
+      
+          res.json(statistics);
+        } catch (error) {
+          res.status(500).json({ message: error.message });
+        }
+      }  
 }
 
 module.exports = orderCtrl
