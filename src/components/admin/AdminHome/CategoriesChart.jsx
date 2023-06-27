@@ -1,16 +1,26 @@
-import React, { PureComponent } from 'react'
-import { PieChart, Pie, Sector, Cell, ResponsiveContainer } from 'recharts';
+import React, { useContext } from 'react';
+import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts';
+import { GlobalState } from '../../../GlobalState';
 
-function CategoriesChart() {
+function CategoriesChart({ statistics }) {
+  const state = useContext(GlobalState);
+  const [categories] = state.categoriesAPI.categories;
 
-  const data = [
-    { name: 'Group A', value: 400 },
-    { name: 'Group B', value: 300 },
-    { name: 'Group C', value: 300 },
-    { name: 'Group D', value: 200 },
-  ];
+  if (statistics === null || statistics === undefined) {
+    return <p>Loading...</p>;
+  }
 
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+  const categoryIds = statistics.categoryStats
+    .filter(category => category.totalSold > 0)
+    .map(category => ({ name: category._id, value: category.totalSold }));
+
+  const updatedData = categoryIds.map(item => {
+    const category = categories.find(category => category._id === item.name);
+    const name = category ? category.name : item.name;
+    return { name, value: item.value };
+  });
+
+  const COLORS = generateRandomColors(updatedData.length);
 
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
@@ -27,12 +37,10 @@ function CategoriesChart() {
 
   return (
     <>
-
-
       <ResponsiveContainer width="100%" height={280}>
-        <PieChart width="40%" height={280}>
+        <PieChart width={400} height={280}>
           <Pie
-            data={data}
+            data={updatedData}
             cx="50%"
             cy="50%"
             labelLine={false}
@@ -41,15 +49,42 @@ function CategoriesChart() {
             fill="#8884d8"
             dataKey="value"
           >
-            {data.map((entry, index) => (
+            {updatedData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
         </PieChart>
       </ResponsiveContainer>
-
+      <div className="color-explain">
+        {updatedData.map((item, index) => (
+          <div key={item.name} className="color-explain-item">
+            <div className="color" style={{ backgroundColor: COLORS[index % COLORS.length] }}></div>
+            <div className="category-type">{item.name}</div>
+          </div>
+        ))}
+      </div>
     </>
-  )
+  );
 }
 
-export default CategoriesChart
+function generateRandomColors(count) {
+  const colors = [];
+
+  for (let i = 0; i < count; i++) {
+    let color = generateRandomColor();
+
+    while (colors.includes(color)) {
+      color = generateRandomColor();
+    }
+
+    colors.push(color);
+  }
+
+  return colors;
+}
+
+function generateRandomColor() {
+  return '#' + Math.floor(Math.random() * 16777215).toString(16);
+}
+
+export default CategoriesChart;

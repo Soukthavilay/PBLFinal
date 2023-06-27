@@ -1,48 +1,11 @@
-import React, { useEffect, useState } from 'react';;
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { PiShoppingBag, PiShoppingCartLight } from "react-icons/pi";
 import { BsCash } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
 
-function DashboardSummary() {
-
-  const [totalSales, setTotalSales] = useState(0);
-  const [soldProducts, setSoldProducts] = useState([]);
-  const [totalRevenue, setTotalRevenue] = useState(0);
-  const [deliveredOrders, setDeliveredOrders] = useState([]);
-  const [newUsers, setNewUsers] = useState([]);
-
-  useEffect(() => {
-    fetchStatistics();
-  }, []);
-
-  var price = 2000000;
-
-
-  const fetchStatistics = async () => {
-    try {
-      const salesResponse = await axios('http://localhost:5000/api/statistics/sales');
-      const salesData = salesResponse.data;
-      setTotalSales(salesData.totalSales);
-      setSoldProducts(salesData.soldProducts);
-
-      const revenueResponse = await axios('http://localhost:5000/api/statistics/revenue');
-      const revenueData = revenueResponse.data;
-      setTotalRevenue(revenueData.totalRevenue);
-      setDeliveredOrders(revenueData.deliveredOrders);
-
-      const newUserResponse = await axios('http://localhost:5000/api/statistics/newUser');
-      const newUserData = newUserResponse.data;
-      setNewUsers(newUserData);
-
-      const statisticsCateResponse = await axios('http://localhost:5000/api/statistics/cate');
-      const statisticsCateData = statisticsCateResponse.data;
-      setCategoryStats(statisticsCateData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+function DashboardSummary({statistics}) {
+  const { totalSales, totalRevenue, totalUsers, totalOrders } = statistics || {};
   return (
     <div className='dashboard-summary'>
       <div className="dashboard-summary-item">
@@ -51,7 +14,7 @@ function DashboardSummary() {
             <PiShoppingBag />
             <h2>Total Sales</h2>
           </div>
-          <p>{totalSales} <small>items</small></p>
+          <p>{totalSales ? totalSales : 0} <small>items</small></p>
         </div>
       </div>
       <div className="dashboard-summary-item">
@@ -60,9 +23,10 @@ function DashboardSummary() {
             <BsCash />
             <h2>Revenue</h2>
           </div>
-          <p>{price.toLocaleString("en-US", {
+          <p>{totalRevenue ? totalRevenue?.toLocaleString("en-US", {
             style: "currency",
-            currency: "USD",})} </p>
+            currency: "USD",
+          }) : 0}</p>
         </div>
       </div>
       <div className="dashboard-summary-item">
@@ -71,7 +35,7 @@ function DashboardSummary() {
             <AiOutlineUser />
             <h2>Total User</h2>
           </div>
-          <p>{totalSales} <small>user</small></p>
+          <p>{totalUsers ? totalUsers : 0} <small>users</small></p>
         </div>
       </div>
       <div className="dashboard-summary-item">
@@ -80,11 +44,11 @@ function DashboardSummary() {
             <PiShoppingCartLight />
             <h2>Total Orders</h2>
           </div>
-          <p>{totalSales} <small>orders</small></p>
+          <p>{totalOrders ? totalOrders : 0} <small>orders</small></p>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default DashboardSummary
