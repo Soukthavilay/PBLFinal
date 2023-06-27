@@ -92,6 +92,7 @@
 
         svg {
           margin-right: 8px;
+          font-size: 20px;
         }
 
         &:hover {
@@ -562,6 +563,17 @@
     .cell-label {
       display: none;
     }
+
+    .remove-btn {
+      border: none;
+      outline: none;
+      background-color: transparent;
+
+      svg {
+        fill: #fff;
+        font-size: 16px;
+      }
+    }
   }
 
   .status {
@@ -708,6 +720,8 @@
 
 .total-color {
   color: #ff1616;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .canceled {
