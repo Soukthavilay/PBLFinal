@@ -50,7 +50,7 @@ function ProductReviewDetail(fd) {
             <p className="review-comment-text">{feedback.content}</p>
             
             {/* REPLY SECTION */}
-            <div className="review-reply">
+            {/* <div className="review-reply">
               <button className="reply-btn" onClick={handleToggle}>Reply</button>
               <div className={showHideComment ? 'review-reply-form show' : 'review-reply-form hide'}>
                 <textarea name="" id="" cols="30" rows="10" placeholder="Write reply..."></textarea>
@@ -58,10 +58,10 @@ function ProductReviewDetail(fd) {
                   <button className="btn btn--animated btn--primary--blue btn--border--blue">Send reply</button>
                 </div>
               </div>
-            </div>
+            </div> */}
             
             {/* REPLY CONTENT */}
-            <div className="reply-content">
+            {/* <div className="reply-content">
               <div className="reply-content-item">
                 <div className="reviews-detail-avatar">
                   <span>K</span>
@@ -83,7 +83,7 @@ function ProductReviewDetail(fd) {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
