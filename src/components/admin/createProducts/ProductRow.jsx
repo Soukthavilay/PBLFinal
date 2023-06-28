@@ -94,7 +94,7 @@ const ProductRow = ( productShow ) => {
           <div className="product-cell price"><span className="cell-label">Price:</span>{product.price}</div>
         </div>
       </Link>
-      <div className="delete"><button className='' onClick={handleOpenModal}><AiFillCloseCircle /></button></div>
+      <div className="delete"><button className='remove-btn' onClick={handleOpenModal}><AiFillCloseCircle /></button></div>
       { modalOpen && (<ConfirmPopup
         isOpen={modalOpen}
         onClose={handleCloseModal}

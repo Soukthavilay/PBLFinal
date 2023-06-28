@@ -24,7 +24,6 @@ const RelatedItem = (categories) => {
   const [savePd,setSavePd] = useState([]);
   const [rating,setRating] = useState();
   const [pdCate,setPdCate] = useState([]);
-  console.log(products)
   useEffect(() => {
     if(products){
     const fetchProductData = async () => {

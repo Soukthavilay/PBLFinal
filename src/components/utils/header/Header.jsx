@@ -28,7 +28,7 @@ const Header = () => {
 
     const logoutUser = async () => {
         await axios.get('https://pbl-technology-988327da4050.herokuapp.com/user/logout');
-        localStorage.removeItem("accessToken")
+        localStorage.removeItem("accessToken");
         // window.location.href = '/';
         window.location.reload();
     };
