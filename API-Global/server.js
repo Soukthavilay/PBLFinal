@@ -25,8 +25,19 @@ app.use(cookieParser())
 app.use(morgan('tiny'));
 // app.disable('x-powered-by'); // less hackers know about our stack
 // app.use(cors());
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     const allowedOrigins = ['https://64e7-2402-800-6294-cf45-c510-287c-d959-6b5a.ngrok-free.app', 'http://localhost:3000', 'http://localhost:5000'];
+//     if (allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true
+// }));
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "https://64e7-2402-800-6294-cf45-c510-287c-d959-6b5a.ngrok-free.app",
     // origin: "https://splendid-puppy-f9941c.netlify.app",
     credentials: true,
 }));
@@ -90,7 +101,7 @@ if (process.env.NODE_ENV === "production") {
   }
 
   app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', "http://localhost:3000");
+    res.header('Access-Control-Allow-Origin', "https://64e7-2402-800-6294-cf45-c510-287c-d959-6b5a.ngrok-free.app");
     res.header('Access-Control-Allow-Credentials', true);
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
@@ -99,7 +110,7 @@ if (process.env.NODE_ENV === "production") {
 // unhandled promise rejection
 process.on("unhandledRejection", (err) => {
     console.log(`Shutting down the server for ${err.message}`);
-    console.log(`shutting down the server for unhandle promise rejection`);
+    console.log(`shutting down the server for Unhandled promise rejection`);
   
     server.close(() => {
       process.exit(1);

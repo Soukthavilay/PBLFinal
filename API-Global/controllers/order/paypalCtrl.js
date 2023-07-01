@@ -1,6 +1,7 @@
 const paypal = require('paypal-rest-sdk')
 const Orders = require('../../models/order/orderModel');
 const voucherModel = require('../../models/voucherModel');
+const ejs = require('ejs');
 
 const paypalCtrl = {
 
@@ -17,8 +18,8 @@ const paypalCtrl = {
                 payment_method: "paypal",
               },
               redirect_urls: {
-                return_url: "http://localhost:5000/api/paypal/success",
-                cancel_url: "http://localhost:5000/api/paypal/cancel",
+                return_url: "https://pbl-technology-988327da4050.herokuapp.com/api/paypal/success",
+                cancel_url: "https://pbl-technology-988327da4050.herokuapp.com/api/paypal/cancel",
               },
               transactions: [
                 {
@@ -47,8 +48,8 @@ const paypalCtrl = {
                 payment_method: "paypal",
               },
               redirect_urls: {
-                return_url: "http://localhost:5000/api/paypal/success",
-                cancel_url: "http://localhost:5000/api/paypal/cancel",
+                return_url: "https://pbl-technology-988327da4050.herokuapp.com/api/paypal/success",
+                cancel_url: "https://pbl-technology-988327da4050.herokuapp.com/api/paypal/cancel",
               },
               transactions: [
                 {
@@ -90,7 +91,7 @@ const paypalCtrl = {
           return res.status(500).json({ message: err.message });
         }
       },      
-    success: async (req, res) => {
+      success: async (req, res) => {
         const payerId = req.query.PayerID;
         const paymentId = req.query.paymentId;
         const execute_payment_json = {
@@ -103,17 +104,21 @@ const paypalCtrl = {
                 throw error;
             } else {
                 try {
-                  const order_id = payment.transactions[0].item_list.items[0].name;
-                    await Orders.findByIdAndUpdate(order_id, { status: "Paid" ,paymentMethod:"PayPal"},{ new: true });
-                    res.send('Success');
-                }
-                catch (err) {
+                    const order_id = payment.transactions[0].item_list.items[0].name;
+                    await Orders.findByIdAndUpdate(order_id, { status: "Paid", paymentMethod: "PayPal" }, { new: true });
+                    const Order = await Orders.findById(order_id);
+    
+                    // Render the HTML template
+                    const renderedHtml = await ejs.renderFile('E:\\Bot\\PBLFinal\\API-Global\\controllers\\order\\templates\\success.ejs', { order_id: order_id ,order: Order});
+    
+                    res.send(renderedHtml);
+                } catch (err) {
                     console.log(err);
-                    res.status(401).send("Something went wrong, cant complete your order");
+                    res.status(401).send("Something went wrong, can't complete your order");
                 }
             }
         });
-    },
+    },    
 
     cancel: async (req, res) => {
         res.status(406).send('Cancelled');
