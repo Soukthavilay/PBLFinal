@@ -32,9 +32,6 @@ const Users = () => {
     }
   }, [token, isAdmin]);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   const handleStatusChange = (e) => {
     setSelectedStatus(e.target.value);

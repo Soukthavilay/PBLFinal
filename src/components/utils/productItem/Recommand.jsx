@@ -25,7 +25,6 @@ const Recommand = () => {
   const [rating,setRating] = useState();
   let [updatePrice , setUpdatePrice] = useState();
   const [loading,setLoading] = useState(false);
-  console.log(products)
   useEffect(() => {
     if(products){
     const fetchProductData = async () => {

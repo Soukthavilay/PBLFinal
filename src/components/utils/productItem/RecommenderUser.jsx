@@ -83,9 +83,9 @@ const RecommenderUser = () => {
     }
     return 0;
   };
-useEffect(()=>{
-    console.log(recommender)
-},[recommender])
+// useEffect(()=>{
+//     console.log(recommender)
+// },[recommender])
   return (
     <>
       <div className="featured-product">

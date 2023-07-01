@@ -5,7 +5,6 @@ import "../scss/order-detail.scss"
 const OrderDetail = () => {
   const location = useLocation();
   const orderItem = location.state.order;
-  console.log(orderItem);
   const createdAtDateTime = new Date(orderItem.createdAt);
   const currentDateTime = new Date();
   const minutesDifference = Math.floor(

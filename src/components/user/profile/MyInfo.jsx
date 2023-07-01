@@ -78,7 +78,7 @@ function MyInfo() {
       });
   
       setImages(res.data.url);
-      console.log(res.data.url);
+      // console.log(res.data.url);
     } catch (error) {
       console.log(error);
     }
