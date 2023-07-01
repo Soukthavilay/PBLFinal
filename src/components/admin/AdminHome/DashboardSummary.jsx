@@ -33,7 +33,7 @@ function DashboardSummary({statistics}) {
         <div className="item-content">
           <div className="title">
             <AiOutlineUser />
-            <h2>Total User</h2>
+            <h2>New User</h2>
           </div>
           <p>{totalUsers ? totalUsers : 0} <small>users</small></p>
         </div>
