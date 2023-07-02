@@ -1,9 +1,37 @@
 .banner{
     width: 100%;
     margin: auto;
-    max-height: 440px;
-    min-height: 440px;
+    // max-height: 440px;
+    // min-height: 440px;
     overflow: hidden;
+    position: relative;
+    &-content {
+        position: absolute;
+        top: 0;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-top: 170px;
+        color: #fff;
+
+        h2 {
+            color: #fff;
+            font-size: 36px;
+        }
+
+        h1 {
+            font-size: 56px;
+            margin-bottom: 32px;
+        }
+
+        button {
+            width: fit-content;
+            padding: 15px 32px;
+        }
+    }
     .img-slide{
         width: 100%;
         .wrapper{
