@@ -1,0 +1,27 @@
+.create-band{
+    width: 100%;
+    display: flex;
+    padding: 20px;
+    .band-field{
+
+    }
+    .band-list{
+        display: flex;
+        flex-direction: column;
+        .band-item{
+            display: flex;
+            gap: 47px;
+            justify-content: space-between;
+            .band-name{
+
+            }
+            .band-logo{
+
+            }
+            .btn-up-de{
+                display: flex;
+                gap: 20px;
+            }
+        }
+    }
+}

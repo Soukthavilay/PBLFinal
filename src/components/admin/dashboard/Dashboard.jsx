@@ -13,6 +13,7 @@ import EditProduct from '../createProducts/EditProduct';
 import Home from '../AdminHome/Home';
 import OrderDetail from '../Report/OrderDetail';
 import Users from '../users/Users';
+import Band from '../bands/Band';
 const Dashboard = () => {
   const state = useContext(GlobalState);
   const [isLogged] = state.userAPI.isLogged;
@@ -30,6 +31,7 @@ const Dashboard = () => {
           <Route path="/admin/statistical" component={Home}/>
           <Route path="/admin/orderDetail/:id" component={OrderDetail}/>
           <Route path="/admin/allUser" component={Users}/>
+          <Route path="/admin/createBands" component={Band}/>
         </Switch>
       </Router>
     </>
