@@ -20,10 +20,9 @@ import { useState } from "react";
 
 const Recommand = () => {
   const state = useContext(GlobalState);
-  const [products, setProducts] = state.productsAPI.products;
+  const [products] = state.productsAPI.products;
   const [savePd,setSavePd] = useState([]);
   const [rating,setRating] = useState();
-  let [updatePrice , setUpdatePrice] = useState();
   const [loading,setLoading] = useState(false);
   useEffect(() => {
     if(products){
