@@ -6,6 +6,7 @@ import '../scss/createProduct.scss'
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import SuccessPopup from '../../utils/NotFound/SuccessPopup';
+import Voucher from './Voucher';
 const initialState = {
     _id: '',
     title: '',
@@ -461,6 +462,27 @@ const Products = () => {
                 </div>
               )}
             </Popup>
+            <br/>
+            <hr/>
+            <hr/>
+            <Popup trigger={
+                <button className="app-content-headerButton button">
+                  Add Voucher
+                </button>
+              }
+              modal
+              nested>
+                {(close) => (
+                  <div className="modal review-modal">
+                    <button className="close" onClick={close}>&times;</button>
+                    <div className="header">Create Voucher</div>
+                    <div className="content">
+                      {" "}
+                      <Voucher category={category}/>
+                    </div>
+                  </div>
+                )}
+              </Popup>
           </div>
           <div className="app-content-actions">
             <input type="text" 
