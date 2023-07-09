@@ -28,10 +28,10 @@ const Dashboard = () => {
           <Route path="/admin/Report" component={isAdmin ? Report : Notfound} />
           <Route path="/admin/edit_product/:id" component={isAdmin ? EditProduct : Notfound}/>
           {/* <Route path="/admin/cancel-request" component={isAdmin ? Report : Notfound} /> */}
-          <Route path="/admin/statistical" component={Home}/>
-          <Route path="/admin/orderDetail/:id" component={OrderDetail}/>
-          <Route path="/admin/allUser" component={Users}/>
-          <Route path="/admin/createBands" component={Band}/>
+          <Route path="/admin/statistical" component={isAdmin ? Home : Notfound}/>
+          <Route path="/admin/orderDetail/:id" component={isAdmin ? OrderDetail : Notfound}/>
+          <Route path="/admin/allUser" component={isAdmin ? Users : Notfound}/>
+          <Route path="/admin/createBands" component={isAdmin ? Band : Notfound}/>
         </Switch>
       </Router>
     </>

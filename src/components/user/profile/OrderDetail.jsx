@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Popup from "reactjs-popup";
 import { GlobalState } from "../../../GlobalState";
 import ProfileOption from "./ProfileOption";
@@ -112,7 +112,7 @@ const OrderDetail = () => {
                         }
                       />
                       <div className="order-product-info_detail">
-                        <h3 className="product-name">{orderItem.title}</h3>
+                        <h3 className="product-name"><Link to={`/detail/${orderItem._id}`}>{orderItem.title}</Link></h3>
                         <span className="product-type">
                           {orderItem.feature.color}
                         </span>
@@ -197,6 +197,14 @@ const OrderDetail = () => {
                     <span className="order-summary-price_method">
                       Ship with {data.paymentMethod ? data.paymentMethod : ""}
                     </span>
+                    {data.voucher ?
+                      <span className="order-summary-price_method">
+                        Vouchers : {data.voucher ? data.voucher : ""}
+                      </span> : 
+                      <span className="order-summary-price_method">
+                        No vouchers
+                      </span>
+                    }
                     <div> 
                       {data && data.status === 'Pending' ? 
                         <Popup

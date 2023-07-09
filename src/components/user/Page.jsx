@@ -49,15 +49,15 @@ const Page = () => {
         <Route path="/register" component={Register} />
         <Route path="/detail/:id" component={ProductDetail} />
         <Route path="/order-summary" component={OrderSummary} />
-        <Route path="/shipping-detail" component={ShippingDetail} />
+        <Route path="/shipping-detail" component={isLogged ? ShippingDetail : Notfound} />
         <Route path="/cart" component={Cart} />
-        <Route path="/checkout-confirm" component={CheckoutComfirm} />
+        <Route path="/checkout-confirm" component={isLogged ? CheckoutComfirm : Notfound} />
         <Route path="/payment-method" component={PaymentMethod} />
         <Route path="/product-list/:id" component={ProductList} />
         <Route path="/order-detail/:id" component={OrderDetail} />
-        <Route path="/profile" component={UserProfile} />
+        <Route path="/profile" component={isLogged ? UserProfile : Notfound} />
         {/* <Route path="/order-detail" component={OrderDetail} /> */}
-        <Route path="/myInfo" component={MyInfo} />
+        <Route path="/myInfo" component={isLogged ? MyInfo : Notfound} />
         <Route path="/review-product/:id" component={Review} />
         <Route path="/" component={Banner} />
       </Switch>
