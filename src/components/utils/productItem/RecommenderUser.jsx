@@ -22,6 +22,7 @@ import { useState } from "react";
 const RecommenderUser = () => {
   const state = useContext(GlobalState);
   const [products, setProducts] = state.productsAPI.products;
+  const [isLogged] = state.userAPI.isLogged;
   const userId = state.userAPI.detail[0];
   const [recommender, setRecommender] = useState();
   const [savePd,setSavePd] = useState([]);
@@ -88,90 +89,92 @@ const RecommenderUser = () => {
 // },[recommender])
   return (
     <>
+      {isLogged ? 
       <div className="featured-product">
-        <p className="featured-product-title">Today's Suggestions</p>
-        <div className="container-list">
-          {loading ? <LoadingSmall/> : <Swiper
-            spaceBetween={50}
-            loop={true}
-            slidesPerView={4}
-            navigation={true}
-            className="featured-product-slide"
-            modules={[Navigation]}
-          >
-            {recommender &&
-              recommender.map((item) => {
-                const productData = savePd.find((pd) => pd.productId === item._id);
-                const feedbackData = productData
-                ? productData.productData.feedback
-                : [];
-                const totalRating = getTotalRating(feedbackData);
-                return (
-                  <SwiperSlide key={item._id}>
-                    <div className="product-item">
-                      <div className="product-item-image">
-                        <Link to={`/detail/${item._id}`}>
-                          <img src={item.images.url} alt={"product-image"} />
-                        </Link>
-                        {item.discountPercentage && item.discountExpiration ? 
-                          <div className="coupon">
-                            <span>{item.discountPercentage}%</span>
-                            <span>OFF</span>
-                            {/* <span>{item.discountExpiration ? moment(item.discountExpiration).format('DD/MM/YYYY') : ''}</span> */}
-                          </div> : null
-                        }
-                      </div>
-                      <div className="product-item-detail">
-                        <h3 className="product-name">
-                          <Link to={`/detail/${item._id}`}>{item.title}</Link>
-                        </h3>
-                        <div className="product-detail">
-                          <div className="product-detail-meta">
-                          {item.discountPercentage ? 
-                              <div className="price-both">
-                                <span style={{ textDecoration: 'line-through' }}>{((item.price) / (1 - (item.discountPercentage / 100))).toLocaleString("en-US", {
-                                  style: "currency",
-                                  currency: "USD",
-                                })}</span>
-                                <span className="product-price">{item.price.toLocaleString("en-US", {
+      <p className="featured-product-title">Today's Suggestions</p>
+      <div className="container-list">
+        {loading ? <LoadingSmall/> : <Swiper
+          spaceBetween={50}
+          loop={true}
+          slidesPerView={4}
+          navigation={true}
+          className="featured-product-slide"
+          modules={[Navigation]}
+        >
+          {recommender &&
+            recommender.map((item) => {
+              const productData = savePd.find((pd) => pd.productId === item._id);
+              const feedbackData = productData
+              ? productData.productData.feedback
+              : [];
+              const totalRating = getTotalRating(feedbackData);
+              return (
+                <SwiperSlide key={item._id}>
+                  <div className="product-item">
+                    <div className="product-item-image">
+                      <Link to={`/detail/${item._id}`}>
+                        <img src={item.images.url} alt={"product-image"} />
+                      </Link>
+                      {item.discountPercentage && item.discountExpiration ? 
+                        <div className="coupon">
+                          <span>{item.discountPercentage}%</span>
+                          <span>OFF</span>
+                          {/* <span>{item.discountExpiration ? moment(item.discountExpiration).format('DD/MM/YYYY') : ''}</span> */}
+                        </div> : null
+                      }
+                    </div>
+                    <div className="product-item-detail">
+                      <h3 className="product-name">
+                        <Link to={`/detail/${item._id}`}>{item.title}</Link>
+                      </h3>
+                      <div className="product-detail">
+                        <div className="product-detail-meta">
+                        {item.discountPercentage ? 
+                            <div className="price-both">
+                              <span style={{ textDecoration: 'line-through' }}>{((item.price) / (1 - (item.discountPercentage / 100))).toLocaleString("en-US", {
                                 style: "currency",
                                 currency: "USD",
                               })}</span>
-                              </div> : 
-                              <span className="product-price">
-                                {item.price.toLocaleString("en-US", {
-                                style: "currency",
-                                currency: "USD",
-                              })}
-                              </span>
-                            }
-                            <div className="product-ratings">
-                              <StarRatings
-                                name="rating"
-                                rating={totalRating.totalRating ? totalRating.totalRating : 0}
-                                starRatedColor="#fadb14"
-                                starDimension="16px"
-                                starSpacing="2px"
-                              />
-                              <span>({totalRating.total ? totalRating.total : 0})</span>
-                            </div>
+                              <span className="product-price">{item.price.toLocaleString("en-US", {
+                              style: "currency",
+                              currency: "USD",
+                            })}</span>
+                            </div> : 
+                            <span className="product-price">
+                              {item.price.toLocaleString("en-US", {
+                              style: "currency",
+                              currency: "USD",
+                            })}
+                            </span>
+                          }
+                          <div className="product-ratings">
+                            <StarRatings
+                              name="rating"
+                              rating={totalRating.totalRating ? totalRating.totalRating : 0}
+                              starRatedColor="#fadb14"
+                              starDimension="16px"
+                              starSpacing="2px"
+                            />
+                            <span>({totalRating.total ? totalRating.total : 0})</span>
                           </div>
-                          <span>sold : {item.sold ? item.sold : 0}</span>
-                          <Link
-                            to={`/detail/${item._id}`}
-                            className="btn btn--animated btn--primary--white btn--border--blue"
-                          >
-                            Buy Now
-                          </Link>
                         </div>
+                        <span>sold : {item.sold ? item.sold : 0}</span>
+                        <Link
+                          to={`/detail/${item._id}`}
+                          className="btn btn--animated btn--primary--white btn--border--blue"
+                        >
+                          Buy Now
+                        </Link>
                       </div>
                     </div>
-                  </SwiperSlide>
-                );
-              })}
-          </Swiper>}
-        </div>
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+        </Swiper>}
       </div>
+    </div> : <></>  
+    }
     </>
   );
 };

@@ -122,7 +122,7 @@ function ProductList() {
                       : [];
                     const totalRating = getTotalRating(feedbackData);
                     return (
-                      <div style={{height: "fit-content"}} className="product-item" key={item._id}>
+                      <div style={{height: "450px"}} className="product-item" key={item._id}>
                         <div className="product-item-image">
                           <Link to={`/detail/${item._id}`}>
                             <img src={item.images.url} alt={"product-image"} />

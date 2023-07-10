@@ -83,7 +83,7 @@ const CategoryItem = () => {
               </picture>
               <div className="block_gris"></div>
               <div className="topbannerh">
-                <h2 className='nom_banner_h'>Speakers</h2>
+                <h2 className='nom_banner_h'>Cabinet</h2>
               </div>
             </div>
           </Link>
