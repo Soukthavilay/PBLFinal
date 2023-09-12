@@ -72,7 +72,7 @@ function ProductReviews(detailProduct) {
   return (
     <>
       <div className="product-reviews">
-        <h3 className="product-reviews-title">Đánh giá sản phẩm</h3>
+        <h3 className="product-reviews-title">Feedback product</h3>
         <div className="product-reviews-summary">
         <div className="reviews-summary-item">
             <h4>Average rating</h4>
@@ -88,12 +88,12 @@ function ProductReviews(detailProduct) {
           </div>
           <div className="reviews-summary-item">
             <p>Have you used this product?</p>
-            <button
+            {/* <button
               className="btn btn--animated btn--primary--blue btn--border--blue"
               onClick={handleToggle}
             >
               Submit a review
-            </button>
+            </button> */}
           </div>
         </div>
 
